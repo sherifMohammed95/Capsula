@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.authentication.AuthenticationViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_right_white_rounded_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_24"
+            android:text="@string/name"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_16" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/field_rounded_bg"
+            android:inputType="text"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingEnd="@dimen/dimen_16"
+            android:text="@={vm.nameText}"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14"
+            tools:text="sherif" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:text="@{vm.nameErrorText}"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/font_12"
+            android:visibility="@{vm.nameError?View.VISIBLE:View.GONE}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/email"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_16" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/field_rounded_bg"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingEnd="@dimen/dimen_16"
+            android:text="@={vm.emailText}"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14"
+            tools:text="sherif@test.com" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:text="@string/please_enter_a_valid_email"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/font_12"
+            android:visibility="@{vm.emailError?View.VISIBLE:View.GONE}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/phone"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/field_rounded_bg"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                style="@style/medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:gravity="center"
+                android:text="+966"
+                android:textColor="@color/colorLabelText" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_weight="85"
+                android:background="@android:color/transparent"
+                android:inputType="number"
+                android:paddingEnd="@dimen/dimen_10"
+                android:text="@={vm.phoneText}"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                tools:text="sherif@test.com" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:text="@string/please_enter_a_valid_phone"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/font_12"
+            android:visibility="@{vm.phoneError?View.VISIBLE:View.GONE}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:text="@string/password"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_16" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/field_rounded_bg"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingEnd="@dimen/dimen_16"
+            android:text="@={vm.passwordText}"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14"
+            tools:text="sherif@test.com" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:text="@{vm.passwordErrorText}"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/font_12"
+            android:visibility="@{vm.passwordError?View.VISIBLE:View.GONE}" />
+
+        <Button
+            style="@style/bold"
+            android:layout_width="180dp"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:background="@drawable/button_rounded_bg"
+            android:onClick="@{()->vm.onRegisterButtonClick()}"
+            android:text="@string/register"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:text="@string/register_with_social"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_24"
+            android:layout_marginBottom="@dimen/dimen_15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:onClick="@{()->vm.onFaceBookClick()}"
+                android:src="@drawable/ic_facebook" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:onClick="@{()->vm.onGoogleClick()}"
+                android:src="@drawable/ic_google" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->vm.onTwitterClick()}"
+                android:src="@drawable/ic_twitter" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

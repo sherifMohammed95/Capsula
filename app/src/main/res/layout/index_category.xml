@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="category"
+            type="com.freelance.capsoula.data.Category" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginEnd="@dimen/dimen_20"
+        app:cardBackgroundColor="@android:color/white"
+        android:layout_marginBottom="@dimen/dimen_16"
+        app:cardCornerRadius="@dimen/dimen_20"
+        app:cardMaxElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                imageURL="@{category.imageLink}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_105"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                style="@style/medium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_3"
+                android:layout_marginEnd="@dimen/dimen_3"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@{category.categoryName}"
+                android:textColor="@color/colorBlack50"
+                android:textSize="@dimen/font_14"
+                tools:text="Babies sherif sherif" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

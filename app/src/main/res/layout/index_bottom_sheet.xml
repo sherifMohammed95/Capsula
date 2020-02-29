@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.freelance.capsoula.custom.bottomSheet.BottomSheetModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_22"
+        android:layout_marginEnd="@dimen/dimen_22"
+        android:layout_marginBottom="@dimen/dimen_16"
+        android:background="@drawable/search_bg"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15">
+
+        <ImageView
+            android:id="@+id/selected_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:src="@{item.selected ? @drawable/ic_selected : @drawable/ic_not_selected}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_not_selected" />
+
+        <TextView
+            android:id="@+id/item_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_13"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:gravity="start"
+            android:text="@{item.text}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/selected_imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Hieght Price" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

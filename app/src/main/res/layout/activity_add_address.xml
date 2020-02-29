@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.addAddress.AddAddressViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.addAddress.AddAddressActivity">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/back_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_20"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_back"
+            android:tint="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:background="@drawable/top_right_white_rounded_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/add_address_textView"
+                style="@style/bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_25"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:text="@string/add_your_address"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/current_location_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:text="@string/current_location"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintStart_toStartOf="@+id/add_address_textView"
+                app:layout_constraintTop_toBottomOf="@+id/add_address_textView" />
+
+
+            <TextView
+                android:id="@+id/current_location_textView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_55"
+                android:layout_marginStart="@dimen/dimen_24"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_24"
+                android:background="@drawable/field_rounded_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dimen_16"
+                android:paddingEnd="@dimen/dimen_16"
+                android:text="@{vm.currentLocationText}"
+                android:textColor="@color/colorLabelText80"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/current_location_label"
+                tools:text="sherif" />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/current_location_textView"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_marginEnd="@dimen/dimen_24"
+                android:text="@string/please_pick_an_address"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/font_12"
+                android:visibility="@{vm.currentLocationError?View.VISIBLE:View.INVISIBLE}" />
+
+            <Button
+                android:id="@+id/add_address_btn"
+                style="@style/bold"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:layout_marginBottom="@dimen/dimen_40"
+                android:background="@drawable/button_rounded_bg"
+                android:onClick="@{()->vm.onAddAddressClick()}"
+                android:text="@string/add_address"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

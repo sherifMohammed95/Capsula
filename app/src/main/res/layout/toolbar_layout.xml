@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_140"
+        android:background="@drawable/toolbar_rounded_bg">
+
+        <ImageView
+            android:id="@+id/back_toolbar_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginTop="@dimen/dimen_18"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_toolbar_textView"
+            style="@style/bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintBottom_toBottomOf="@+id/back_toolbar_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back_toolbar_imageView"
+            app:layout_constraintTop_toTopOf="@+id/back_toolbar_imageView"
+            tools:text="Brands" />
+
+
+        <LinearLayout
+            android:id="@+id/search_toolbar_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_45"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_22"
+            android:background="@drawable/search_bg"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_toolbar_imageView">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="10"
+                android:src="@drawable/ic_search" />
+
+            <TextView
+                android:id="@+id/search_toolbar_textView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_6"
+                android:layout_weight="90"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|start"
+                android:hint="@string/what_are_you_looking_for"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLabelText"
+                android:textColorHint="@color/colorLabelText30"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

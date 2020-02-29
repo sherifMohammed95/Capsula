@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_140"
+        android:background="@drawable/toolbar_rounded_bg">
+
+        <ImageView
+            android:id="@+id/back_search_toolbar_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginTop="@dimen/dimen_18"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_toolbar_textView"
+            style="@style/bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/search"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintBottom_toBottomOf="@+id/back_search_toolbar_imageView"
+            app:layout_constraintEnd_toStartOf="@+id/filter_toolbar_imageView"
+            app:layout_constraintStart_toEndOf="@+id/back_search_toolbar_imageView"
+            app:layout_constraintTop_toTopOf="@+id/back_search_toolbar_imageView" />
+
+        <ImageView
+            android:id="@+id/filter_toolbar_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_18"
+            android:layout_marginEnd="@dimen/dimen_22"
+            android:onClick="@{()->vm.openFilterList()}"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_sort"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/search_toolbar_layout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_45"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_22"
+            android:background="@drawable/search_bg"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_search_toolbar_imageView">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_weight="10"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/search_toolbar_editText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_6"
+                android:layout_weight="90"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|start"
+                android:hint="@string/what_are_you_looking_for"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/dimen_5"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLabelText"
+                android:textColorHint="@color/colorLabelText30"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

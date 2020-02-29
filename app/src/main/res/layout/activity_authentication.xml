@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.authentication.AuthenticationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:isScrollContainer="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                tools:context=".ui.authentication.AuthenticationActivity">
+
+                <TextView
+                    android:id="@+id/skip_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:onClick="@{()->vm.onSkipClick()}"
+                    android:padding="@dimen/dimen_5"
+                    android:text="@string/skip"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/welcome_textView"
+                    style="@style/bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:text="@string/welcome_to_capsula"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/skip_textView" />
+
+                <TextView
+                    android:id="@+id/sub_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:layout_marginEnd="@dimen/dimen_25"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/welcome_textView"
+                    app:layout_constraintTop_toBottomOf="@+id/welcome_textView" />
+
+                <LinearLayout
+                    android:id="@+id/switch_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:background="@drawable/auth_blue_15_rounded_bg"
+                    android:weightSum="2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sub_textView">
+
+                    <TextView
+                        style="@style/bold"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dimen_3"
+                        android:layout_marginTop="@dimen/dimen_3"
+                        android:layout_marginBottom="@dimen/dimen_3"
+                        android:layout_weight="1"
+                        android:background="@{vm.registerTab?@drawable/auth_white_rounded_bg:@drawable/transparent_bg}"
+                        android:gravity="center"
+                        android:onClick="@{()->vm.onRegisterTabClick()}"
+                        android:text="@string/register"
+                        android:textColor="@{vm.registerTab? @color/colorPrimary:@color/colorWhite30}"
+                        android:textSize="@dimen/font_16" />
+
+                    <TextView
+                        style="@style/bold"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dimen_3"
+                        android:layout_marginEnd="@dimen/dimen_3"
+                        android:layout_marginBottom="@dimen/dimen_3"
+                        android:layout_weight="1"
+                        android:background="@{vm.loginTab?@drawable/auth_white_rounded_bg:@drawable/transparent_bg}"
+                        android:gravity="center"
+                        android:onClick="@{()->vm.onLoginTabClick()}"
+                        android:text="@string/login"
+                        android:textColor="@{vm.loginTab? @color/colorPrimary:@color/colorWhite30}"
+                        android:textSize="@dimen/font_16" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switch_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

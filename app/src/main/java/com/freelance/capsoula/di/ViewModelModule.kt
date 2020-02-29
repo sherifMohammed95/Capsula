@@ -1,0 +1,36 @@
+package com.freelance.capsoula.di
+
+
+import com.freelance.capsoula.custom.bottomSheet.BottomSheetViewModel
+import com.freelance.capsoula.ui.addAddress.AddAddressViewModel
+import com.freelance.capsoula.ui.authentication.AuthenticationViewModel
+import com.freelance.capsoula.ui.brands.BrandsViewModel
+import com.freelance.capsoula.ui.categories.CategoriesViewModel
+import com.freelance.capsoula.ui.completeProfile.CompleteProfileViewModel
+import com.freelance.capsoula.ui.forgetPassword.ForgetPasswordViewModel
+import com.freelance.capsoula.ui.home.HomeViewModel
+import com.freelance.capsoula.ui.products.ProductsViewModel
+import com.freelance.capsoula.ui.resetPassword.ResetPasswordViewModel
+import com.freelance.capsoula.ui.search.SearchViewModel
+import com.freelance.capsoula.ui.stores.StoresViewModel
+import com.freelance.capsoula.ui.subCategories.SubCategoriesViewModel
+import com.freelance.capsoula.ui.verification.VerificationViewModel
+import org.koin.androidx.experimental.dsl.viewModel
+import org.koin.dsl.module
+
+val viewModelModule = module {
+    viewModel<BottomSheetViewModel>()
+    viewModel<AuthenticationViewModel>()
+    viewModel<VerificationViewModel>()
+    viewModel<AddAddressViewModel>()
+    viewModel<CompleteProfileViewModel>()
+    viewModel<ForgetPasswordViewModel>()
+    viewModel<ResetPasswordViewModel>()
+    viewModel<HomeViewModel>()
+    viewModel<BrandsViewModel>()
+    viewModel<CategoriesViewModel>()
+    viewModel<StoresViewModel>()
+    viewModel<SubCategoriesViewModel>()
+    viewModel<ProductsViewModel>()
+    viewModel<SearchViewModel>()
+}
