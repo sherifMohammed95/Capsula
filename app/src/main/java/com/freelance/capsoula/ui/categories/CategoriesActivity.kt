@@ -57,8 +57,8 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
             mViewModel.getStoreCategories()
     }
 
-    private fun getIntentsData(){
-        mViewModel.storeId = intent.getIntExtra(Constants.EXTRA_STORE_ID,-1)
+    private fun getIntentsData() {
+        mViewModel.storeId = intent.getIntExtra(Constants.EXTRA_STORE_ID, -1)
     }
 
 
@@ -84,8 +84,9 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
     }
 
     override fun onItemClick(pos: Int, item: Category) {
-        val intent  = Intent(this,SubCategoriesActivity::class.java)
-        intent.putExtra(Constants.EXTRA_CATEGORY,Gson().toJson(item))
+        val intent = Intent(this, SubCategoriesActivity::class.java)
+        intent.putExtra(Constants.EXTRA_CATEGORY, Gson().toJson(item))
+        intent.putExtra(Constants.EXTRA_STORE_ID, mViewModel.storeId)
         startActivity(intent)
     }
 }

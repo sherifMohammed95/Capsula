@@ -16,6 +16,7 @@ class SubCategoriesViewModel(private val mRepository: CategoriesRepository) :
     var subCategoriesResponse = SingleLiveEvent<BaseResponse<CategoriesResponse>>()
     var mCategory = Category()
     var pageNo = 1
+    var storeId = -1
 
     init {
         initRepository(mRepository)
@@ -25,6 +26,12 @@ class SubCategoriesViewModel(private val mRepository: CategoriesRepository) :
     fun getSubCategories() {
         viewModelScope.launch(IO) {
             mRepository.getSubCategories(pageNo, mCategory.categoryId)
+        }
+    }
+
+    fun getStoreSubCategories() {
+        viewModelScope.launch(IO) {
+            mRepository.getStoreSubCategories(pageNo, mCategory.categoryId, storeId)
         }
     }
 }

@@ -64,5 +64,10 @@
     <string name="highest_price">Highest Price</string>
     <string name="lowest_price">Lowest Price</string>
     <string name="nearby_location">Nearby Location</string>
+    <string name="available_at">Available at</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="was">Was</string>
+    <string name="offer">Offer</string>
+    <string name="discount">Discount</string>
 
 </resources>

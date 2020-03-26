@@ -46,6 +46,8 @@ class SubCategoriesActivity : BaseActivity<ActivitySubCategoriesBinding, SubCate
             intent.getStringExtra(Constants.EXTRA_CATEGORY),
             Category::class.java
         )
+
+        mViewModel.storeId = intent.getIntExtra(Constants.EXTRA_STORE_ID, -1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,11 @@ class SubCategoriesActivity : BaseActivity<ActivitySubCategoriesBinding, SubCate
         initRecyclerView()
         setUpToolbar(mViewModel.mCategory.categoryName)
         subscribeToLiveData()
-        mViewModel.getSubCategories()
+
+        if (mViewModel.storeId == -1)
+            mViewModel.getSubCategories()
+        else
+            mViewModel.getStoreSubCategories()
     }
 
     private fun initRecyclerView() {
@@ -75,6 +81,7 @@ class SubCategoriesActivity : BaseActivity<ActivitySubCategoriesBinding, SubCate
         val intent = Intent(this, ProductsActivity::class.java)
         intent.putExtra(Constants.EXTRA_SUB_CATEGORY, Gson().toJson(item))
         intent.putExtra(Constants.FROM_WHERE, Constants.FROM_SUB_CATEGORIES)
+        intent.putExtra(Constants.EXTRA_STORE_ID, mViewModel.storeId)
         startActivity(intent)
     }
 }

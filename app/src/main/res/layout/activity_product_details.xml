@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="product"
+            type="com.freelance.capsoula.data.Product" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.productDetails.ProductDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.productDetails.ProductDetailsActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/product_imageView"
+                    imageURL="@{product.imagePath}"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_380"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@color/colorPrice" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="300dp"
+                    android:background="@drawable/rounded_bottom_sheet_bg_en"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/product_name_textView"
+                        style="@style/medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_22"
+                        android:layout_marginTop="@dimen/dimen_40"
+                        android:layout_marginEnd="@dimen/dimen_22"
+                        android:text="@{product.productName}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Nivea Oil-Infused Lotion" />
+
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/ratingBar"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:progressDrawable="@drawable/rating_bar"
+                        android:rating="4"
+                        android:stepSize="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/product_name_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/product_name_textView" />
+
+
+                    <TextView
+                        android:id="@+id/product_details_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:layout_marginEnd="@dimen/dimen_22"
+                        android:text="@{product.offerType == -1?product.productDesc:product.offerDesc}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText80"
+                        android:textSize="@dimen/font_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/product_name_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                        tools:text="You open that brand new prototype – it’s so fresh that it almost has that new car smell. But after so much pain and suffering to get your design right," />
+
+
+                    <TextView
+                        android:id="@+id/available_textView"
+                        style="@style/medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="@string/available_at"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="@+id/product_name_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/product_details_textView" />
+
+                    <TextView
+                        android:id="@+id/store_textView"
+                        style="@style/medium"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:layout_marginEnd="@dimen/dimen_22"
+                        android:text="@{product.storeName}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintBottom_toBottomOf="@+id/available_textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/available_textView"
+                        app:layout_constraintTop_toTopOf="@+id/available_textView"
+                        tools:text="almahdy pharmacy" />
+
+                    <TextView
+                        android:id="@+id/was_textView"
+                        style="@style/medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:text="@{product.wasPriceText}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/font_14"
+                        android:visibility="@{product.offerType == 3? View.VISIBLE:View.GONE}"
+                        app:layout_constraintStart_toStartOf="@+id/product_name_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/available_textView"
+                        app:strikeThrough="@{true}"
+                        tools:text="Was RSD 100" />
+
+                    <TextView
+                        android:id="@+id/price_textView"
+                        style="@style/bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:text="@{product.priceDetailsText}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="@+id/product_name_textView"
+                        app:layout_constraintTop_toBottomOf="@+id/was_textView"
+                        tools:text="RSD 100" />
+
+                    <Button
+                        style="@style/bold"
+                        android:layout_width="200dp"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginTop="@dimen/dimen_30"
+                        android:background="@drawable/button_rounded_bg"
+                        android:text="@string/add_to_cart"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/price_textView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

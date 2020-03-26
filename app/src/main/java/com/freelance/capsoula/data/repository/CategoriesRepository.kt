@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CategoriesRepository:BaseRepository() {
+class CategoriesRepository : BaseRepository() {
 
     val categoriesResponse = SingleLiveEvent<BaseResponse<CategoriesResponse>>()
     val storeCategoriesResponse = SingleLiveEvent<BaseResponse<CategoriesResponse>>()
@@ -45,7 +45,7 @@ class CategoriesRepository:BaseRepository() {
         }
     }
 
-    suspend fun getStoreCategories(pageNo: Int, storeId:Int) {
+    suspend fun getStoreCategories(pageNo: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
@@ -66,14 +66,14 @@ class CategoriesRepository:BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getStoreCategories(pageNo,storeId)
+                        getStoreCategories(pageNo, storeId)
                     }
                 })
             }
         }
     }
 
-    suspend fun getSubCategories(pageNo: Int, catId:Int) {
+    suspend fun getSubCategories(pageNo: Int, catId: Int) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
@@ -94,7 +94,37 @@ class CategoriesRepository:BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getSubCategories(pageNo,catId)
+                        getSubCategories(pageNo, catId)
+                    }
+                })
+            }
+        }
+    }
+
+
+    suspend fun getStoreSubCategories(pageNo: Int, catId: Int, storeId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+
+            val response =
+                webService.getStoreSubCategories(pageNo, Constants.PER_PAGE, catId, storeId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    subCategoriesResponse.postValue(response.body()!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getStoreSubCategories(pageNo, catId, storeId)
                     }
                 })
             }

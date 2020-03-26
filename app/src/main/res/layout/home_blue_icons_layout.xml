@@ -90,6 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="100"
+            android:onClick="@{()->vm.openFreeDelivery()}"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout

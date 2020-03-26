@@ -71,6 +71,35 @@ class ProductsRepository : BaseRepository() {
         }
     }
 
+    suspend fun getStoreProducts(pageNo: Int, subCatId: Int, storeId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+
+            val response =
+                webService.getStoreProducts(pageNo, Constants.PER_PAGE, subCatId, storeId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    productsResponse.postValue(response.body()!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getStoreProducts(pageNo, subCatId, storeId)
+                    }
+                })
+            }
+        }
+    }
+
     suspend fun getTopRated(pageNo: Int) {
         try {
             withContext(Dispatchers.Main) {
@@ -121,6 +150,34 @@ class ProductsRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getBestSellers(pageNo)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getFreeDelivery(pageNo: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+
+            val response = webService.getFreeDelivery(pageNo, Constants.PER_PAGE)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    productsResponse.postValue(response.body()!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getFreeDelivery(pageNo)
                     }
                 })
             }

@@ -68,6 +68,14 @@ interface WebService {
         @Query("categoryId") categoryId: Int
     ): Response<BaseResponse<CategoriesResponse>>
 
+    @GET("Category/GetSubCategoriesByStoreId")
+    suspend fun getStoreSubCategories(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int,
+        @Query("categoryId") categoryId: Int,
+        @Query("storeId") storeId: Int
+    ): Response<BaseResponse<CategoriesResponse>>
+
     @GET("Store/GetStores")
     suspend fun getStores(
         @Query("PageNumber") pageNo: Int,
@@ -88,6 +96,14 @@ interface WebService {
         @Query("subCategoryId") subCategoryId: Int
     ): Response<BaseResponse<ProductsResponse>>
 
+    @GET("Item/GetItemsByStoreSubCategoryId")
+    suspend fun getStoreProducts(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int,
+        @Query("subCategoryId") subCategoryId: Int,
+        @Query("storeId") storeId: Int
+    ): Response<BaseResponse<ProductsResponse>>
+
     @GET("Item/GetTopRatingItems")
     suspend fun getTopRated(
         @Query("PageNumber") pageNo: Int,
@@ -96,6 +112,12 @@ interface WebService {
 
     @GET("Item/GetTopSellingItems")
     suspend fun getBestSellers(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int
+    ): Response<BaseResponse<ProductsResponse>>
+
+    @GET("Item/GetFreeDeliveryItems")
+    suspend fun getFreeDelivery(
         @Query("PageNumber") pageNo: Int,
         @Query("PageSize") pageSize: Int
     ): Response<BaseResponse<ProductsResponse>>

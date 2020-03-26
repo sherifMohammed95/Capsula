@@ -15,6 +15,7 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     var productsResponse = SingleLiveEvent<BaseResponse<ProductsResponse>>()
     var pageNo = 1
     var brandId = -1
+    var storeId = -1
     var subCategory = Category()
     var fromWhere = 0
 
@@ -35,6 +36,12 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
         }
     }
 
+    fun getStoreProducts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepository.getStoreProducts(pageNo, subCategory.categoryId, storeId)
+        }
+    }
+
     fun getTopRated() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepository.getTopRated(pageNo)
@@ -44,6 +51,12 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     fun getBestSellers() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepository.getBestSellers(pageNo)
+        }
+    }
+
+    fun getFreeDelivery() {
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepository.getFreeDelivery(pageNo)
         }
     }
 }

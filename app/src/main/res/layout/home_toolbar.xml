@@ -26,15 +26,37 @@
             app:layout_constraintBottom_toTopOf="@+id/hello_textView"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/cart_imageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cart_imageView_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_22"
-            android:src="@drawable/ic_cart"
             app:layout_constraintBottom_toBottomOf="@+id/notifications_imageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/notifications_imageView" />
+            app:layout_constraintTop_toTopOf="@+id/notifications_imageView">
+
+            <ImageView
+                android:id="@+id/cart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:padding="@dimen/dimen_5"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cart_number_textView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/white_circle_bg"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_10"
+                app:layout_constraintEnd_toEndOf="@+id/cart_imageView"
+                app:layout_constraintTop_toTopOf="@+id/cart_imageView"
+                tools:text="5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/hello_textView"

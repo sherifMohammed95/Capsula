@@ -34,9 +34,11 @@ import com.freelance.capsoula.ui.search.SearchActivity
 import com.freelance.capsoula.utils.MyContextWrapper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_brands.view.*
+import kotlinx.android.synthetic.main.home_toolbar.*
 import kotlinx.android.synthetic.main.loading_layout.*
 import kotlinx.android.synthetic.main.search_toolbar_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import kotlinx.android.synthetic.main.toolbar_layout.cart_number_textView
 import kotlinx.android.synthetic.main.toolbar_layout.search_toolbar_layout
 import kotlinx.android.synthetic.main.toolbar_layout.title_toolbar_textView
 import rx.functions.Action1
@@ -133,7 +135,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     }
 
     fun setUpToolbar(toolbarTitle: String) {
-
         title_toolbar_textView?.text = toolbarTitle
 
         back_toolbar_imageView?.setOnClickListener {
@@ -143,6 +144,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         search_toolbar_layout.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }
+
+        cart_number_textView.visibility = View.INVISIBLE
     }
 
     private fun showProgressLayout() {
@@ -195,7 +198,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         @StringRes negAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        val builder = MaterialAlertDialogBuilder(this,R.style.MaterialAlertDialog_Rounded)
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_Rounded)
         return builder.setCancelable(isCancelable)
             .setMessage(getString(messageId))
             .setPositiveButton(getString(posActionName), positiveAction)
@@ -210,7 +213,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         @StringRes negAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        val builder = MaterialAlertDialogBuilder(this,R.style.MaterialAlertDialog_Rounded)
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_Rounded)
         return builder.setCancelable(isCancelable)
             .setMessage(message)
             .setPositiveButton(getString(posActionName), positiveAction)
@@ -225,7 +228,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         negAction: DialogInterface.OnClickListener,
         isCancelable: Boolean
     ): AlertDialog {
-        val builder = MaterialAlertDialogBuilder(this,R.style.MaterialAlertDialog_Rounded)
+        val builder = MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog_Rounded)
         return builder.setCancelable(isCancelable)
             .setMessage(getString(messageId))
             .setPositiveButton(getString(posAction), positiveAction)

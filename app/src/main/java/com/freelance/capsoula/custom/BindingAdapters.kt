@@ -1,5 +1,6 @@
 package com.freelance.capsoula.custom
 
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
@@ -222,6 +223,16 @@ object BindingAdapters {
     fun setSeekBarStatus(seekBar: SeekBar?, disable: Boolean?) {
         if (seekBar != null) {
             seekBar.isEnabled = !disable!!
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("strikeThrough")
+    fun strikeThrough(textView: TextView, strikeThrough: Boolean) {
+        if (strikeThrough) {
+            textView.paintFlags = textView.paintFlags or STRIKE_THRU_TEXT_FLAG
+        } else {
+            textView.paintFlags = textView.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 

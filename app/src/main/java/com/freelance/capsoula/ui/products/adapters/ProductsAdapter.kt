@@ -11,6 +11,8 @@ import com.freelance.capsoula.databinding.IndexProductBinding
 
 class ProductsAdapter : BaseRecyclerAdapter<Product, ProductsAdapter.ProductViewHolder>() {
 
+    var onPlusClickListener: OnPlusClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding: IndexProductBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context), R.layout.index_product, parent,
@@ -21,8 +23,15 @@ class ProductsAdapter : BaseRecyclerAdapter<Product, ProductsAdapter.ProductView
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bind(items!![position])
-    }
 
+        holder.itemView.setOnClickListener {
+            onITemClickListener.onItemClick(position, items!![position])
+        }
+
+        holder.binding.addCartImageView.setOnClickListener {
+            onPlusClickListener?.onPlusClick(items!![position])
+        }
+    }
 
     class ProductViewHolder(val binding: IndexProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,6 +40,10 @@ class ProductsAdapter : BaseRecyclerAdapter<Product, ProductsAdapter.ProductView
             binding.product = product
             binding.executePendingBindings()
         }
+    }
+
+    interface OnPlusClickListener {
+        fun onPlusClick(product: Product)
     }
 
 }

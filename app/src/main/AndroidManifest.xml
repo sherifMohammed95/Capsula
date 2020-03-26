@@ -22,6 +22,10 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".ui.productDetails.ProductDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="product"
             type="com.freelance.capsoula.data.Product" />
@@ -26,7 +28,7 @@
 
             <ImageView
                 android:id="@+id/product_imageView"
-                imageURL="@{product.imageLink}"
+                imageURL="@{product.imagePath}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_115"
                 android:scaleType="centerCrop"
@@ -34,6 +36,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:background="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@drawable/offer_tag_bg"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingEnd="@dimen/dimen_10"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="@{product.offerTag}"
+                android:textColor="@color/colorPrice"
+                android:textSize="@dimen/font_12"
+                android:visibility="@{product.offerType == -1?View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/free_delivery" />
 
             <TextView
                 android:id="@+id/product_name_textView"
@@ -59,10 +79,11 @@ cool kick Men anti-perspirant
 cool kick Men anti-perspirant
 cool kick" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/add_cart_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/add_product_to_cart"
                 app:layout_constraintBottom_toBottomOf="parent"

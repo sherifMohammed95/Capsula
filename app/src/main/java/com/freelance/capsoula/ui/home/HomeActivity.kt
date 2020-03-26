@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -18,11 +19,15 @@ import com.freelance.capsoula.ui.home.adapters.HomeStoresAdapter
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
 import com.freelance.capsoula.ui.stores.StoresActivity
+import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import android.os.Handler
+import io.reactivex.functions.Action
+
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
 
@@ -47,8 +52,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     override fun onResume() {
         super.onResume()
-        if(UserDataSource.getUser()!=null)
-        viewDataBinding?.toolbar?.userNameTextView?.text = UserDataSource.getUser()?.name
+        if (UserDataSource.getUser() != null)
+            viewDataBinding?.toolbar?.userNameTextView?.text = UserDataSource.getUser()?.name
         else
             viewDataBinding?.toolbar?.userNameTextView?.text = "User"
     }
@@ -61,15 +66,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        Handler().postDelayed({
+//            AnimationUtils
+//                .circularTransition(viewDataBinding!!.parent)
+//        }, 50)
+
         initRecyclerViews()
         subscribeToLiveData()
 
-//        viewDataBinding?.toolbar?.cartImageView?.setOnClickListener {
-//            UserDataSource.saveUser(null)
-//            val intent = Intent(this,AuthenticationActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            startActivity(intent)
-//        }
+    }
+
+    override fun onBackPressed() {
+//        Handler().postDelayed({
+//            AnimationUtils
+//                .circularReverseTransition(viewDataBinding!!.parent, Action {
+//                    super.onBackPressed()
+//                })
+//        }, 50)
+
     }
 
     private fun subscribeToLiveData() {
@@ -107,6 +122,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     override fun openFreeDelivery() {
+        val intent = Intent(this, ProductsActivity::class.java)
+        intent.putExtra(Constants.FROM_WHERE, Constants.FROM_FREE_DELIVERY)
+        startActivity(intent)
     }
 
     override fun openSearch() {

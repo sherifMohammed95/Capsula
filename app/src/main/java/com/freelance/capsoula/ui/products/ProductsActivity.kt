@@ -1,13 +1,17 @@
 package com.freelance.capsoula.ui.products
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseActivity
+import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.Category
+import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityProductsBinding
+import com.freelance.capsoula.ui.productDetails.ProductDetailsActivity
 import com.freelance.capsoula.ui.products.adapters.ProductsAdapter
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
@@ -22,7 +26,8 @@ val productsModule = module {
 }
 
 class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel>(),
-    ProductsNavigator {
+    ProductsNavigator, ProductsAdapter.OnPlusClickListener,
+    BaseRecyclerAdapter.OnITemClickListener<Product> {
 
     private val mViewModel: ProductsViewModel by viewModel()
     private val mAdapter: ProductsAdapter by inject()
@@ -49,9 +54,15 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
             mViewModel.fromWhere == Constants.FROM_SUB_CATEGORIES -> {
                 mViewModel.subCategory = Gson().fromJson(
                     intent.getStringExtra(Constants.EXTRA_SUB_CATEGORY),
-                    Category::class.java)
+                    Category::class.java
+                )
+                mViewModel.storeId = intent.getIntExtra(Constants.EXTRA_STORE_ID, -1)
                 toolbarTitle = mViewModel.subCategory.categoryName
-                mViewModel.getSubCategoryProducts()
+
+                if (mViewModel.storeId == -1)
+                    mViewModel.getSubCategoryProducts()
+                else
+                    mViewModel.getStoreProducts()
             }
             mViewModel.fromWhere == Constants.FROM_TOP_RATED -> {
                 toolbarTitle = getString(R.string.top_rated)
@@ -60,6 +71,11 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
             mViewModel.fromWhere == Constants.FROM_BEST_SELLER -> {
                 toolbarTitle = getString(R.string.best_seller)
                 mViewModel.getBestSellers()
+            }
+
+            mViewModel.fromWhere == Constants.FROM_FREE_DELIVERY -> {
+                toolbarTitle = getString(R.string.free_delivery)
+                mViewModel.getFreeDelivery()
             }
         }
     }
@@ -89,5 +105,17 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
 
     private fun initRecyclerView() {
         products_recyclerView.adapter = mAdapter
+        mAdapter.onPlusClickListener = this
+        mAdapter.onITemClickListener = this
+    }
+
+    override fun onPlusClick(product: Product) {
+
+    }
+
+    override fun onItemClick(pos: Int, item: Product) {
+        val intent = Intent(this, ProductDetailsActivity::class.java)
+        intent.putExtra(Constants.EXTRA_PRODUCT, Gson().toJson(item))
+        startActivity(intent)
     }
 }

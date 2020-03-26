@@ -9,6 +9,7 @@ import com.freelance.capsoula.ui.categories.CategoriesViewModel
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileViewModel
 import com.freelance.capsoula.ui.forgetPassword.ForgetPasswordViewModel
 import com.freelance.capsoula.ui.home.HomeViewModel
+import com.freelance.capsoula.ui.productDetails.ProductDetailsViewModel
 import com.freelance.capsoula.ui.products.ProductsViewModel
 import com.freelance.capsoula.ui.resetPassword.ResetPasswordViewModel
 import com.freelance.capsoula.ui.search.SearchViewModel
@@ -33,4 +34,5 @@ val viewModelModule = module {
     viewModel<SubCategoriesViewModel>()
     viewModel<ProductsViewModel>()
     viewModel<SearchViewModel>()
+    viewModel<ProductDetailsViewModel>()
 }

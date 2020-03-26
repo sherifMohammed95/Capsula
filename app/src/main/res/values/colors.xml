@@ -13,6 +13,7 @@
     <color name="colorSearchBarBorder">#e0e8ee</color>
     <color name="colorBlack50">#80000000</color>
     <color name="colorPrice">#d0021b</color>
+    <color name="colorPrice15">#26d0021b</color>
 </resources>
 
 

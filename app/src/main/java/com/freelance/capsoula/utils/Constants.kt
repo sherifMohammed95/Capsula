@@ -20,6 +20,7 @@ object Constants {
     const val EXTRA_CATEGORY = "category"
     const val EXTRA_SELECTION_TITLE = "selection_title"
     const val EXTRA_SELECTION_LIST = "selection_list"
+    const val EXTRA_PRODUCT = "product"
 
 
     /**
@@ -47,4 +48,13 @@ object Constants {
      * GPS Code
      */
     const val GPS_REQUEST = 4321
+
+
+    /**
+     * Offer types
+     * **/
+
+    const val FREE_DELIVERY_OFFER = 1
+    const val PRODUCT_OFFER = 2
+    const val DISCOUNT_OFFER = 3
 }
