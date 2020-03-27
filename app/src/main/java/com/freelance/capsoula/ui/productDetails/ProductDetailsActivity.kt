@@ -37,7 +37,9 @@ class ProductDetailsActivity :
     }
 
     private fun getIntentsData() {
-        viewDataBinding?.product =
-            Gson().fromJson(intent.getStringExtra(Constants.EXTRA_PRODUCT), Product::class.java)
+        mViewModel.product = Gson().fromJson(intent.getStringExtra(Constants.EXTRA_PRODUCT),
+            Product::class.java)
+        viewDataBinding?.product = mViewModel.product
+
     }
 }

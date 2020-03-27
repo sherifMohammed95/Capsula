@@ -69,5 +69,13 @@
     <string name="was">Was</string>
     <string name="offer">Offer</string>
     <string name="discount">Discount</string>
+    <string name="checkout">Checkout</string>
+    <string name="cart">Cart</string>
+    <string name="details">Details</string>
+    <string name="done">Done</string>
+    <string name="clear_all">Clear All</string>
+    <string name="next">Next</string>
+    <string name="empty_cart_msg">The cart is empty, please add products to cart first</string>
+    <string name="items">Items</string>
 
 </resources>

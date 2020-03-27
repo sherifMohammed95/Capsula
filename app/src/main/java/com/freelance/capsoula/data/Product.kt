@@ -16,9 +16,15 @@ class Product {
     var offerDesc: String? = ""
     var offerType: Int? = -1
     var priceInOffer: Int? = null
+    var quantity = 1
+
+
+    fun getQuantityText(): String {
+        return quantity.toString()
+    }
 
     fun getPriceText(): String {
-        return price.toString() + " " + Domain.application.getString(R.string.rsd)
+        return Domain.application.getString(R.string.rsd) + " " + price.toString()
     }
 
     fun getWasPriceText(): String {

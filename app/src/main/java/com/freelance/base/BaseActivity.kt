@@ -28,9 +28,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.MessageEvent
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityCategoriesBinding
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.search.SearchActivity
+import com.freelance.capsoula.utils.Constants.OPEN_CHECKOUT
+import com.freelance.capsoula.utils.Constants.UPDATE_CART_NUMBER
 import com.freelance.capsoula.utils.MyContextWrapper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_brands.view.*
@@ -41,6 +46,9 @@ import kotlinx.android.synthetic.main.toolbar_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.cart_number_textView
 import kotlinx.android.synthetic.main.toolbar_layout.search_toolbar_layout
 import kotlinx.android.synthetic.main.toolbar_layout.title_toolbar_textView
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import rx.functions.Action1
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
@@ -120,7 +128,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             }
         })
 
-
         search_toolbar_editText?.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 actionId == EditorInfo.IME_ACTION_DONE
@@ -141,11 +148,34 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             finish()
         }
 
+        cart_imageView_layout_toolbar?.setOnClickListener {
+            if (UserDataSource.getUser() == null) {
+                if (UserDataSource.getUserCartSize() > 0)
+                    startActivity(Intent(this, CheckoutActivity::class.java))
+                else
+                    showPopUp(
+                        getString(R.string.cart), getString(R.string.empty_cart_msg),
+                        getString(android.R.string.ok), false
+                    )
+            } else {
+                when {
+                    UserDataSource.getUserCartSize() > 0 ->
+                        startActivity(Intent(this, CheckoutActivity::class.java))
+                    UserDataSource.getUser()?.cartContent?.size!! > 0 ->
+                        startActivity(Intent(this, CheckoutActivity::class.java))
+                    else -> showPopUp(
+                        getString(R.string.cart), getString(R.string.empty_cart_msg),
+                        getString(android.R.string.ok), false
+                    )
+                }
+            }
+        }
+
         search_toolbar_layout.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }
 
-        cart_number_textView.visibility = View.INVISIBLE
+        updateCartNumber()
     }
 
     private fun showProgressLayout() {
@@ -414,4 +444,30 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageEvent) {
+        if (event.message.contentEquals(UPDATE_CART_NUMBER)) {
+            updateCartNumber()
+        } else if (event.message.contentEquals(OPEN_CHECKOUT)) {
+            startActivity(Intent(this, CheckoutActivity::class.java))
+        }
+    }
+
+    private fun updateCartNumber() {
+        if (UserDataSource.getUserCartSize() > 0) {
+            cart_number_textView.visibility = View.VISIBLE
+            cart_number_textView.text = UserDataSource.getUserCartSize().toString()
+        } else
+            cart_number_textView.visibility = View.INVISIBLE
+    }
 }

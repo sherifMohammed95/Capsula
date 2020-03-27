@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.freelance.capsoula.ui.home.HomeViewModel" />
@@ -30,6 +32,7 @@
             android:id="@+id/cart_imageView_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->vm.cartAction()}"
             app:layout_constraintBottom_toBottomOf="@+id/notifications_imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/notifications_imageView">
@@ -50,8 +53,10 @@
                 android:layout_height="16dp"
                 android:background="@drawable/white_circle_bg"
                 android:gravity="center"
+                android:text="@{vm.cartNumberText}"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/font_10"
+                android:visibility="@{vm.cartNumberVisibility?View.VISIBLE:View.INVISIBLE}"
                 app:layout_constraintEnd_toEndOf="@+id/cart_imageView"
                 app:layout_constraintTop_toTopOf="@+id/cart_imageView"
                 tools:text="5" />
@@ -78,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_10"
+            android:text="@{vm.userNameText}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_22"
             app:layout_constraintBottom_toBottomOf="@+id/hello_textView"

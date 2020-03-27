@@ -1,13 +1,20 @@
 package com.freelance.capsoula.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseActivity
+import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
 import com.freelance.capsoula.data.FilterType
+import com.freelance.capsoula.data.Product
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivitySearchBinding
+import com.freelance.capsoula.ui.productDetails.ProductDetailsActivity
 import com.freelance.capsoula.ui.products.adapters.ProductsAdapter
+import com.freelance.capsoula.utils.Constants
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,7 +23,8 @@ import org.koin.core.qualifier.named
 import rx.functions.Action1
 import rx.functions.Action2
 
-class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator {
+class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator,
+    ProductsAdapter.OnPlusClickListener, BaseRecyclerAdapter.OnITemClickListener<Product> {
 
     private val mViewModel: SearchViewModel by viewModel()
     private val mAdapter: ProductsAdapter by inject()
@@ -28,6 +36,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     override fun getLayoutId(): Int {
         return R.layout.activity_search
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.updateCartNumber()
     }
 
     override fun init() {
@@ -58,6 +71,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     private fun initRecyclerView() {
         results_recyclerView.adapter = mAdapter
+        mAdapter.onPlusClickListener = this
+        mAdapter.onITemClickListener = this
     }
 
     override fun openFilterList() {
@@ -72,5 +87,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             }, mViewModel.selectedFilterTypePos)
 
         fragment.show(supportFragmentManager, fragment.tag)
+    }
+
+    override fun onPlusClick(product: Product) {
+        if (UserDataSource.getUser() == null) {
+            UserDataSource.addProductToCart(product)
+            mViewModel.updateCartNumber()
+        }
+    }
+
+    override fun onItemClick(pos: Int, item: Product) {
+        val intent = Intent(this, ProductDetailsActivity::class.java)
+        intent.putExtra(Constants.EXTRA_PRODUCT, Gson().toJson(item))
+        startActivity(intent)
     }
 }

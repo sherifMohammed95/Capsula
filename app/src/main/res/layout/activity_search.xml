@@ -28,6 +28,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_16"
+            android:layout_marginBottom="88dp"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -48,6 +49,57 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:background="@drawable/checkout_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/cart_imageView"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_40"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cart_number_textView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/white_circle_bg"
+                android:gravity="center"
+                android:text="@{vm.cartNumberText}"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_10"
+                android:translationX="5dp"
+                android:visibility="@{vm.cartNumberVisibility?View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintEnd_toEndOf="@+id/cart_imageView"
+                app:layout_constraintTop_toTopOf="@+id/cart_imageView"
+                tools:text="5" />
+
+
+            <TextView
+                style="@style/bold"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_marginStart="@dimen/dimen_40"
+                android:background="@drawable/button_rounded_bg"
+                android:backgroundTint="@color/colorAccent"
+                android:gravity="center"
+                android:text="@string/checkout"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

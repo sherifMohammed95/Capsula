@@ -7,15 +7,17 @@
     <color name="colorWhite30">#4Dffffff</color>
     <color name="colorLabelText">#5d5c71</color>
     <color name="colorLabelText80">#cc5d5c71</color>
+    <color name="colorLabelText50">#805d5c71</color>
     <color name="colorLabelText30">#4d5d5c71</color>
+    <color name="colorLabelText20">#335d5c71</color>
     <color name="colorFieldBg">#0D0e518a</color>
     <color name="colorMoreTabShadow">#812f4256</color>
     <color name="colorSearchBarBorder">#e0e8ee</color>
     <color name="colorBlack50">#80000000</color>
     <color name="colorPrice">#d0021b</color>
     <color name="colorPrice15">#26d0021b</color>
+    <color name="colorCheckoutBg">#2f4256</color>
 </resources>
-
 
 
     <!--Opacity-->

@@ -26,7 +26,13 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import android.os.Handler
+import android.view.View
+import com.freelance.capsoula.data.MessageEvent
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import io.reactivex.functions.Action
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
@@ -52,10 +58,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     override fun onResume() {
         super.onResume()
-        if (UserDataSource.getUser() != null)
-            viewDataBinding?.toolbar?.userNameTextView?.text = UserDataSource.getUser()?.name
-        else
-            viewDataBinding?.toolbar?.userNameTextView?.text = "User"
+        mViewModel.updateToolbarData()
     }
 
     private fun initRecyclerViews() {
@@ -94,6 +97,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
                 homeBrandsAdapter.setData(it.brandsData)
                 homeStoresAdapter.setData(it.storesData)
             }
+        })
+
+        mViewModel.emptyCartMessage.observe(this, Observer {
+            showPopUp(
+                getString(R.string.cart), getString(R.string.empty_cart_msg),
+                getString(android.R.string.ok), false
+            )
         })
     }
 
@@ -135,6 +145,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     override fun openMore() {
+    }
+
+    override fun openCheckout() {
+        startActivity(Intent(this, CheckoutActivity::class.java))
     }
 
 }

@@ -9,6 +9,7 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.data.Category
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityProductsBinding
 import com.freelance.capsoula.ui.productDetails.ProductDetailsActivity
@@ -110,7 +111,11 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
     }
 
     override fun onPlusClick(product: Product) {
+        if (UserDataSource.getUser() == null)
+            UserDataSource.addProductToCart(product)
+        else {
 
+        }
     }
 
     override fun onItemClick(pos: Int, item: Product) {

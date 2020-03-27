@@ -6,6 +6,8 @@ import com.freelance.capsoula.ui.addAddress.AddAddressViewModel
 import com.freelance.capsoula.ui.authentication.AuthenticationViewModel
 import com.freelance.capsoula.ui.brands.BrandsViewModel
 import com.freelance.capsoula.ui.categories.CategoriesViewModel
+import com.freelance.capsoula.ui.checkout.CheckoutViewModel
+import com.freelance.capsoula.ui.checkout.fragment.cart.CartViewModel
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileViewModel
 import com.freelance.capsoula.ui.forgetPassword.ForgetPasswordViewModel
 import com.freelance.capsoula.ui.home.HomeViewModel
@@ -35,4 +37,6 @@ val viewModelModule = module {
     viewModel<ProductsViewModel>()
     viewModel<SearchViewModel>()
     viewModel<ProductDetailsViewModel>()
+    viewModel<CheckoutViewModel>()
+    viewModel<CartViewModel>()
 }

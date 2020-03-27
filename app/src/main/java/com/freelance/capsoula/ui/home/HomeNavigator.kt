@@ -19,4 +19,6 @@ interface HomeNavigator {
     fun openNotifications()
 
     fun openMore()
+
+    fun openCheckout()
 }

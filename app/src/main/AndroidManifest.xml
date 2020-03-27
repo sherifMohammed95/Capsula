@@ -21,6 +21,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.checkout.CheckoutActivity"></activity>
         <activity
             android:name=".ui.productDetails.ProductDetailsActivity"
             android:screenOrientation="portrait"

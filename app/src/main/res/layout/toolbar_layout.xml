@@ -39,7 +39,7 @@
             tools:text="Brands" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cart_imageView_layout"
+            android:id="@+id/cart_imageView_layout_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/back_toolbar_imageView"

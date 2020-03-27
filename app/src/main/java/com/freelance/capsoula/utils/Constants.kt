@@ -7,6 +7,9 @@ object Constants {
     const val LANGUAGE = "language"
     const val PER_PAGE = 50
     const val FROM_WHERE = "from_where"
+    const val USER_CART = "user_cart"
+    const val UPDATE_CART_NUMBER = "update_cart_number"
+    const val OPEN_CHECKOUT = "open_checkout"
 
     /**
      * Extras
