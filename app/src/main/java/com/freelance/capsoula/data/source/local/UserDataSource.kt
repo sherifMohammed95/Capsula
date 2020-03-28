@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus
 class UserDataSource {
     companion object {
 
-        val productListType = object : TypeToken<List<Product>>() {}.type
+        private val productListType = object : TypeToken<List<Product>>() {}.type
 
         fun saveUser(user: User?) {
             preferencesGateway.save(USER, Gson().toJson(user))
@@ -59,24 +59,70 @@ class UserDataSource {
                 userCart = Gson().fromJson(jsonString, productListType)
 
                 if (checkProductExistInCart(userCart, product)) {
-                    EventBus.getDefault().post(MessageEvent(OPEN_CHECKOUT))
+                    EventBus.getDefault().postSticky(MessageEvent(OPEN_CHECKOUT))
                 } else {
                     userCart.add(product)
                     preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
-                    EventBus.getDefault().post(MessageEvent(UPDATE_CART_NUMBER))
+                    EventBus.getDefault().postSticky(MessageEvent(UPDATE_CART_NUMBER))
                 }
             } else {
                 userCart.add(product)
                 preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
-                EventBus.getDefault().post(MessageEvent(UPDATE_CART_NUMBER))
+                EventBus.getDefault().postSticky(MessageEvent(UPDATE_CART_NUMBER))
             }
         }
 
-        private fun checkProductExistInCart(
+        fun checkProductExistInCart(
             userCart: ArrayList<Product>,
             product: Product
         ): Boolean {
             return userCart.find { it.mainId == product.mainId } != null
+        }
+
+        fun increaseProductQuantity(product: Product) {
+            val userCart = getUserCart()
+            if (!userCart.isNullOrEmpty())
+                run loop@{
+                    userCart.forEach {
+                        if (it.mainId == product.mainId) {
+                            ++it.quantity
+                            return@loop
+                        }
+                    }
+                }
+            preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
+        }
+
+        fun decreaseProductQuantity(product: Product) {
+            val userCart = getUserCart()
+            if (!userCart.isNullOrEmpty())
+                run loop@{
+                    userCart.forEach {
+                        if (it.mainId == product.mainId) {
+                            --it.quantity
+                            return@loop
+                        }
+                    }
+                }
+            preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
+        }
+
+        fun deleteProduct(product: Product) {
+            val userCart = getUserCart()
+            if (!userCart.isNullOrEmpty())
+                run loop@{
+                    userCart.forEach {
+                        if (it.mainId == product.mainId) {
+                            userCart.remove(it)
+                            return@loop
+                        }
+                    }
+                }
+            preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
+        }
+
+        fun deleteCart() {
+            preferencesGateway.save(USER_CART, Gson().toJson(ArrayList<Product>(), productListType))
         }
     }
 }

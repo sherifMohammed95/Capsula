@@ -7,16 +7,19 @@ import com.freelance.base.BaseActivity
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.Category
+import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityProductsBinding
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.productDetails.ProductDetailsActivity
 import com.freelance.capsoula.ui.products.adapters.ProductsAdapter
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_products.*
+import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
@@ -102,6 +105,13 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
                     mAdapter.setData(it.data!!.productsList!!)
             }
         })
+
+        mViewModel.cartResponse.observe(this, Observer {
+            val user = UserDataSource.getUser()
+            user?.cartContent = it
+            UserDataSource.saveUser(user)
+            EventBus.getDefault().postSticky(MessageEvent(Constants.UPDATE_CART_NUMBER))
+        })
     }
 
     private fun initRecyclerView() {
@@ -111,10 +121,15 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
     }
 
     override fun onPlusClick(product: Product) {
+        mViewModel.mProduct = product
         if (UserDataSource.getUser() == null)
             UserDataSource.addProductToCart(product)
         else {
-
+            if(UserDataSource.checkProductExistInCart(UserDataSource.getUser()?.cartContent!!,
+                    product)) {
+                openCheckout()
+            } else
+                mViewModel.addProductToCart()
         }
     }
 
@@ -122,5 +137,9 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PRODUCT, Gson().toJson(item))
         startActivity(intent)
+    }
+
+    override fun openCheckout() {
+        startActivity(Intent(this, CheckoutActivity::class.java))
     }
 }

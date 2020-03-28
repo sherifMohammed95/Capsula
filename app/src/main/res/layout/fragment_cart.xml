@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimen_22"
+            android:onClick="@{()->vm.deleteAllAction()}"
             android:text="@string/clear_all"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/font_14"
@@ -46,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dimen_16"
-            android:layout_marginBottom="88dp"
+            android:layout_marginBottom="92dp"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical"
             android:paddingStart="@dimen/dimen_15"
@@ -75,6 +76,7 @@
                 android:background="@drawable/button_rounded_bg"
                 android:backgroundTint="@color/colorAccent"
                 android:gravity="center"
+                android:onClick="@{()->vm.nextAction()}"
                 android:text="@string/next"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_16"
@@ -110,12 +112,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:text="Total  RSD 550"
+                    android:text="@{vm.totalPriceText}"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_20" />
+                    android:textSize="@dimen/font_20"
+                    tools:text="Total  RSD 550" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            layout="@layout/loading_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

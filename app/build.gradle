@@ -109,6 +109,7 @@ dependencies {
     implementation 'com.github.nisrulz:validatetor:1.0.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
 
     // Facebook
     implementation 'com.facebook.android:facebook-android-sdk:5.0.1'

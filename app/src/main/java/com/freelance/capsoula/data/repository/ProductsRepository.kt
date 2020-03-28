@@ -1,6 +1,8 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.base.BaseResponse
+import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.responses.ProductsResponse
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -14,6 +16,7 @@ class ProductsRepository : BaseRepository() {
 
 
     val productsResponse = SingleLiveEvent<BaseResponse<ProductsResponse>>()
+    val cartResponse = SingleLiveEvent<ArrayList<Product>>()
 
     suspend fun getBrandProducts(pageNo: Int, brandId: Int) {
         try {
@@ -178,6 +181,33 @@ class ProductsRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getFreeDelivery(pageNo)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun updateCart(cart: Cart) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.updateCart(cart)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    cartResponse.postValue(response.body()?.data?.productsList)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        updateCart(cart)
                     }
                 })
             }

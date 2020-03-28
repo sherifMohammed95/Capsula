@@ -80,15 +80,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     }
 
-    override fun onBackPressed() {
-//        Handler().postDelayed({
+    //        Handler().postDelayed({
 //            AnimationUtils
 //                .circularReverseTransition(viewDataBinding!!.parent, Action {
 //                    super.onBackPressed()
 //                })
 //        }, 50)
-
-    }
 
     private fun subscribeToLiveData() {
         mViewModel.homeDataResponse.observe(this, Observer {

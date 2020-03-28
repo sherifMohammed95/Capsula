@@ -32,8 +32,13 @@ import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityCategoriesBinding
+import com.freelance.capsoula.ui.brands.BrandsActivity
+import com.freelance.capsoula.ui.categories.CategoriesActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
+import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
+import com.freelance.capsoula.ui.stores.StoresActivity
+import com.freelance.capsoula.ui.subCategories.SubCategoriesActivity
 import com.freelance.capsoula.utils.Constants.OPEN_CHECKOUT
 import com.freelance.capsoula.utils.Constants.UPDATE_CART_NUMBER
 import com.freelance.capsoula.utils.MyContextWrapper
@@ -176,6 +181,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         }
 
         updateCartNumber()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(this is ProductsActivity || this is StoresActivity || this is CategoriesActivity ||
+                this is SubCategoriesActivity || this is BrandsActivity)
+            updateCartNumber()
     }
 
     private fun showProgressLayout() {
@@ -464,10 +477,26 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     }
 
     private fun updateCartNumber() {
-        if (UserDataSource.getUserCartSize() > 0) {
-            cart_number_textView.visibility = View.VISIBLE
-            cart_number_textView.text = UserDataSource.getUserCartSize().toString()
-        } else
-            cart_number_textView.visibility = View.INVISIBLE
+
+        if (UserDataSource.getUser() == null) {
+            if (UserDataSource.getUserCartSize() > 0) {
+                cart_number_textView.visibility = View.VISIBLE
+                cart_number_textView.text = UserDataSource.getUserCartSize().toString()
+            } else
+                cart_number_textView.visibility = View.INVISIBLE
+        } else {
+            when {
+                UserDataSource.getUserCartSize() > 0 -> {
+                    cart_number_textView.visibility = View.VISIBLE
+                    cart_number_textView.text = UserDataSource.getUserCartSize().toString()
+                }
+                UserDataSource.getUser()?.cartContent?.size!! > 0 -> {
+                    cart_number_textView.visibility = View.VISIBLE
+                    cart_number_textView.text =
+                        UserDataSource.getUser()?.cartContent?.size!!.toString()
+                }
+                else -> cart_number_textView.visibility = View.INVISIBLE
+            }
+        }
     }
 }

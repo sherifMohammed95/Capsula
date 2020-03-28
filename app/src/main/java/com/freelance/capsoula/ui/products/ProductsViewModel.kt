@@ -3,7 +3,9 @@ package com.freelance.capsoula.ui.products
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
+import com.freelance.capsoula.data.Cart
 import com.freelance.capsoula.data.Category
+import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
 import com.freelance.capsoula.data.responses.ProductsResponse
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -18,10 +20,13 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     var storeId = -1
     var subCategory = Category()
     var fromWhere = 0
+    var mProduct = Product()
+    var cartResponse = SingleLiveEvent<ArrayList<Product>>()
 
     init {
         initRepository(mRepository)
         this.productsResponse = mRepository.productsResponse
+        this.cartResponse = mRepository.cartResponse
     }
 
     fun getBrandProducts() {
@@ -57,6 +62,15 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     fun getFreeDelivery() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepository.getFreeDelivery(pageNo)
+        }
+    }
+
+    fun addProductToCart() {
+        val cart = Cart()
+        cart.mainId = mProduct.mainId
+        cart.quantity = 1
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepository.updateCart(cart)
         }
     }
 }

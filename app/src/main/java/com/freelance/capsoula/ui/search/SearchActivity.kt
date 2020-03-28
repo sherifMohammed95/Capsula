@@ -8,20 +8,24 @@ import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
 import com.freelance.capsoula.data.FilterType
+import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivitySearchBinding
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.productDetails.ProductDetailsActivity
 import com.freelance.capsoula.ui.products.adapters.ProductsAdapter
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_search.*
+import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import rx.functions.Action1
 import rx.functions.Action2
+import java.util.zip.CheckedOutputStream
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator,
     ProductsAdapter.OnPlusClickListener, BaseRecyclerAdapter.OnITemClickListener<Product> {
@@ -67,6 +71,21 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                     mAdapter.setData(it.data!!.productsList!!)
             }
         })
+
+        mViewModel.cartResponse.observe(this, Observer {
+            val user = UserDataSource.getUser()
+            user?.cartContent = it
+            UserDataSource.saveUser(user)
+            mViewModel.updateCartNumber()
+            EventBus.getDefault().postSticky(MessageEvent(Constants.UPDATE_CART_NUMBER))
+        })
+
+        mViewModel.emptyCartMessage.observe(this, Observer {
+            showPopUp(
+                getString(R.string.cart), getString(R.string.empty_cart_msg),
+                getString(android.R.string.ok), false
+            )
+        })
     }
 
     private fun initRecyclerView() {
@@ -90,9 +109,16 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     }
 
     override fun onPlusClick(product: Product) {
+        mViewModel.mProduct = product
         if (UserDataSource.getUser() == null) {
             UserDataSource.addProductToCart(product)
             mViewModel.updateCartNumber()
+        } else {
+            if(UserDataSource.checkProductExistInCart(UserDataSource.getUser()?.cartContent!!,
+                    product)) {
+                openCheckout()
+            } else
+                mViewModel.addProductToCart()
         }
     }
 
@@ -100,5 +126,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         val intent = Intent(this, ProductDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_PRODUCT, Gson().toJson(item))
         startActivity(intent)
+    }
+
+    override fun openCheckout() {
+        startActivity(Intent(this, CheckoutActivity::class.java))
     }
 }

@@ -46,11 +46,13 @@ class BottomSelectionFragment :
     override fun subscibeToLiveData() {
 
         apply_btn.setOnClickListener {
-            clickAction.call(mViewModel.mSelectedPos, mViewModel.mBottomSheetModel)
-            dismiss()
+            if (mViewModel.mSelectedPos != -1) {
+                clickAction.call(mViewModel.mSelectedPos, mViewModel.mBottomSheetModel)
+                dismiss()
+            }
         }
 
-        clear_textView.setOnClickListener{
+        clear_textView.setOnClickListener {
             mViewModel.mSelectedPos = -1
             mViewModel.mBottomSheetModel = BottomSheetModel()
             clickAction.call(mViewModel.mSelectedPos, mViewModel.mBottomSheetModel)

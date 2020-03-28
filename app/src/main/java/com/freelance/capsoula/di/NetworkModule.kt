@@ -39,6 +39,7 @@ fun provideNetworkInterceptor(): Interceptor {
         val request = original.newBuilder()
         runBlocking {
             val job = CoroutineScope(IO).launch {
+                var x = UserDataSource.getToken()
                 request.addHeader(
                     "Authorization", Constants.BEARER + " " +
                             UserDataSource.getToken()

@@ -77,5 +77,7 @@
     <string name="next">Next</string>
     <string name="empty_cart_msg">The cart is empty, please add products to cart first</string>
     <string name="items">Items</string>
+    <string name="total">Total</string>
+    <string name="product_added_to_cart">Product added to cart</string>
 
 </resources>

@@ -12,126 +12,148 @@
             type="com.freelance.capsoula.data.Product" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16">
 
-        <androidx.cardview.widget.CardView
+        <com.daimajia.swipe.SwipeLayout
+            android:id="@+id/swipeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_10"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="@dimen/dimen_20"
-            app:cardElevation="@dimen/dimen_2"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@android:color/transparent"
+            app:clickToClose="true">
+
+            <LinearLayout
+                android:id="@+id/delete_image_layout"
+                android:layout_width="@dimen/dimen_70"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/delete_swipe_bg"
+                android:gravity="center"
+                android:translationX="-20dp">
+
+                <ImageView
+                    android:id="@+id/delete_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    android:src="@drawable/ic_delete" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/product_imageView"
-                    imageURL="@{product.imagePath}"
-                    android:layout_width="@dimen/dimen_80"
-                    android:layout_height="@dimen/dimen_80"
-                    android:layout_marginStart="@dimen/dimen_8"
-                    android:layout_marginTop="@dimen/dimen_12"
-                    android:layout_marginBottom="@dimen/dimen_12"
-                    android:scaleType="centerCrop"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/product_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cart_item_bg"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:riv_corner_radius="@dimen/dimen_10"
-                    tools:src="@color/colorAccent" />
-
-                <TextView
-                    style="@style/medium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginEnd="@dimen/dimen_10"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{product.productName}"
-                    android:textColor="@color/colorLabelText"
-                    android:textSize="@dimen/font_12"
-                    app:layout_constraintStart_toEndOf="@+id/product_imageView"
-                    app:layout_constraintTop_toTopOf="@+id/product_imageView"
-                    tools:text="Nivea Oil-Infused Lotion" />
-
-                <TextView
-                    android:id="@+id/price_textView"
-                    style="@style/medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginBottom="@dimen/dimen_8"
-                    android:text="@{product.priceDetailsText}"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/font_14"
-                    app:layout_constraintBottom_toBottomOf="@+id/product_imageView"
-                    app:layout_constraintStart_toEndOf="@+id/product_imageView" />
-
-                <TextView
-                    android:id="@+id/offer_price_textView"
-                    style="@style/medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_8"
-                    android:text="@{product.priceText}"
-                    android:textColor="@color/colorLabelText20"
-                    android:textSize="@dimen/font_12"
-                    android:visibility="@{product.offerType == 3? View.VISIBLE:View.INVISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="@+id/price_textView"
-                    app:layout_constraintStart_toEndOf="@+id/price_textView"
-                    app:layout_constraintTop_toTopOf="@+id/price_textView"
-                    app:strikeThrough="@{true}"
-                    tools:text="RSD 100" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_16"
-                    android:gravity="end"
-                    app:layout_constraintBottom_toBottomOf="@+id/price_textView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/offer_price_textView"
-                    app:layout_constraintTop_toTopOf="@+id/price_textView">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageButton
-                        android:id="@+id/minus_imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@{product.quantity > 1 ? @drawable/ic_minus:@drawable/ic_dimmed_minus}"
-                        tools:src="@drawable/ic_dimmed_minus" />
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/product_imageView"
+                        imageURL="@{product.imagePath}"
+                        android:layout_width="@dimen/dimen_80"
+                        android:layout_height="@dimen/dimen_80"
+                        android:layout_marginStart="@dimen/dimen_8"
+                        android:layout_marginTop="@dimen/dimen_12"
+                        android:layout_marginBottom="@dimen/dimen_12"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_corner_radius="@dimen/dimen_10"
+                        tools:src="@color/colorAccent" />
 
                     <TextView
                         style="@style/medium"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dimen_16"
-                        android:paddingEnd="@dimen/dimen_16"
-                        android:text="@{product.quantityText}"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@{product.productName}"
                         android:textColor="@color/colorLabelText"
-                        android:textSize="@dimen/font_18" />
+                        android:textSize="@dimen/font_12"
+                        app:layout_constraintStart_toEndOf="@+id/product_imageView"
+                        app:layout_constraintTop_toTopOf="@+id/product_imageView"
+                        tools:text="Nivea Oil-Infused Lotion" />
 
-                    <ImageButton
-                        android:id="@+id/plus_imageView"
+                    <TextView
+                        android:id="@+id/price_textView"
+                        style="@style/medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_plus" />
-                </LinearLayout>
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:text="@{product.priceDetailsText}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/font_14"
+                        app:layout_constraintBottom_toBottomOf="@+id/product_imageView"
+                        app:layout_constraintStart_toEndOf="@+id/product_imageView" />
+
+                    <TextView
+                        android:id="@+id/offer_price_textView"
+                        style="@style/medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_8"
+                        android:text="@{product.priceText}"
+                        android:textColor="@color/colorLabelText20"
+                        android:textSize="@dimen/font_12"
+                        android:visibility="@{product.offerType == 3? View.VISIBLE:View.INVISIBLE}"
+                        app:layout_constraintBottom_toBottomOf="@+id/price_textView"
+                        app:layout_constraintStart_toEndOf="@+id/price_textView"
+                        app:layout_constraintTop_toTopOf="@+id/price_textView"
+                        app:strikeThrough="@{true}"
+                        tools:text="RSD 100" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:gravity="end"
+                        app:layout_constraintBottom_toBottomOf="@+id/price_textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/offer_price_textView"
+                        app:layout_constraintTop_toTopOf="@+id/price_textView">
+
+                        <ImageButton
+                            android:id="@+id/minus_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@{product.quantity > 1 ? @drawable/ic_minus:@drawable/ic_dimmed_minus}"
+                            tools:src="@drawable/ic_dimmed_minus" />
+
+                        <TextView
+                            style="@style/medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/dimen_16"
+                            android:paddingEnd="@dimen/dimen_16"
+                            android:text="@{product.quantityText}"
+                            android:textColor="@color/colorLabelText"
+                            android:textSize="@dimen/font_18" />
+
+                        <ImageButton
+                            android:id="@+id/plus_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_plus" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.daimajia.swipe.SwipeLayout>
+    </LinearLayout>
 </layout>

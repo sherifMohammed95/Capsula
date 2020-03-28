@@ -70,6 +70,19 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
             else
                 hideProgressLayout()
         })
+
+        viewModel!!.progressLoading.observe(viewLifecycleOwner, Observer { showLoading ->
+            if (viewModel != null) {
+                if (showLoading)
+                    activity?.window?.setFlags(
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                    )
+                else
+                    activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                viewModel!!.isLoading.set(showLoading)
+            }
+        })
     }
 
     private fun handleError() {

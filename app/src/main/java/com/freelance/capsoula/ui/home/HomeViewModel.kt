@@ -79,11 +79,34 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     }
 
     private fun updateCartNumber() {
-        if (UserDataSource.getUserCartSize() > 0) {
-            cartNumberVisibility.set(true)
-            cartNumberText.set(UserDataSource.getUserCartSize().toString())
-        } else
-            cartNumberVisibility.set(false)
+
+        if (UserDataSource.getUser() == null) {
+            if (UserDataSource.getUserCartSize() > 0) {
+                cartNumberVisibility.set(true)
+                cartNumberText.set(UserDataSource.getUserCartSize().toString())
+            }
+            else
+                cartNumberVisibility.set(false)
+        } else {
+            when {
+                UserDataSource.getUserCartSize() > 0 ->{
+                    cartNumberVisibility.set(true)
+                    cartNumberText.set(UserDataSource.getUserCartSize().toString())
+                }
+                UserDataSource.getUser()?.cartContent?.size!! > 0 ->{
+                    cartNumberVisibility.set(true)
+                    cartNumberText.set(UserDataSource.getUser()?.cartContent?.size!!.toString())
+                }
+                else -> cartNumberVisibility.set(false)
+            }
+        }
+
+
+//        if (UserDataSource.getUserCartSize() > 0) {
+//            cartNumberVisibility.set(true)
+//            cartNumberText.set(UserDataSource.getUserCartSize().toString())
+//        } else
+//            cartNumberVisibility.set(false)
     }
 
 

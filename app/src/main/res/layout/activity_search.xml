@@ -92,6 +92,7 @@
                 android:background="@drawable/button_rounded_bg"
                 android:backgroundTint="@color/colorAccent"
                 android:gravity="center"
+                android:onClick="@{()->vm.checoutAction()}"
                 android:text="@string/checkout"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_16"

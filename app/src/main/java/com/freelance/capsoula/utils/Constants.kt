@@ -45,6 +45,7 @@ object Constants {
     const val FROM_FREE_DELIVERY = 6
     const val FROM_BRANDS = 7
     const val FROM_SUB_CATEGORIES = 8
+    const val FROM_CART = 9
 
 
     /**
