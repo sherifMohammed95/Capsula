@@ -40,31 +40,12 @@ object BindingAdapters {
         progressLoading?.visibility = VISIBLE
         if (url != null && url.isNotEmpty()) {
             Glide.with(view.context)
+                .asBitmap()
                 .load(url)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        progressLoading?.visibility = GONE
-                        return false
-                    }
-
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        progressLoading?.visibility = GONE
-                        return false
-                    }
-                })
                 .apply(
                     RequestOptions()
+                        .fitCenter()
+                        .override(600,600)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                        .placeholder(R.drawable.ic_logo_large)
                 )

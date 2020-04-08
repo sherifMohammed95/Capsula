@@ -38,8 +38,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        fetchCartList()
-//        updateDataView()
+        if (mViewModel.cartList.isNullOrEmpty())
+            mViewModel.fetchCartList()
+        updateDataView()
         subscribeToLiveData()
     }
 
@@ -102,21 +103,6 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
         viewDataBinding?.vm = mViewModel
         viewModel = mViewModel
         mViewModel.navigator = this
-    }
-
-    private fun fetchCartList() {
-        if (UserDataSource.getUser() == null) {
-            mViewModel.cartList = UserDataSource.getUserCart()
-            updateDataView()
-        } else {
-            if (UserDataSource.getUserCartSize() > 0) {
-                mViewModel.cartList = UserDataSource.getUserCart()
-                mViewModel.addProductsToCart()
-            } else {
-                mViewModel.cartList = UserDataSource.getUser()?.cartContent!!
-                updateDataView()
-            }
-        }
     }
 
     override fun onPlusClick(product: Product) {

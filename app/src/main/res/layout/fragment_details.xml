@@ -74,6 +74,16 @@
 
                     </androidx.cardview.widget.CardView>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginEnd="@dimen/dimen_24"
+                        android:text="@string/please_add_prescription"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="@dimen/font_12"
+                        android:visibility="@{vm.prescriptionError?View.VISIBLE:View.GONE}" />
+
                 </LinearLayout>
 
 
@@ -223,6 +233,18 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_add_your_payment_method"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.paymentMethodError?View.VISIBLE:View.GONE}" />
+
 
                 <TextView
                     style="@style/medium"

@@ -58,7 +58,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         viewDataBinding?.vm = mViewModel
         viewDataBinding?.navigator = this
         viewModel = mViewModel
-//        mViewModel.navigator = this
+        mViewModel.navigator = this
     }
 
     override fun onResume() {
@@ -92,6 +92,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
             Action2 { pos, item ->
                 mViewModel.selectedPaymentMethodPos = pos
                 mViewModel.paymentMethodText.set(item.text)
+                mViewModel.paymentMethodError.set(false)
 //                when (pos) {
 //                    0 -> openGallery()
 //                    1 -> openCamera()
@@ -162,6 +163,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                     mViewModel.currentPickedImageUri.set(contentURI)
                     bitmap = ImageUtil.getResizedBitmap(bitmap, 800)
                     convertBitmapToBase64(bitmap)
+                    mViewModel.prescriptionError.set(false)
                 }
                 REQUEST_CAMERA -> {
                     var thumbnail = data.extras?.get("data") as Bitmap
@@ -173,6 +175,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                     )
                     thumbnail = ImageUtil.getResizedBitmap(thumbnail, 800)
                     convertBitmapToBase64(thumbnail)
+                    mViewModel.prescriptionError.set(false)
                 }
             }
         }

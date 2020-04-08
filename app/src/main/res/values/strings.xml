@@ -101,5 +101,7 @@
     <string name="stc_pay">STC Pay</string>
     <string name="mada">Mada</string>
     <string name="payment_method">Payment Method</string>
+    <string name="please_add_prescription">Please add prescription</string>
+    <string name="please_add_your_payment_method">Please add your payment method</string>
 
 </resources>

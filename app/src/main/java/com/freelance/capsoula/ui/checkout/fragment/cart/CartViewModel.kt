@@ -51,6 +51,52 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
             navigator?.openAuthentication()
     }
 
+    fun fetchCartList() {
+        if (UserDataSource.getUser() == null) {
+            cartList = UserDataSource.getUserCart()
+//            updateDataView()
+        } else {
+            if (UserDataSource.getUserCartSize() > 0) {
+                if (UserDataSource.getUser()?.cartContent!!.size > 0) {
+                    addLocalCartToUserCart()
+                } else
+                    cartList = UserDataSource.getUserCart()
+                addProductsToCart()
+            } else {
+                cartList = UserDataSource.getUser()?.cartContent!!
+//                updateDataView()
+            }
+        }
+    }
+
+    private fun addLocalCartToUserCart() {
+        if (UserDataSource.getUser()?.cartContent!!.size > UserDataSource.getUserCartSize()) {
+            UserDataSource.getUser()?.cartContent!!.forEach { product ->
+                val localProd =
+                    UserDataSource.getUserCart().find { it.mainId == product.mainId }
+                if (localProd != null) {
+                    val quantity = localProd.quantity + product.quantity
+                    localProd.quantity = quantity
+                    cartList.add(localProd)
+
+                } else
+                    cartList.add(product)
+            }
+        } else {
+            UserDataSource.getUserCart().forEach { localProduct ->
+                val prod =
+                    UserDataSource.getUser()?.cartContent!!.find { it.mainId == localProduct.mainId }
+                if (prod != null) {
+                    val quantity = prod.quantity + localProduct.quantity
+                    prod.quantity = quantity
+                    cartList.add(prod)
+
+                } else
+                    cartList.add(localProduct)
+            }
+        }
+    }
+
     private fun buildCartItems() {
         cartItems = ArrayList()
         if (!cartList.isNullOrEmpty()) {

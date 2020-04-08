@@ -7,4 +7,5 @@ class User {
     var phone: String? = null
     var userAddresses: ArrayList<UserAddress>? = null
     var cartContent: ArrayList<Product>? = null
+    var defaultAddress: UserAddress? = null
 }
