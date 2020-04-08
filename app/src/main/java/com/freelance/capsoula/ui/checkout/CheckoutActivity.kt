@@ -6,6 +6,7 @@ import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityCheckoutBinding
 import com.freelance.capsoula.ui.checkout.fragment.cart.CartFragment
+import com.freelance.capsoula.ui.checkout.fragment.details.DetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel>(),
@@ -16,6 +17,10 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         openCartFragment()
+
+        viewDataBinding?.toolbar?.backToolbarImageView?.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -40,6 +45,10 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
     }
 
     override fun openDetailsFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, DetailsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun openDoneFragment() {

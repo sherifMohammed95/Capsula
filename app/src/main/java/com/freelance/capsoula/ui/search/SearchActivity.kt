@@ -99,11 +99,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             .newInstance(getString(R.string.sort_by), mFilterTypeList, Action2 { pos, item ->
                 run {
                     mViewModel.selectedFilterTypePos = pos
-                    mViewModel.filterType = item!!.id
+                    mViewModel.filterType = item!!.selectionID!!
                     mViewModel.pageNo = 1
                     mViewModel.getSearchResults()
                 }
-            }, mViewModel.selectedFilterTypePos)
+            }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false)
 
         fragment.show(supportFragmentManager, fragment.tag)
     }

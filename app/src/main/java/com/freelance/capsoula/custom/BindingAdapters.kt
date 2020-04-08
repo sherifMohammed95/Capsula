@@ -1,7 +1,9 @@
 package com.freelance.capsoula.custom
 
+import android.graphics.Bitmap
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
@@ -87,6 +89,27 @@ object BindingAdapters {
             view.setImageResource(resource)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("imageUri")
+    fun bindImageUri(view: ImageView, uri: Uri?) {
+        if (uri != Uri.EMPTY) {
+            Glide.with(view.context)
+                .load(uri)
+                .apply(
+                    RequestOptions()
+                        .centerCrop())
+                .into(view)
+        } else {
+            Glide.with(view.context)
+                .load(R.drawable.ic_photo)
+                .apply(
+                    RequestOptions()
+                        .centerInside())
+                .into(view)
+        }
+    }
+
 
     @JvmStatic
     @BindingAdapter("imageDrawableSrc")

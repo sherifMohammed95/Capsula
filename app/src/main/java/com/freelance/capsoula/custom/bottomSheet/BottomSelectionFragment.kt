@@ -1,6 +1,7 @@
 package com.freelance.capsoula.custom.bottomSheet
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.freelance.base.BaseBottomSheetFragment
 import com.freelance.base.BaseRecyclerAdapter
@@ -23,6 +24,8 @@ class BottomSelectionFragment :
     private var list: List<BottomSheetModel> = ArrayList()
     private val mAdapter = BottomSheetAdapter()
     private var selectedPos = -1
+    private var showClearText = true
+    private var showIconImage = true
     private lateinit var clickAction: Action2<Int, BottomSheetModel>
 
     override fun getViewModel(): BottomSheetViewModel {
@@ -39,7 +42,10 @@ class BottomSelectionFragment :
         getBundles()
         initRecyclerView()
         title_textView.text = title
-
+        if (this.showClearText)
+            clear_textView.visibility = View.VISIBLE
+        else
+            clear_textView.visibility = View.INVISIBLE
     }
 
 
@@ -74,15 +80,17 @@ class BottomSelectionFragment :
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = mAdapter
-        mAdapter.setData(list)
         mAdapter.selectedPos = this.selectedPos
+        mAdapter.showIconImage = this.showIconImage
+        mAdapter.setData(list)
         mAdapter.onITemClickListener = this
     }
 
     companion object {
         fun newInstance(
             selectionTitle: String, selectionList: List<BottomSheetModel>,
-            clickAction: Action2<Int, BottomSheetModel>, selectedPos: Int
+            clickAction: Action2<Int, BottomSheetModel>, selectedPos: Int, showClearText: Boolean,
+            showIconImage: Boolean
         ) =
             BottomSelectionFragment().apply {
                 arguments = Bundle().apply {
@@ -96,6 +104,8 @@ class BottomSelectionFragment :
                 }
                 this.clickAction = clickAction
                 this.selectedPos = selectedPos
+                this.showClearText = showClearText
+                this.showIconImage = showIconImage
             }
     }
 

@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:background="@drawable/more_tab_bg"
+            android:onClick="@{()->vm.openMore()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.60">

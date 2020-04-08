@@ -33,13 +33,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:text="@string/checkout"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_16"
             app:layout_constraintBottom_toBottomOf="@+id/back_toolbar_imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/back_toolbar_imageView"
-            tools:text="Brands" />
+            app:layout_constraintTop_toTopOf="@+id/back_toolbar_imageView" />
 
         <ImageView
             android:id="@+id/progress_bar_imageView"

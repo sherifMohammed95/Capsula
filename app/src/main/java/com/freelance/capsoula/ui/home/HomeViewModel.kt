@@ -72,6 +72,10 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         navigator?.openFreeDelivery()
     }
 
+    fun openMore() {
+        navigator?.openMore()
+    }
+
     private fun loadHomeData() {
         viewModelScope.launch(IO) {
             repo.getHomeData()

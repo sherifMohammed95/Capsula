@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.checkout.fragment.details.DetailsViewModel" />
+
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.checkout.fragment.details.DetailsNavigator" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/prescription_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:orientation="vertical"
+                    android:visibility="@{vm.showPrescription?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        style="@style/medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/this_order_require_a_prescription"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_18" />
+
+                    <TextView
+                        style="@style/medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:text="@string/add_prescription"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_16" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:onClick="@{()->navigator.showImagePickerSheet(1)}"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="@dimen/dimen_15"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <ImageView
+                            imageUri="@{vm.prescriptionImageUri}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/delivery_address"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_16" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_12"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/address_arrow_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:gravity="center_vertical|start"
+                            android:maxLines="1"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorLabelText"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/address_arrow_imageView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Jeddah" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/insurance_number"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_16" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:onClick="@{()->navigator.showImagePickerSheet(2)}"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true">
+
+                    <ImageView
+                        imageUri="@{vm.insuranceNumberImageUri}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/preferred_payment_method"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_16" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_12"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="@{()->navigator.showPaymentMethodSheet()}">
+
+                        <ImageView
+                            android:id="@+id/payment_arrow_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/add_your_payment_method"
+                            android:maxLines="1"
+                            android:text="@{vm.paymentMethodText}"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorLabelText"
+                            android:textColorHint="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/payment_arrow_imageView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/do_you_have_a_promo_code"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/font_14" />
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/cost_details"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_16" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_12"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/items_cost_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_22"
+                            android:text="@string/items_cost"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/delivery_cost_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:text="@string/delivery_cost"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/items_cost_label" />
+
+                        <TextView
+                            android:id="@+id/estimate_total_label"
+                            style="@style/bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginBottom="@dimen/dimen_22"
+                            android:text="@string/estimated_total"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/font_15"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/delivery_cost_label" />
+
+
+                        <TextView
+                            android:id="@+id/delivery_cost_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_65"
+                            android:gravity="end"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/delivery_cost_label"
+                            app:layout_constraintTop_toTopOf="@+id/delivery_cost_label"
+                            tools:text="RSD 50" />
+
+                        <TextView
+                            android:id="@+id/estimated_total_value"
+                            style="@style/bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_65"
+                            android:gravity="end"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/font_15"
+                            app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/estimate_total_label"
+                            app:layout_constraintTop_toTopOf="@+id/estimate_total_label"
+                            tools:text="RSD 999" />
+
+
+                        <TextView
+                            android:id="@+id/items_cost_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_65"
+                            android:gravity="end"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/items_cost_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/items_cost_label"
+                            app:layout_constraintTop_toTopOf="@+id/items_cost_label"
+                            tools:text="RSD 500" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/next_btn"
+                    style="@style/bold"
+                    android:layout_width="180dp"
+                    android:layout_height="@dimen/dimen_65"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:background="@drawable/button_rounded_bg"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

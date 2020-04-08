@@ -1,6 +1,7 @@
 package com.freelance.capsoula.custom.bottomSheet
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,8 @@ import com.freelance.capsoula.databinding.IndexBottomSheetBinding
 
 class BottomSheetAdapter : BaseRecyclerAdapter<BottomSheetModel,
         BottomSheetAdapter.BottomSheetViewHolder>() {
+
+    var showIconImage = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
         val binding: IndexBottomSheetBinding = DataBindingUtil.inflate(
@@ -31,7 +34,7 @@ class BottomSheetAdapter : BaseRecyclerAdapter<BottomSheetModel,
         }
     }
 
-    class BottomSheetViewHolder(private var binding: IndexBottomSheetBinding) :
+    class BottomSheetViewHolder(var binding: IndexBottomSheetBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: BottomSheetModel) {
             binding.item = item

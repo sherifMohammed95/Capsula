@@ -79,5 +79,27 @@
     <string name="items">Items</string>
     <string name="total">Total</string>
     <string name="product_added_to_cart">Product added to cart</string>
+    <string name="this_order_require_a_prescription">This Order require a prescription</string>
+    <string name="add_prescription">Add Prescription</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="insurance_number">Insurance Number</string>
+    <string name="preferred_payment_method">Preferred Payment Method</string>
+    <string name="add_your_payment_method">Add your payment method</string>
+    <string name="do_you_have_a_promo_code"><u>Do you have a promo code ?</u></string>
+    <string name="cost_details">Cost Details</string>
+    <string name="items_cost">Items Cost</string>
+    <string name="estimated_total">Estimated Total</string>
+    <string name="delivery_cost">Delivery Cost</string>
+    <string name="permission_denied_permanently">You refused to allow the application to use some applications, to reset go to settings</string>
+    <string name="permission_denied">You refused to allow the app to use some apps</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="choose_option">Choose Option</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="stc_pay">STC Pay</string>
+    <string name="mada">Mada</string>
+    <string name="payment_method">Payment Method</string>
 
 </resources>

@@ -171,4 +171,10 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
         mAdapter.setData(mViewModel.cartList)
         mViewModel.calcTotalPrice()
     }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
+            ?.setImageResource(R.drawable.cart_progress_bar)
+    }
 }

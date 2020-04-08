@@ -29,6 +29,7 @@ import android.os.Handler
 import android.view.View
 import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
+import com.freelance.capsoula.ui.more.MoreActivity
 import io.reactivex.functions.Action
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -70,22 +71,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        Handler().postDelayed({
-//            AnimationUtils
-//                .circularTransition(viewDataBinding!!.parent)
-//        }, 50)
-
         initRecyclerViews()
         subscribeToLiveData()
 
     }
-
-    //        Handler().postDelayed({
-//            AnimationUtils
-//                .circularReverseTransition(viewDataBinding!!.parent, Action {
-//                    super.onBackPressed()
-//                })
-//        }, 50)
 
     private fun subscribeToLiveData() {
         mViewModel.homeDataResponse.observe(this, Observer {
@@ -142,6 +131,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     override fun openMore() {
+        startActivity(Intent(this, MoreActivity::class.java))
+
     }
 
     override fun openCheckout() {

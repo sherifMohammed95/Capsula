@@ -61,4 +61,10 @@ object Constants {
     const val FREE_DELIVERY_OFFER = 1
     const val PRODUCT_OFFER = 2
     const val DISCOUNT_OFFER = 3
+
+    /**
+     * Image numbers
+     * **/
+    const val INSURANCE_NUMBER_ID = 2
+    const val PRESCRIPTION_ID = 1
 }
