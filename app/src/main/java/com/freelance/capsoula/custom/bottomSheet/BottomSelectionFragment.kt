@@ -1,5 +1,6 @@
 package com.freelance.capsoula.custom.bottomSheet
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,8 +8,11 @@ import com.freelance.base.BaseBottomSheetFragment
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.FragmentBottomSelectionBinding
+import com.freelance.capsoula.ui.addAddress.AddAddressActivity
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.Constants.EXTRA_SELECTION_LIST
 import com.freelance.capsoula.utils.Constants.EXTRA_SELECTION_TITLE
+import com.freelance.capsoula.utils.Constants.FROM_CHECKOUT_DETAILS
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_bottom_selection.*
@@ -25,6 +29,7 @@ class BottomSelectionFragment :
     private val mAdapter = BottomSheetAdapter()
     private var selectedPos = -1
     private var showClearText = true
+    private var showAddNewAddressText = true
     private var showIconImage = true
     private lateinit var clickAction: Action2<Int, BottomSheetModel>
 
@@ -46,6 +51,11 @@ class BottomSelectionFragment :
             clear_textView.visibility = View.VISIBLE
         else
             clear_textView.visibility = View.INVISIBLE
+
+        if (this.showAddNewAddressText)
+            add_new_address_textView.visibility = View.VISIBLE
+        else
+            add_new_address_textView.visibility = View.INVISIBLE
     }
 
 
@@ -62,6 +72,13 @@ class BottomSelectionFragment :
             mViewModel.mSelectedPos = -1
             mViewModel.mBottomSheetModel = BottomSheetModel()
             clickAction.call(mViewModel.mSelectedPos, mViewModel.mBottomSheetModel)
+            dismiss()
+        }
+
+        add_new_address_textView.setOnClickListener {
+            val intent  = Intent(activity,AddAddressActivity::class.java)
+            intent.putExtra(Constants.FROM_WHERE, FROM_CHECKOUT_DETAILS)
+            startActivity(intent)
             dismiss()
         }
     }
@@ -90,7 +107,7 @@ class BottomSelectionFragment :
         fun newInstance(
             selectionTitle: String, selectionList: List<BottomSheetModel>,
             clickAction: Action2<Int, BottomSheetModel>, selectedPos: Int, showClearText: Boolean,
-            showIconImage: Boolean
+            showIconImage: Boolean,showAddNewAddressText: Boolean
         ) =
             BottomSelectionFragment().apply {
                 arguments = Bundle().apply {
@@ -106,6 +123,7 @@ class BottomSelectionFragment :
                 this.selectedPos = selectedPos
                 this.showClearText = showClearText
                 this.showIconImage = showIconImage
+                this.showAddNewAddressText = showAddNewAddressText
             }
     }
 

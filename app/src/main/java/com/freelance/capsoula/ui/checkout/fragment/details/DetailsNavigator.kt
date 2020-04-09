@@ -5,4 +5,6 @@ interface DetailsNavigator {
     fun showImagePickerSheet(currentImage: Int)
 
     fun showPaymentMethodSheet()
+
+    fun showDeliveryAddressSheet()
 }

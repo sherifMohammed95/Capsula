@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/title_toolbar_textView"
             style="@style/bold"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/search"
@@ -40,7 +40,7 @@
             android:textSize="@dimen/font_16"
             app:layout_constraintBottom_toBottomOf="@+id/back_search_toolbar_imageView"
             app:layout_constraintEnd_toStartOf="@+id/filter_toolbar_imageView"
-            app:layout_constraintStart_toEndOf="@+id/back_search_toolbar_imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/back_search_toolbar_imageView" />
 
         <ImageView

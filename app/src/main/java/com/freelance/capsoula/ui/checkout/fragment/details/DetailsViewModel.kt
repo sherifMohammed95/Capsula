@@ -4,13 +4,20 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
+import com.freelance.capsoula.custom.bottomSheet.BottomSheetModel
+import com.freelance.capsoula.data.UserAddress
+import com.freelance.capsoula.data.repository.UserRepository
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
 import com.freelance.capsoula.utils.addCallback
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
-class DetailsViewModel : BaseViewModel<DetailsNavigator>() {
+class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigator>() {
 
     var insuranceNumberImageUri = ObservableField(Uri.EMPTY)
     var prescriptionImageUri = ObservableField(Uri.EMPTY)
@@ -25,14 +32,38 @@ class DetailsViewModel : BaseViewModel<DetailsNavigator>() {
     var paymentMethodError = ObservableBoolean(false)
 
     var paymentMethodText = ObservableField("")
+    var deliveryAddressText = ObservableField(UserDataSource.getUser()?.defaultAddress?.addressDesc)
+    var selectedAddress = BottomSheetModel()
     var selectedPaymentMethodPos = -1
+    var selectedPaymentMethodValue = -1
+    var selectedDeliveryAddressPos = -1
+
+    var updateDefaultAddressResponse = SingleLiveEvent<Void>()
 
     init {
-
+        initRepository(repo)
+        this.updateDefaultAddressResponse = repo.updateDefaultAddressResponse
         showPrescription.set(UserDataSource.getUser()?.cartContent?.find { it.isTreatment } != null)
         setImageUri()
+        setSelectedAddressPos()
+
+        paymentMethodText.addCallback {
+            if (!it.isNullOrEmpty()) {
+                paymentMethodError.set(false)
+            }
+        }
     }
 
+    fun setSelectedAddressPos() {
+        run loop@{
+            UserDataSource.getUser()?.userAddresses?.forEachIndexed { index, userAddress ->
+                if (userAddress.addressId == UserDataSource.getUser()?.defaultAddress?.addressId) {
+                    selectedDeliveryAddressPos = index
+                    return@loop
+                }
+            }
+        }
+    }
 
     private fun setImageUri() {
         currentPickedImageUri.addCallback {
@@ -56,20 +87,33 @@ class DetailsViewModel : BaseViewModel<DetailsNavigator>() {
         }
     }
 
-     fun validate():Boolean{
+    fun nextAction() {
+        if (!validate())
+            return
+
+        //todo call checkout api
+    }
+
+    private fun validate(): Boolean {
         var isValid = true
-        if(showPrescription.get()){
-            if(!ValidationUtils.isValidText(prescriptionBase64)){
+        if (showPrescription.get()) {
+            if (!ValidationUtils.isValidText(prescriptionBase64)) {
                 isValid = false
                 prescriptionError.set(true)
             }
         }
 
-        if(!ValidationUtils.isValidText(paymentMethodText.get())){
+        if (!ValidationUtils.isValidText(paymentMethodText.get())) {
             isValid = false
             paymentMethodError.set(true)
         }
         return isValid
+    }
+
+    fun updateDefaultAddress() {
+        viewModelScope.launch(IO) {
+            repo.updateDefaultAddress(selectedAddress.selectionID!!)
+        }
     }
 
 }

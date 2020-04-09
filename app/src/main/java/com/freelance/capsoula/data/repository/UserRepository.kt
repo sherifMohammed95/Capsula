@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 class UserRepository : BaseRepository() {
 
     val addAddressResponse = SingleLiveEvent<Void>()
+    val updateDefaultAddressResponse = SingleLiveEvent<Void>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -42,6 +43,38 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         addAddress(addressText, lat, lng)
+                    }
+                })
+            }
+        }
+    }
+
+
+    suspend fun updateDefaultAddress(addressId:Int) {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.updateDefaultAddress(addressId)
+            if (response.isSuccessful) {
+                UserDataSource.saveUser(response.body()!!.data!!.authUserData)
+                withContext(Main) {
+                    progressLoading.value = false
+                    updateDefaultAddressResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        updateDefaultAddress(addressId)
                     }
                 })
             }

@@ -147,4 +147,8 @@ interface WebService {
 
     @PUT("Cart/Update")
     suspend fun updateCart(@Body cart: Cart): Response<BaseResponse<ProductsResponse>>
+
+    @PUT("UserProfile/UpdateDefaultAddress/{addressId}")
+    suspend fun updateDefaultAddress(@Path("addressId") addressId: Int):
+            Response<BaseResponse<AuthenticationResponse>>
 }

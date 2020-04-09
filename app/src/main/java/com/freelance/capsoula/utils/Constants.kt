@@ -46,6 +46,8 @@ object Constants {
     const val FROM_BRANDS = 7
     const val FROM_SUB_CATEGORIES = 8
     const val FROM_CART = 9
+    const val FROM_CHECKOUT_DETAILS = 10
+    const val FROM_PROFILE = 11
 
 
     /**
@@ -67,4 +69,13 @@ object Constants {
      * **/
     const val INSURANCE_NUMBER_ID = 2
     const val PRESCRIPTION_ID = 1
+
+    /**
+     * Payment methods
+     * **/
+    const val CASH = 1
+    const val CRDIT_CARD = 2
+    const val STC_PAY = 3
+    const val MADA = 6
+    const val GOOGLE_PAY = 7
 }

@@ -40,7 +40,7 @@
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".ui.products.ProductsActivity"
             android:screenOrientation="portrait"

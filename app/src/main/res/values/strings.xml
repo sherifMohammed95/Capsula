@@ -103,5 +103,6 @@
     <string name="payment_method">Payment Method</string>
     <string name="please_add_prescription">Please add prescription</string>
     <string name="please_add_your_payment_method">Please add your payment method</string>
+    <string name="add_new_address"><u>Add New Address</u></string>
 
 </resources>

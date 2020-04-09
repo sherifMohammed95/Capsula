@@ -17,6 +17,7 @@ class AddAddressViewModel(private val mRepository: UserRepository) :
     var currentLocationText = ObservableField<String>("")
     var mLat = 0.0
     var mLng = 0.0
+    var fromWhere = -1
 
     var currentLocationError = ObservableBoolean(false)
 

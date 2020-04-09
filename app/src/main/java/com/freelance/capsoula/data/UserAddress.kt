@@ -8,8 +8,8 @@ class UserAddress : BottomSheetModel() {
     var latitude = 0.0
     var longitude = 0.0
 
-    fun initialize(areaList: ArrayList<UserAddress>?) {
-        areaList?.forEach {
+    fun initialize(addressList: ArrayList<UserAddress>?) {
+        addressList?.forEach {
             it.initialize(it.addressId, it.addressDesc)
         }
     }

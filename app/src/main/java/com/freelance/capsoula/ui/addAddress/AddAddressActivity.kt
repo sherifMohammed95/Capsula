@@ -18,6 +18,7 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.data.repository.UserRepository
 import com.freelance.capsoula.databinding.ActivityAddAddressBinding
 import com.freelance.capsoula.ui.home.HomeActivity
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.GpsUtils
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -53,13 +54,21 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initMapView()
+        getIntentsData()
         subscribeToLiveData()
     }
 
     private fun subscribeToLiveData() {
         mViewModel.addAddressResponse.observe(this, androidx.lifecycle.Observer {
-            openHome()
+            if (mViewModel.fromWhere == Constants.FROM_CHECKOUT_DETAILS)
+                finish()
+            else
+                openHome()
         })
+    }
+
+    private fun getIntentsData() {
+        mViewModel.fromWhere = intent.getIntExtra(Constants.FROM_WHERE, -1)
     }
 
     override fun openHome() {

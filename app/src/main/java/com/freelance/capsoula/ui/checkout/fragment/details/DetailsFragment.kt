@@ -1,17 +1,23 @@
 package com.freelance.capsoula.ui.checkout.fragment.details
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import androidx.lifecycle.Observer
 import com.freelance.base.BaseFragment
 import com.freelance.capsoula.R
 import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
 import com.freelance.capsoula.data.ImagePickerOption
 import com.freelance.capsoula.data.PaymentMethod
+import com.freelance.capsoula.data.UserAddress
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.FragmentDetailsBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.cart.CartViewModel
@@ -21,6 +27,7 @@ import com.freelance.capsoula.utils.ImageUtil
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
+import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
@@ -46,6 +53,12 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
     private val REQUEST_CAMERA = 1000
     private val REQUEST_GALLERY = 2000
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToLiveData()
+        calCostDetails()
+    }
+
     override fun getMyViewModel(): DetailsViewModel {
         return mViewModel
     }
@@ -59,6 +72,31 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         viewDataBinding?.navigator = this
         viewModel = mViewModel
         mViewModel.navigator = this
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun calCostDetails(){
+        var total = 0.0
+        var prodPrice: Double
+        UserDataSource.getUser()?.cartContent?.forEach {
+            prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
+                it.priceInOffer!!.toDouble()
+            else
+                it.price.toDouble()
+
+            total += (it.quantity * prodPrice)
+        }
+
+        estimated_total_value.text = Domain.application.getString(R.string.rsd) + " " + total
+        items_cost_value.text = Domain.application.getString(R.string.rsd) + " " + total
+        delivery_cost_value.text = Domain.application.getString(R.string.rsd) + " " + 0.0
+    }
+
+    private fun subscribeToLiveData() {
+        mViewModel.updateDefaultAddressResponse.observe(viewLifecycleOwner, Observer {
+            mViewModel.setSelectedAddressPos()
+            mViewModel.deliveryAddressText.set(mViewModel.selectedAddress.text)
+        })
     }
 
     override fun onResume() {
@@ -92,12 +130,37 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
             Action2 { pos, item ->
                 mViewModel.selectedPaymentMethodPos = pos
                 mViewModel.paymentMethodText.set(item.text)
-                mViewModel.paymentMethodError.set(false)
-//                when (pos) {
-//                    0 -> openGallery()
-//                    1 -> openCamera()
-//                }
-            }, mViewModel.selectedPaymentMethodPos, showClearText = false, showIconImage = true
+                when (pos) {
+                    0 ->mViewModel.selectedPaymentMethodValue = Constants.CASH
+                    1 -> mViewModel.selectedPaymentMethodValue = Constants.CRDIT_CARD
+                    2 -> mViewModel.selectedPaymentMethodValue = Constants.GOOGLE_PAY
+                    3 -> mViewModel.selectedPaymentMethodValue = Constants.STC_PAY
+                    4 -> mViewModel.selectedPaymentMethodValue = Constants.MADA
+                }
+            },
+            mViewModel.selectedPaymentMethodPos,
+            showClearText = false,
+            showIconImage = true,
+            showAddNewAddressText = false
+        )
+        fragment.show(childFragmentManager, fragment.tag)
+    }
+
+    override fun showDeliveryAddressSheet() {
+        val userAddressList = UserDataSource.getUser()?.userAddresses
+        UserAddress().initialize(userAddressList)
+        val fragment = BottomSelectionFragment.newInstance(
+            getString(R.string.delivery_address),
+            userAddressList!!,
+            Action2 { pos, item ->
+
+                mViewModel.selectedAddress = item
+                mViewModel.updateDefaultAddress()
+            },
+            mViewModel.selectedDeliveryAddressPos,
+            showClearText = false,
+            showIconImage = true,
+            showAddNewAddressText = true
         )
         fragment.show(childFragmentManager, fragment.tag)
     }
@@ -121,7 +184,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                     0 -> openGallery()
                     1 -> openCamera()
                 }
-            }, -1, showClearText = false, showIconImage = false
+            }, -1, showClearText = false, showIconImage = false, showAddNewAddressText = false
         )
         fragment.show(childFragmentManager, fragment.tag)
     }

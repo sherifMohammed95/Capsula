@@ -34,7 +34,7 @@
             android:textSize="@dimen/font_16"
             app:layout_constraintBottom_toBottomOf="@+id/back_toolbar_imageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/back_toolbar_imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/back_toolbar_imageView"
             tools:text="Brands" />
 

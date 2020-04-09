@@ -103,7 +103,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                     mViewModel.pageNo = 1
                     mViewModel.getSearchResults()
                 }
-            }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false)
+            }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false,
+                showAddNewAddressText = false
+            )
 
         fragment.show(supportFragmentManager, fragment.tag)
     }
