@@ -43,6 +43,8 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
     val registerRequest = RegisterRequest()
     var googleSignInAccount: GoogleSignInAccount? = null
 
+    var fromWhere = -1
+
     init {
         initRepository(mRepository)
         nameText.addCallback {

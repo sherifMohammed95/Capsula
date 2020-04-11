@@ -2,6 +2,7 @@ package com.freelance.capsoula.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseActivity
@@ -23,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_authentication.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
 import rx.functions.Action1
@@ -41,6 +43,22 @@ class AuthenticationActivity :
     private val mViewModel: AuthenticationViewModel by viewModel()
     private val socialUtils = SocialNetworkUtils()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getIntentsData()
+        openRegister()
+        subscribeToLiveData()
+
+        if (mViewModel.fromWhere == Constants.FROM_MORE)
+            skip_textView.visibility = View.INVISIBLE
+        else
+            skip_textView.visibility = View.VISIBLE
+    }
+
+    private fun getIntentsData() {
+        mViewModel.fromWhere = intent.getIntExtra(Constants.FROM_WHERE, -1)
+    }
+
     override fun getMyViewModel(): AuthenticationViewModel {
         return mViewModel
     }
@@ -54,13 +72,6 @@ class AuthenticationActivity :
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        openRegister()
-        subscribeToLiveData()
-    }
-
 
     override fun signInWithGoogle() {
         val signInIntent = socialUtils.initGoogleSignInClient(this).signInIntent

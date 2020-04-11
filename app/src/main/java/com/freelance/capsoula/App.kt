@@ -10,6 +10,7 @@ import com.freelance.capsoula.ui.categories.categoriesModule
 import com.freelance.capsoula.ui.checkout.fragment.cart.cartModule
 import com.freelance.capsoula.ui.checkout.fragment.details.checkoutDetailsModule
 import com.freelance.capsoula.ui.home.homeModule
+import com.freelance.capsoula.ui.more.moreModule
 import com.freelance.capsoula.ui.products.productsModule
 import com.freelance.capsoula.ui.search.searchModule
 import com.freelance.capsoula.ui.stores.storesModule
@@ -35,7 +36,7 @@ class App : Application() {
                 listOf(
                     networkModule, viewModelModule, authModule, addAddressModule, homeModule,
                     brandsModule, categoriesModule, storesModule, subCategoriesModule,
-                    productsModule, searchModule, cartModule, checkoutDetailsModule
+                    productsModule, searchModule, cartModule, checkoutDetailsModule, moreModule
                 )
             )
         }

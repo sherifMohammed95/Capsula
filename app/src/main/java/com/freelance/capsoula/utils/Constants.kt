@@ -48,6 +48,7 @@ object Constants {
     const val FROM_CART = 9
     const val FROM_CHECKOUT_DETAILS = 10
     const val FROM_PROFILE = 11
+    const val FROM_MORE = 12
 
 
     /**

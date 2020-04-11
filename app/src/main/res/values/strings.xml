@@ -106,5 +106,13 @@
     <string name="add_new_address"><u>Add New Address</u></string>
     <string name="thank_you_for_your_order">Thank you for your order</string>
     <string name="track_my_order"><u>Track My Order</u></string>
+    <string name="personal_details">Personal Details</string>
+    <string name="my_orders">My Orders</string>
+    <string name="manage_payment_methods">Manage Payment Methods</string>
+    <string name="help">Help</string>
+    <string name="share_earn">Share and Earn</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="faqs">FAQs</string>
+    <string name="logout">Logout</string>
 
 </resources>

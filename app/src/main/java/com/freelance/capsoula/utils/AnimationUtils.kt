@@ -28,7 +28,7 @@ object AnimationUtils {
             startRadius.toFloat(),
             endRadius.toFloat()
         )
-        anim.duration = 1700
+        anim.duration = 1500
         view.visibility = View.VISIBLE
         anim.start()
     }
@@ -47,7 +47,7 @@ object AnimationUtils {
             startRadius.toFloat(),
             endRadius.toFloat()
         )
-        anim.duration = 1700
+        anim.duration = 1500
         //        view.setVisibility(View.VISIBLE);
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
