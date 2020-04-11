@@ -7,7 +7,9 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityCheckoutBinding
 import com.freelance.capsoula.ui.checkout.fragment.cart.CartFragment
 import com.freelance.capsoula.ui.checkout.fragment.details.DetailsFragment
+import com.freelance.capsoula.ui.checkout.fragment.done.DoneFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.fragment.app.Fragment
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel>(),
     CheckoutNavigator {
@@ -40,17 +42,34 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
 
     override fun openCartFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, CartFragment())
+            .replace(R.id.container, CartFragment(), "Cart fragment")
             .commit()
     }
 
     override fun openDetailsFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, DetailsFragment())
+            .replace(R.id.container, DetailsFragment(), "Details fragment")
             .addToBackStack(null)
             .commit()
     }
 
     override fun openDoneFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, DoneFragment(), "Done fragment")
+            .addToBackStack(null)
+            .commit()
     }
+
+    override fun onBackPressed() {
+        val doneFragment = supportFragmentManager.findFragmentByTag("Done fragment")
+        val cartFragment = supportFragmentManager.findFragmentByTag("Cart fragment")
+        val detailsFragment = supportFragmentManager.findFragmentByTag("Details fragment")
+
+        if ((doneFragment != null && doneFragment.isVisible) ||
+            (cartFragment != null && cartFragment.isVisible))
+            finish()
+        else if (detailsFragment != null && detailsFragment.isVisible)
+            supportFragmentManager.popBackStack()
+    }
+
 }

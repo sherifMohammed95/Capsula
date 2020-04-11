@@ -104,5 +104,7 @@
     <string name="please_add_prescription">Please add prescription</string>
     <string name="please_add_your_payment_method">Please add your payment method</string>
     <string name="add_new_address"><u>Add New Address</u></string>
+    <string name="thank_you_for_your_order">Thank you for your order</string>
+    <string name="track_my_order"><u>Track My Order</u></string>
 
 </resources>

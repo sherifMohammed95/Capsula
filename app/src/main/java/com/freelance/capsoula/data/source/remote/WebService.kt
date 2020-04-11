@@ -1,9 +1,7 @@
 package com.freelance.capsoula.data.source.remote
 
 import com.freelance.base.BaseResponse
-import com.freelance.capsoula.data.Brand
-import com.freelance.capsoula.data.Cart
-import com.freelance.capsoula.data.Product
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.requests.*
 import com.freelance.capsoula.data.responses.*
 import retrofit2.Response
@@ -134,7 +132,7 @@ interface WebService {
 
     @POST("Cart/Add")
     suspend fun addProductsToCart(
-        @Body cartItems: ArrayList<Cart>
+        @Body cartRequestItems: ArrayList<CartRequest>
     ): Response<BaseResponse<ProductsResponse>>
 
     @DELETE("Cart/Delete/{mainId}")
@@ -146,9 +144,19 @@ interface WebService {
     suspend fun deleteCart(): Response<BaseResponse<String>>
 
     @PUT("Cart/Update")
-    suspend fun updateCart(@Body cart: Cart): Response<BaseResponse<ProductsResponse>>
+    suspend fun updateCart(@Body cartRequest: CartRequest): Response<BaseResponse<ProductsResponse>>
 
     @PUT("UserProfile/UpdateDefaultAddress/{addressId}")
     suspend fun updateDefaultAddress(@Path("addressId") addressId: Int):
             Response<BaseResponse<AuthenticationResponse>>
+
+    @GET("Cart/GetContent")
+    suspend fun getUpdatedCart(): Response<BaseResponse<UserCartResponse>>
+
+    @GET("Cart/Validate")
+    suspend fun validateCart(): Response<BaseResponse<String>>
+
+    @POST("Checkout")
+    suspend fun submitCheckoutDetails(@Body request: CheckoutDetailsRequest): Response<BaseResponse<String>>
+
 }

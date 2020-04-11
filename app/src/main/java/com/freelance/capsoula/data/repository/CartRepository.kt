@@ -1,10 +1,7 @@
 package com.freelance.capsoula.data.repository
 
-import com.freelance.base.BaseResponse
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
-import com.freelance.capsoula.data.responses.ProductsResponse
-import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
 import kotlinx.coroutines.CoroutineScope
@@ -16,13 +13,14 @@ class CartRepository : BaseRepository() {
 
     val cartResponse = SingleLiveEvent<ArrayList<Product>>()
     val deleteCartResponse = SingleLiveEvent<Void>()
+    val validCart = SingleLiveEvent<Void>()
 
-    suspend fun addProductsToCart(cartItems:ArrayList<Cart>) {
+    suspend fun addProductsToCart(cartRequestItems:ArrayList<CartRequest>) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
             }
-            val response = webService.addProductsToCart(cartItems)
+            val response = webService.addProductsToCart(cartRequestItems)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
                     showLoadingLayout.value = false
@@ -37,7 +35,7 @@ class CartRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        addProductsToCart(cartItems)
+                        addProductsToCart(cartRequestItems)
                     }
                 })
             }
@@ -98,12 +96,12 @@ class CartRepository : BaseRepository() {
         }
     }
 
-    suspend fun updateCart(cart: Cart) {
+    suspend fun updateCart(cartRequest: CartRequest) {
         try {
             withContext(Dispatchers.Main) {
                 progressLoading.value = true
             }
-            val response = webService.updateCart(cart)
+            val response = webService.updateCart(cartRequest)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
                     progressLoading.value = false
@@ -118,7 +116,35 @@ class CartRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        updateCart(cart)
+                        updateCart(cartRequest)
+                    }
+                })
+            }
+        }
+    }
+
+
+    suspend fun validateCart() {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.validateCart()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    validCart.call()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        validateCart()
                     }
                 })
             }

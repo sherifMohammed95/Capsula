@@ -75,7 +75,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun calCostDetails(){
+    private fun calCostDetails() {
         var total = 0.0
         var prodPrice: Double
         UserDataSource.getUser()?.cartContent?.forEach {
@@ -87,15 +87,23 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
             total += (it.quantity * prodPrice)
         }
 
-        estimated_total_value.text = Domain.application.getString(R.string.rsd) + " " + total
-        items_cost_value.text = Domain.application.getString(R.string.rsd) + " " + total
-        delivery_cost_value.text = Domain.application.getString(R.string.rsd) + " " + 0.0
+        estimated_total_value.text = total.toString()
+        items_cost_value.text = total.toString()
+        delivery_cost_value.text = " " + 0.0
     }
 
     private fun subscribeToLiveData() {
         mViewModel.updateDefaultAddressResponse.observe(viewLifecycleOwner, Observer {
             mViewModel.setSelectedAddressPos()
             mViewModel.deliveryAddressText.set(mViewModel.selectedAddress.text)
+        })
+
+        mViewModel.successEvent.observe(viewLifecycleOwner, Observer {
+            if (mViewModel.selectedPaymentMethodValue == Constants.CASH)
+                (activity as CheckoutActivity).openDoneFragment()
+            else {
+
+            }
         })
     }
 
@@ -131,7 +139,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                 mViewModel.selectedPaymentMethodPos = pos
                 mViewModel.paymentMethodText.set(item.text)
                 when (pos) {
-                    0 ->mViewModel.selectedPaymentMethodValue = Constants.CASH
+                    0 -> mViewModel.selectedPaymentMethodValue = Constants.CASH
                     1 -> mViewModel.selectedPaymentMethodValue = Constants.CRDIT_CARD
                     2 -> mViewModel.selectedPaymentMethodValue = Constants.GOOGLE_PAY
                     3 -> mViewModel.selectedPaymentMethodValue = Constants.STC_PAY

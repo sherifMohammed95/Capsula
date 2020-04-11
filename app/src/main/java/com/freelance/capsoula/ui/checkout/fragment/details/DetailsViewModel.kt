@@ -9,6 +9,7 @@ import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.custom.bottomSheet.BottomSheetModel
 import com.freelance.capsoula.data.UserAddress
 import com.freelance.capsoula.data.repository.UserRepository
+import com.freelance.capsoula.data.requests.CheckoutDetailsRequest
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -39,10 +40,12 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     var selectedDeliveryAddressPos = -1
 
     var updateDefaultAddressResponse = SingleLiveEvent<Void>()
+    var successEvent = SingleLiveEvent<Void>()
 
     init {
         initRepository(repo)
         this.updateDefaultAddressResponse = repo.updateDefaultAddressResponse
+        this.successEvent = repo.successEvent
         showPrescription.set(UserDataSource.getUser()?.cartContent?.find { it.isTreatment } != null)
         setImageUri()
         setSelectedAddressPos()
@@ -90,8 +93,7 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     fun nextAction() {
         if (!validate())
             return
-
-        //todo call checkout api
+        submitCheckoutDetails()
     }
 
     private fun validate(): Boolean {
@@ -113,6 +115,17 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     fun updateDefaultAddress() {
         viewModelScope.launch(IO) {
             repo.updateDefaultAddress(selectedAddress.selectionID!!)
+        }
+    }
+
+    fun submitCheckoutDetails() {
+        val request = CheckoutDetailsRequest()
+        request.insuranceNumberImage = insuranceNumberBase64
+        request.prescriptionImage = prescriptionBase64
+        request.paymentMethodType = this.selectedPaymentMethodValue
+
+        viewModelScope.launch(IO) {
+            repo.submitCheckoutDetails(request)
         }
     }
 

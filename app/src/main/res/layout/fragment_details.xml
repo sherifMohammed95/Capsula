@@ -35,6 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_20"
                     android:layout_marginEnd="@dimen/dimen_22"
                     android:orientation="vertical"
                     android:visibility="@{vm.showPrescription?View.VISIBLE:View.GONE}">
@@ -331,48 +332,81 @@
                             android:id="@+id/delivery_cost_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_16"
-                            android:layout_marginEnd="@dimen/dimen_65"
-                            android:gravity="end"
+                            android:layout_marginStart="@dimen/dimen_5"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/delivery_cost_label"
+                            app:layout_constraintStart_toEndOf="@+id/delivery_cost_rsd"
                             app:layout_constraintTop_toTopOf="@+id/delivery_cost_label"
-                            tools:text="RSD 50" />
+                            tools:text="50" />
 
                         <TextView
                             android:id="@+id/estimated_total_value"
                             style="@style/bold"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_16"
-                            android:layout_marginEnd="@dimen/dimen_65"
-                            android:gravity="end"
+                            android:layout_marginStart="@dimen/dimen_5"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/font_15"
                             app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/estimate_total_label"
+                            app:layout_constraintStart_toEndOf="@+id/estimated_total_rsd"
                             app:layout_constraintTop_toTopOf="@+id/estimate_total_label"
-                            tools:text="RSD 999" />
+                            tools:text="999" />
 
 
                         <TextView
                             android:id="@+id/items_cost_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_16"
-                            android:layout_marginEnd="@dimen/dimen_65"
-                            android:gravity="end"
+                            android:layout_marginStart="@dimen/dimen_5"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/items_cost_label"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/items_cost_label"
+                            app:layout_constraintStart_toEndOf="@+id/items_cost_rsd"
                             app:layout_constraintTop_toTopOf="@+id/items_cost_label"
-                            tools:text="RSD 500" />
+                            tools:text="500" />
+
+                        <TextView
+                            android:id="@+id/items_cost_rsd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_90"
+                            android:text="@string/rsd"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/items_cost_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/items_cost_label" />
+
+
+                        <TextView
+                            android:id="@+id/delivery_cost_rsd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_90"
+                            android:text="@string/rsd"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/delivery_cost_label" />
+
+                        <TextView
+                            android:id="@+id/estimated_total_rsd"
+                            style="@style/bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="87dp"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/font_15"
+                            android:text="@string/rsd"
+                            app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/estimate_total_label" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -383,8 +417,8 @@
                     android:layout_width="180dp"
                     android:layout_height="@dimen/dimen_65"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_40"
-                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
                     android:background="@drawable/button_rounded_bg"
                     android:onClick="@{()->vm.nextAction()}"
                     android:text="@string/next"

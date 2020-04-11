@@ -2,13 +2,11 @@ package com.freelance.capsoula.ui.checkout.fragment.cart
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.R
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.CartRepository
-import com.freelance.capsoula.data.responses.ProductsResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.Domain
@@ -24,14 +22,16 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
     var deleteCartResponse = SingleLiveEvent<Void>()
     var emptyCartEvent = SingleLiveEvent<Void>()
     var deleteCartEvent = SingleLiveEvent<Void>()
+    var validCart = SingleLiveEvent<Void>()
     var cartList = ArrayList<Product>()
-    private var cartItems = ArrayList<Cart>()
+    private var cartItems = ArrayList<CartRequest>()
     var mProduct = Product()
 
     init {
         initRepository(repo)
         this.cartResponse = repo.cartResponse
         this.deleteCartResponse = repo.deleteCartResponse
+        this.validCart = repo.validCart
     }
 
 
@@ -43,7 +43,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
     fun nextAction() {
         if (UserDataSource.getUser() != null) {
             if (!cartList.isNullOrEmpty()) {
-                navigator?.openDetailsStep()
+                validateCart()
             } else {
                 emptyCartEvent.call()
             }
@@ -58,7 +58,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
         } else {
             if (UserDataSource.getUserCartSize() > 0) {
                 if (UserDataSource.getUser()?.cartContent!!.size > 0) {
-                    addLocalCartToUserCart()
+                    combineLocalCartWithUserCart()
                 } else
                     cartList = UserDataSource.getUserCart()
                 addProductsToCart()
@@ -69,7 +69,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
         }
     }
 
-    private fun addLocalCartToUserCart() {
+    private fun combineLocalCartWithUserCart() {
         if (UserDataSource.getUser()?.cartContent!!.size > UserDataSource.getUserCartSize()) {
             UserDataSource.getUser()?.cartContent!!.forEach { product ->
                 val localProd =
@@ -101,7 +101,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
         cartItems = ArrayList()
         if (!cartList.isNullOrEmpty()) {
             cartList.forEach {
-                val cart = Cart()
+                val cart = CartRequest()
                 cart.mainId = it.mainId
                 cart.quantity = it.quantity
                 cartItems.add(cart)
@@ -122,8 +122,14 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
         }
     }
 
+    fun validateCart() {
+        viewModelScope.launch(IO) {
+            repo.validateCart()
+        }
+    }
+
     fun updateCart(actionType: Int) {
-        val cart = Cart()
+        val cart = CartRequest()
         cart.mainId = mProduct.mainId
         if (actionType == 1)
             cart.quantity = mProduct.quantity + 1

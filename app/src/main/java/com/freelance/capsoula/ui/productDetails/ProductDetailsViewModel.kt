@@ -3,7 +3,7 @@ package com.freelance.capsoula.ui.productDetails
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -39,7 +39,7 @@ class ProductDetailsViewModel(val mRepository: ProductsRepository) :
     }
 
    private fun addProductToCart() {
-        val cart = Cart()
+        val cart = CartRequest()
         cart.mainId = product.mainId
         cart.quantity = 1
         viewModelScope.launch(Dispatchers.IO) {

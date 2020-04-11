@@ -1,7 +1,7 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.base.BaseResponse
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.responses.ProductsResponse
 import com.freelance.capsoula.utils.Constants
@@ -187,12 +187,12 @@ class ProductsRepository : BaseRepository() {
         }
     }
 
-    suspend fun updateCart(cart: Cart) {
+    suspend fun updateCart(cartRequest: CartRequest) {
         try {
             withContext(Dispatchers.Main) {
                 progressLoading.value = true
             }
-            val response = webService.updateCart(cart)
+            val response = webService.updateCart(cartRequest)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
                     progressLoading.value = false
@@ -207,7 +207,7 @@ class ProductsRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        updateCart(cart)
+                        updateCart(cartRequest)
                     }
                 })
             }

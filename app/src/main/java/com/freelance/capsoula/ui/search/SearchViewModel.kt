@@ -5,9 +5,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
-import com.freelance.capsoula.data.repository.CartRepository
 import com.freelance.capsoula.data.repository.SearchRepository
 import com.freelance.capsoula.data.responses.ProductsResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -47,7 +46,7 @@ class SearchViewModel(private val mRepository: SearchRepository) :
     }
 
     fun addProductToCart() {
-        val cart = Cart()
+        val cart = CartRequest()
         cart.mainId = mProduct.mainId
         cart.quantity = 1
         viewModelScope.launch(IO) {

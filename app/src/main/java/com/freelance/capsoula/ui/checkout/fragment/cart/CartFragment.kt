@@ -38,8 +38,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        if (mViewModel.cartList.isNullOrEmpty())
-            mViewModel.fetchCartList()
+        mViewModel.fetchCartList()
         updateDataView()
         subscribeToLiveData()
     }
@@ -82,6 +81,10 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
             } else {
                 mViewModel.deleteCart()
             }
+        })
+
+        mViewModel.validCart.observe(viewLifecycleOwner, Observer {
+            openDetailsStep()
         })
     }
 

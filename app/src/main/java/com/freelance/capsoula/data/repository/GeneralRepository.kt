@@ -40,4 +40,26 @@ class GeneralRepository : BaseRepository() {
             }
         }
     }
+
+    suspend fun getUpdatedCart(){
+        try {
+
+            val response = webService.getUpdatedCart()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    if(!response.body()?.data?.list.isNullOrEmpty()){
+                        val user = UserDataSource.getUser()
+                        user?.cartContent = response.body()?.data?.list
+                        UserDataSource.saveUser(user)
+                    } else {
+                        val user = UserDataSource.getUser()
+                        user?.cartContent = ArrayList()
+                        UserDataSource.saveUser(user)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+    }
 }

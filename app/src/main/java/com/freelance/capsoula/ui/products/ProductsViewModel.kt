@@ -3,7 +3,7 @@ package com.freelance.capsoula.ui.products
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
-import com.freelance.capsoula.data.Cart
+import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Category
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.ProductsRepository
@@ -66,7 +66,7 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     }
 
     fun addProductToCart() {
-        val cart = Cart()
+        val cart = CartRequest()
         cart.mainId = mProduct.mainId
         cart.quantity = 1
         viewModelScope.launch(Dispatchers.IO) {

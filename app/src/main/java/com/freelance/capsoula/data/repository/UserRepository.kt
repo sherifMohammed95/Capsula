@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
+import com.freelance.capsoula.data.requests.CheckoutDetailsRequest
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
@@ -14,6 +15,7 @@ class UserRepository : BaseRepository() {
 
     val addAddressResponse = SingleLiveEvent<Void>()
     val updateDefaultAddressResponse = SingleLiveEvent<Void>()
+    val successEvent = SingleLiveEvent<Void>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -49,7 +51,6 @@ class UserRepository : BaseRepository() {
         }
     }
 
-
     suspend fun updateDefaultAddress(addressId:Int) {
 
         try {
@@ -75,6 +76,33 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         updateDefaultAddress(addressId)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun submitCheckoutDetails(request: CheckoutDetailsRequest) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.submitCheckoutDetails(request)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    successEvent.call()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        submitCheckoutDetails(request)
                     }
                 })
             }

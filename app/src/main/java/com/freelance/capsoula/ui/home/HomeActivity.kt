@@ -60,6 +60,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     override fun onResume() {
         super.onResume()
         mViewModel.updateToolbarData()
+        mViewModel.loadUpdatedCart()
     }
 
     private fun initRecyclerViews() {
