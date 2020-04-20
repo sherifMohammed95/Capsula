@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="order"
+            type="com.freelance.capsoula.data.Order" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_16"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/dimen_20"
+        app:cardElevation="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/status_textView"
+                style="@style/bold"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@drawable/button_rounded_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_20"
+                android:paddingEnd="@dimen/dimen_20"
+                android:text="@{order.orderStatus}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pending" />
+
+            <TextView
+                android:id="@+id/order_date_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:text="@string/order_date"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@+id/status_textView"
+                app:layout_constraintTop_toBottomOf="@+id/status_textView" />
+
+            <TextView
+                android:id="@+id/total_price_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_45"
+                android:text="@string/total_price"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/status_textView" />
+
+            <TextView
+                android:id="@+id/order_date_value"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:text="@{order.orderDateText}"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_18"
+                app:layout_constraintStart_toStartOf="@+id/status_textView"
+                app:layout_constraintTop_toBottomOf="@+id/order_date_textView"
+                tools:text="1 JAN 2020" />
+
+            <TextView
+                android:id="@+id/rsd"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_3"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:text="@string/rsd"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_18"
+                app:layout_constraintStart_toStartOf="@+id/total_price_textView"
+                app:layout_constraintTop_toBottomOf="@+id/total_price_textView" />
+
+
+            <TextView
+                android:id="@+id/price_value"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_3"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:text="@{order.finalCost}"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_18"
+                app:layout_constraintStart_toEndOf="@+id/rsd"
+                app:layout_constraintTop_toBottomOf="@+id/total_price_textView"
+                tools:text="5000" />
+
+            <TextView
+                android:id="@+id/deliver_address_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:text="@string/delivery_address"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@+id/status_textView"
+                app:layout_constraintTop_toBottomOf="@+id/order_date_value" />
+
+
+            <TextView
+                android:id="@+id/address_value"
+                style="@style/medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:text="@{order.deliveryAddress}"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/status_textView"
+                app:layout_constraintTop_toBottomOf="@+id/deliver_address_textView"
+                tools:text="1 JAN 2020" />
+
+            <TextView
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_16"
+                android:layout_marginBottom="@dimen/dimen_16"
+                android:text="@string/more_details"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address_value" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

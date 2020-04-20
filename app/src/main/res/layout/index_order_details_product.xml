@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="product"
+            type="com.freelance.capsoula.data.Product" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_16"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/dimen_20"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/product_imageView"
+                imageURL="@{product.imagePath}"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:scaleType="centerCrop"
+                tools:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/product_name_textView"
+                style="@style/medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_6"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLines="2"
+                android:text="@{product.productName}"
+                android:textColor="@color/colorBlack50"
+                android:textSize="@dimen/font_12"
+                tools:text="Babies sherif sherif Men anti-perspirant
+cool kick Men anti-perspirant
+cool kick Men anti-perspirant
+cool kick" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:text="@{product.orderDetailsQuantityText}"
+                android:layout_marginBottom="@dimen/dimen_3"
+                android:textColor="@color/colorLabelText50"
+                android:textSize="@dimen/font_12"
+                tools:text="2 Pieces" />
+
+
+            <TextView
+                android:id="@+id/price_textView"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_3"
+                android:text="@{product.priceDetailsText}"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12"
+                tools:text="170 RSD" />
+
+            <TextView
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:text="@{product.vatText}"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12"
+                tools:text="170 RSD" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

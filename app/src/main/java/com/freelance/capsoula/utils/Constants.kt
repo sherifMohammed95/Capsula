@@ -24,12 +24,13 @@ object Constants {
     const val EXTRA_SELECTION_TITLE = "selection_title"
     const val EXTRA_SELECTION_LIST = "selection_list"
     const val EXTRA_PRODUCT = "product"
+    const val EXTRA_ORDER = "order"
 
 
     /**
      * APIs Constants
      * **/
-    const val BASE_URL = "http://capsula-001-site1.atempurl.com/api/"
+    const val BASE_URL = "http://capsulav2-001-site1.itempurl.com/api/"
     const val CONTENT_TYPE = "application/json"
 
 
@@ -75,8 +76,8 @@ object Constants {
      * Payment methods
      * **/
     const val CASH = 1
-    const val CRDIT_CARD = 2
+    const val CRDIT_CARD = 4
     const val STC_PAY = 3
-    const val MADA = 6
-    const val GOOGLE_PAY = 7
+    const val MADA = 5
+    const val GOOGLE_PAY = 6
 }

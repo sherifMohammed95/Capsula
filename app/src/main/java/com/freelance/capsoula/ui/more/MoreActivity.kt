@@ -15,6 +15,7 @@ import com.freelance.capsoula.databinding.ActivityMoreBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
+import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
 import io.reactivex.functions.Action
@@ -96,7 +97,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     }
 
     override fun openMyOrders() {
-
+        startActivity(Intent(this, MyOrdersActivity::class.java))
     }
 
     override fun openPersonalDetails() {

@@ -73,6 +73,19 @@ object DateUtils {
         return res
     }
 
+    fun reformatOrderDate(date: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH)
+        val output = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val d = sdf.parse(date)
+        return output.format(d!!)
+    }
+
+    fun getOrderDate(date:String):String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val output = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+        val d = sdf.parse(date)
+        return output.format(d!!)
+    }
     fun getDayName(dateStr: String): String {
         // dd/MM/yyyy
         var date: Date? = null

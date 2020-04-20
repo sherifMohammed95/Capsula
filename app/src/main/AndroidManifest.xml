@@ -24,6 +24,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.orderDetails.OrderDetailsActivity"></activity>
+        <activity
+            android:name=".ui.myOrders.MyOrdersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.more.MoreActivity"
             android:screenOrientation="portrait"

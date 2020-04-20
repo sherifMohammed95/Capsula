@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.source.remote
 
 import com.freelance.base.BaseResponse
+import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.requests.*
 import com.freelance.capsoula.data.responses.*
@@ -158,5 +159,11 @@ interface WebService {
 
     @POST("Checkout")
     suspend fun submitCheckoutDetails(@Body request: CheckoutDetailsRequest): Response<BaseResponse<String>>
+
+    @GET("Order/GetOrders")
+    suspend fun getOrders(): Response<BaseResponse<OrdersResponse>>
+
+    @GET("Order/GetOrderDetails")
+    suspend fun getOrderDetails(@Query("orderId") orderId:Int): Response<BaseResponse<Order>>
 
 }

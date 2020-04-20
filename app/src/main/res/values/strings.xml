@@ -86,7 +86,7 @@
     <string name="preferred_payment_method">Preferred Payment Method</string>
     <string name="add_your_payment_method">Add your payment method</string>
     <string name="do_you_have_a_promo_code"><u>Do you have a promo code ?</u></string>
-    <string name="cost_details">Cost Details</string>
+    <string name="cost_details">Payment Details</string>
     <string name="items_cost">Items Cost</string>
     <string name="estimated_total">Estimated Total</string>
     <string name="delivery_cost">Delivery Cost</string>
@@ -114,5 +114,23 @@
     <string name="enable_notifications">Enable Notifications</string>
     <string name="faqs">FAQs</string>
     <string name="logout">Logout</string>
+    <string name="order_date">Order Date</string>
+    <string name="total_price">Total Price</string>
+    <string name="more_details"><u>More Details</u></string>
+    <string name="pending">Pending</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="rejected">Rejected</string>
+    <string name="approved">Approved</string>
+    <string name="shipped">Shipped</string>
+    <string name="delivered">Delivered</string>
+    <string name="order_details">Order Details</string>
+    <string name="track_order"><u>Track Order</u></string>
+    <string name="documents">Documents</string>
+    <string name="prescription">Prescription</string>
+    <string name="products_details">Products Details</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="reorder">Reorder</string>
+    <string name="vat">VAT</string>
+    <string name="pieces">Pieces</string>
 
 </resources>

@@ -10,13 +10,15 @@ class Product {
     var productName: String? = ""
     var productDesc: String? = ""
     var imagePath: String? = ""
-    var price = 0
+    var price = 0.0
     var storeName: String? = ""
     var isTreatment = false
     var offerDesc: String? = ""
     var offerType: Int? = -1
-    var priceInOffer: Int? = null
+    var priceInOffer: Double? = null
     var quantity = 1
+    var vat: Int? = 0
+    var offerExpirationDate: String? = null
 
 
     fun getQuantityText(): String {
@@ -25,6 +27,15 @@ class Product {
 
     fun getPriceText(): String {
         return Domain.application.getString(R.string.rsd) + " " + price.toString()
+    }
+
+    fun getVatText(): String {
+        return Domain.application.getString(R.string.vat) + " " +
+                Domain.application.getString(R.string.rsd) + " " + vat.toString()
+    }
+
+    fun getOrderDetailsQuantityText(): String {
+        return  quantity.toString() + " " + Domain.application.getString(R.string.pieces)
     }
 
     fun getWasPriceText(): String {
