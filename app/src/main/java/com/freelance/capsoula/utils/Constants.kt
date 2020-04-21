@@ -25,6 +25,7 @@ object Constants {
     const val EXTRA_SELECTION_LIST = "selection_list"
     const val EXTRA_PRODUCT = "product"
     const val EXTRA_ORDER = "order"
+    const val EXTRA_ORDER_ID = "order_id"
 
 
     /**

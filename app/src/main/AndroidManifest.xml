@@ -24,7 +24,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.orderDetails.OrderDetailsActivity"></activity>
+        <activity android:name=".ui.orderTracking.OrderTrackingActivity"></activity>
+        <activity android:name=".ui.orderDetails.OrderDetailsActivity" />
         <activity
             android:name=".ui.myOrders.MyOrdersActivity"
             android:screenOrientation="portrait"

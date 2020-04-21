@@ -16,6 +16,7 @@ import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.MoreViewModel
 import com.freelance.capsoula.ui.myOrders.MyOrdersViewModel
 import com.freelance.capsoula.ui.orderDetails.OrderDetailsViewModel
+import com.freelance.capsoula.ui.orderTracking.OrderTrackingViewModel
 import com.freelance.capsoula.ui.productDetails.ProductDetailsViewModel
 import com.freelance.capsoula.ui.products.ProductsViewModel
 import com.freelance.capsoula.ui.resetPassword.ResetPasswordViewModel
@@ -49,4 +50,5 @@ val viewModelModule = module {
     viewModel<DoneViewModel>()
     viewModel<MyOrdersViewModel>()
     viewModel<OrderDetailsViewModel>()
+    viewModel<OrderTrackingViewModel>()
 }

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.freelance.capsoula.data.OrderTracking" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.orderTracking.OrderTrackingViewModel" />
+
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.orderTracking.OrderTrackingNavigator" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScreenBg"
+        tools:context=".ui.orderTracking.OrderTrackingActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/order_tracking_toolbar"
+                    app:navigator="@{navigator}" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_marginEnd="@dimen/dimen_12"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/estimated_date_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:text="@string/estimated_date"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/estimated_date_value"
+                            style="@style/medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="@{item.estimatedDate}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_18"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/estimated_date_label"
+                            tools:text="Sat 10 jan" />
+
+                        <TextView
+                            android:id="@+id/estimated_time_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:text="@string/estimated_time"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/estimated_time_value"
+                            style="@style/medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="@{item.estimatedTime}"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_18"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/estimated_time_label"
+                            app:layout_constraintTop_toBottomOf="@+id/estimated_time_label"
+                            tools:text="12:00 PM" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_tracking_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/index_order_tracking" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <include
+            layout="@layout/loading_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

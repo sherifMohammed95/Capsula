@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.orderDetails
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.databinding.ActivityOrderDetailsBinding
 import com.freelance.capsoula.ui.orderDetails.adapters.ProductsDetailsAdapter
+import com.freelance.capsoula.ui.orderTracking.OrderTrackingActivity
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_order_details.*
@@ -74,7 +76,9 @@ class OrderDetailsActivity : BaseActivity<ActivityOrderDetailsBinding, OrderDeta
     }
 
     override fun trackOrderAction() {
-
+        val intent = Intent(this, OrderTrackingActivity::class.java)
+        intent.putExtra(Constants.EXTRA_ORDER_ID, mViewModel.orderId)
+        startActivity(intent)
     }
 
 }

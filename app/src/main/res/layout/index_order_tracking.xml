@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.freelance.capsoula.data.OrderTracking" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.estimatedTime}"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="@+id/order_tracking_imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/order_tracking_imageView"
+            tools:text="10 Jan" />
+
+        <ImageView
+            android:id="@+id/order_tracking_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:src="@drawable/ic_order_tracking"
+            app:layout_constraintStart_toEndOf="@+id/time_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent20"
+            app:layout_constraintEnd_toEndOf="@+id/order_tracking_imageView"
+            app:layout_constraintStart_toStartOf="@+id/order_tracking_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/order_tracking_imageView" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:text="@{item.orderStatus}"
+            android:textColor="@color/colorLabelText"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="@+id/order_tracking_imageView"
+            app:layout_constraintStart_toEndOf="@+id/order_tracking_imageView"
+            app:layout_constraintTop_toTopOf="@+id/order_tracking_imageView"
+            tools:text="Order is pending" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

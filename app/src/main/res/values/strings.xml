@@ -132,5 +132,9 @@
     <string name="reorder">Reorder</string>
     <string name="vat">VAT</string>
     <string name="pieces">Pieces</string>
+    <string name="order_tracking">Order Tracking</string>
+    <string name="estimated_date">Estimated Date</string>
+    <string name="estimated_time">Estimated Time</string>
+    <string name="order_is">Order is</string>
 
 </resources>

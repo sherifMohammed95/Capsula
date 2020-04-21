@@ -86,6 +86,21 @@ object DateUtils {
         val d = sdf.parse(date)
         return output.format(d!!)
     }
+
+    fun getEstimatedOrderTime(date:String):String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val output = SimpleDateFormat("HH:mm a", Locale.ENGLISH)
+        val d = sdf.parse(date)
+        return output.format(d!!)
+    }
+
+    fun getEstimatedOrderDate(date:String):String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val output = SimpleDateFormat("EEE dd MMM", Locale.ENGLISH)
+        val d = sdf.parse(date)
+        return output.format(d!!)
+    }
+
     fun getDayName(dateStr: String): String {
         // dd/MM/yyyy
         var date: Date? = null
