@@ -78,30 +78,6 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
 
     private fun combineOrderProductsWithUserCart() {
         val productsTemp = ArrayList<Product>()
-//        if (cartList.size > mOrder?.products?.size!!) {
-//            cartList.forEachIndexed { index, product ->
-//                val prod =
-//                    mOrder?.products?.find { it.mainId == product.mainId }
-//                if (prod != null) {
-//                    val quantity = prod.quantity + product.quantity
-//                    cartList[index].quantity = quantity
-//                } else
-//                    productsTemp.add(product)
-//            }
-//        } else {
-//            mOrder?.products?.forEachIndexed { index, product ->
-//                val prod =
-//                    cartList.find { it.mainId == product.mainId }
-//                if (prod != null) {
-//                    val quantity = prod.quantity + product.quantity
-//                    cartList[index].quantity = quantity
-//                } else
-//                    productsTemp.add(product)
-//            }
-//
-//        }
-
-
 
         mOrder?.products?.forEachIndexed { index, product ->
             val prod =
@@ -112,7 +88,6 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
             } else
                 productsTemp.add(product)
         }
-
 
         if (productsTemp.size > 0)
             cartList.addAll(productsTemp)
