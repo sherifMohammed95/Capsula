@@ -11,16 +11,32 @@ import kotlinx.coroutines.launch
 
 class OrderDetailsViewModel(val repo: OrdersRepository) : BaseViewModel<OrderDetailsNavigator>() {
     var orderDetailsResponse = SingleLiveEvent<BaseResponse<Order>>()
-    var orderId = -1
+    var cancelOrderResponse = SingleLiveEvent<String>()
+    var mOrder = Order()
 
     init {
         initRepository(repo)
         this.orderDetailsResponse = repo.orderDetailsResponse
+        this.cancelOrderResponse = repo.cancelOrderResponse
     }
 
     fun loadOrderDetails() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.getOrderDetails(orderId)
+            repo.getOrderDetails(mOrder.id)
         }
     }
+
+    fun buttonAction() {
+        if (mOrder.hasCancelAction())
+            cancelOrder()
+        else
+            navigator?.openCheckout()
+    }
+
+    private fun cancelOrder() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.cancelOrder(mOrder.id)
+        }
+    }
+
 }

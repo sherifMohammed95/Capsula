@@ -169,4 +169,6 @@ interface WebService {
     @GET("Order/GetOrderTracking")
     suspend fun getOrderTracking(@Query("orderId") orderId:Int): Response<BaseResponse<OrderTrackingResponse>>
 
+    @PUT("Order/cancelOrder")
+    suspend fun cancelOrder(@Query("orderId") orderId:Int): Response<BaseResponse<String>>
 }

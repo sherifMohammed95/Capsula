@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.CartRepository
@@ -26,6 +27,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
     var cartList = ArrayList<Product>()
     private var cartItems = ArrayList<CartRequest>()
     var mProduct = Product()
+    var mOrder: Order? = null
 
     init {
         initRepository(repo)
@@ -61,12 +63,59 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
                     combineLocalCartWithUserCart()
                 } else
                     cartList = UserDataSource.getUserCart()
-                addProductsToCart()
+//                addProductsToCart()
             } else {
                 cartList = UserDataSource.getUser()?.cartContent!!
 //                updateDataView()
             }
+
+            if (mOrder != null) {
+                combineOrderProductsWithUserCart()
+            }
+            addProductsToCart()
         }
+    }
+
+    private fun combineOrderProductsWithUserCart() {
+        val productsTemp = ArrayList<Product>()
+//        if (cartList.size > mOrder?.products?.size!!) {
+//            cartList.forEachIndexed { index, product ->
+//                val prod =
+//                    mOrder?.products?.find { it.mainId == product.mainId }
+//                if (prod != null) {
+//                    val quantity = prod.quantity + product.quantity
+//                    cartList[index].quantity = quantity
+//                } else
+//                    productsTemp.add(product)
+//            }
+//        } else {
+//            mOrder?.products?.forEachIndexed { index, product ->
+//                val prod =
+//                    cartList.find { it.mainId == product.mainId }
+//                if (prod != null) {
+//                    val quantity = prod.quantity + product.quantity
+//                    cartList[index].quantity = quantity
+//                } else
+//                    productsTemp.add(product)
+//            }
+//
+//        }
+
+
+
+        mOrder?.products?.forEachIndexed { index, product ->
+            val prod =
+                cartList.find { it.mainId == product.mainId }
+            if (prod != null) {
+                val quantity = prod.quantity + product.quantity
+                cartList[index].quantity = quantity
+            } else
+                productsTemp.add(product)
+        }
+
+
+        if (productsTemp.size > 0)
+            cartList.addAll(productsTemp)
     }
 
     private fun combineLocalCartWithUserCart() {

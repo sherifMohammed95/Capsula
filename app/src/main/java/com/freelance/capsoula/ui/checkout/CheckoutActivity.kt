@@ -10,6 +10,9 @@ import com.freelance.capsoula.ui.checkout.fragment.details.DetailsFragment
 import com.freelance.capsoula.ui.checkout.fragment.done.DoneFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.fragment.app.Fragment
+import com.freelance.capsoula.data.Order
+import com.freelance.capsoula.utils.Constants
+import com.google.gson.Gson
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel>(),
     CheckoutNavigator {
@@ -18,7 +21,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        openCartFragment()
+        getIntentsData()
 
         viewDataBinding?.toolbar?.backToolbarImageView?.setOnClickListener {
             finish()
@@ -40,9 +43,18 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
         mViewModel.navigator = this
     }
 
+    private fun getIntentsData() {
+        mViewModel.fromWhere = intent.getIntExtra(Constants.FROM_WHERE,-1)
+        if(mViewModel.fromWhere == Constants.FROM_ORDER_DETAILS)
+            mViewModel.mOrder = Gson().fromJson(intent.getStringExtra(Constants.EXTRA_ORDER),
+                Order::class.java)
+
+        openCartFragment()
+    }
+
     override fun openCartFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, CartFragment(), "Cart fragment")
+            .replace(R.id.container, CartFragment.newInstance(mViewModel.mOrder), "Cart fragment")
             .commit()
     }
 
@@ -66,7 +78,8 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
         val detailsFragment = supportFragmentManager.findFragmentByTag("Details fragment")
 
         if ((doneFragment != null && doneFragment.isVisible) ||
-            (cartFragment != null && cartFragment.isVisible))
+            (cartFragment != null && cartFragment.isVisible)
+        )
             finish()
         else if (detailsFragment != null && detailsFragment.isVisible)
             supportFragmentManager.popBackStack()

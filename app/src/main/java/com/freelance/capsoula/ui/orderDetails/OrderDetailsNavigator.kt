@@ -5,4 +5,7 @@ interface OrderDetailsNavigator {
     fun backAction()
 
     fun trackOrderAction()
+
+    fun openCheckout()
+
 }

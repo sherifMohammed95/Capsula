@@ -35,6 +35,7 @@ import com.freelance.capsoula.databinding.ActivityCategoriesBinding
 import com.freelance.capsoula.ui.brands.BrandsActivity
 import com.freelance.capsoula.ui.categories.CategoriesActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
+import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
 import com.freelance.capsoula.ui.stores.StoresActivity
@@ -187,7 +188,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         super.onResume()
 
         if(this is ProductsActivity || this is StoresActivity || this is CategoriesActivity ||
-                this is SubCategoriesActivity || this is BrandsActivity)
+                this is SubCategoriesActivity || this is BrandsActivity || this is MyOrdersActivity)
             updateCartNumber()
     }
 

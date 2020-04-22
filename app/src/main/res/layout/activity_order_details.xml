@@ -419,6 +419,7 @@
                 android:background="@drawable/button_rounded_bg"
                 android:backgroundTint="@{order.hasCancelAction()?@color/colorPrice:@color/colorAccent}"
                 android:gravity="center"
+                android:onClick="@{()->vm.buttonAction()}"
                 android:paddingStart="@dimen/dimen_20"
                 android:paddingEnd="@dimen/dimen_20"
                 android:text="@{order.hasCancelAction()?@string/cancel_order:@string/reorder}"
@@ -436,6 +437,16 @@
             layout="@layout/loading_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

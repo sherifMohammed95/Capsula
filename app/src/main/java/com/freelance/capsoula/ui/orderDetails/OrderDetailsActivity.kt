@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.orderDetails
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.databinding.ActivityOrderDetailsBinding
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.orderDetails.adapters.ProductsDetailsAdapter
 import com.freelance.capsoula.ui.orderTracking.OrderTrackingActivity
 import com.freelance.capsoula.utils.Constants
@@ -50,20 +52,28 @@ class OrderDetailsActivity : BaseActivity<ActivityOrderDetailsBinding, OrderDeta
     }
 
     private fun getIntentsData() {
-        val mOrder: Order =
+        mViewModel.mOrder =
             Gson().fromJson(intent.getStringExtra(Constants.EXTRA_ORDER), Order::class.java)
 
-        mViewModel.orderId = mOrder.id
-        if (mViewModel.orderId != -1)
-            mViewModel.loadOrderDetails()
+        mViewModel.loadOrderDetails()
     }
 
     private fun subscribeToLiveData() {
         mViewModel.orderDetailsResponse.observe(this, Observer {
             if (it.data != null) {
+                mViewModel.mOrder = it.data!!
                 viewDataBinding?.order = it.data
                 mAdapter.setData(it.data?.products!!)
             }
+        })
+
+        mViewModel.cancelOrderResponse.observe(this, Observer {
+            showPopUp(
+                it, android.R.string.ok,
+                DialogInterface.OnClickListener { dialogInterface, i ->
+                    finish()
+                }, false
+            )
         })
     }
 
@@ -77,7 +87,14 @@ class OrderDetailsActivity : BaseActivity<ActivityOrderDetailsBinding, OrderDeta
 
     override fun trackOrderAction() {
         val intent = Intent(this, OrderTrackingActivity::class.java)
-        intent.putExtra(Constants.EXTRA_ORDER_ID, mViewModel.orderId)
+        intent.putExtra(Constants.EXTRA_ORDER_ID, mViewModel.mOrder.id)
+        startActivity(intent)
+    }
+
+    override fun openCheckout() {
+        val intent = Intent(this, CheckoutActivity::class.java)
+        intent.putExtra(Constants.EXTRA_ORDER, Gson().toJson(mViewModel.mOrder))
+        intent.putExtra(Constants.FROM_WHERE, Constants.FROM_ORDER_DETAILS)
         startActivity(intent)
     }
 

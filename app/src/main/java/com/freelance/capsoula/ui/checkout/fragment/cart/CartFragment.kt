@@ -8,6 +8,7 @@ import com.freelance.base.BaseFragment
 import com.freelance.base.BaseRecyclerSwipeAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.MessageEvent
+import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.repository.CartRepository
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -37,8 +38,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getBundles()
         initRecyclerView()
-        mViewModel.fetchCartList()
+//        mViewModel.fetchCartList()
         updateDataView()
         subscribeToLiveData()
     }
@@ -165,5 +167,24 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
         super.onResume()
         (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
             ?.setImageResource(R.drawable.cart_progress_bar)
+    }
+
+
+    companion object {
+        fun newInstance(order: Order?) =
+            CartFragment().apply {
+                arguments = Bundle().apply {
+                    putString(Constants.EXTRA_ORDER, Gson().toJson(order))
+                }
+            }
+    }
+
+    private fun getBundles() {
+        if (arguments != null) {
+            mViewModel.mOrder = Gson().fromJson(arguments?.getString(Constants.EXTRA_ORDER),
+                Order::class.java)
+
+            mViewModel.fetchCartList()
+        }
     }
 }

@@ -18,8 +18,9 @@ class OrdersRepository : BaseRepository() {
     val ordersResponse = SingleLiveEvent<BaseResponse<OrdersResponse>>()
     val orderTrackingResponse = SingleLiveEvent<BaseResponse<OrderTrackingResponse>>()
     val orderDetailsResponse = SingleLiveEvent<BaseResponse<Order>>()
+    val cancelOrderResponse = SingleLiveEvent<String>()
 
-    suspend fun getOrders(showLoading:Boolean) {
+    suspend fun getOrders(showLoading: Boolean) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = showLoading
@@ -47,7 +48,7 @@ class OrdersRepository : BaseRepository() {
         }
     }
 
-    suspend fun getOrderDetails(orderId:Int) {
+    suspend fun getOrderDetails(orderId: Int) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
@@ -75,7 +76,7 @@ class OrdersRepository : BaseRepository() {
         }
     }
 
-    suspend fun getOrderTracking(orderId:Int) {
+    suspend fun getOrderTracking(orderId: Int) {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
@@ -97,6 +98,35 @@ class OrdersRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getOrderTracking(orderId)
+                    }
+                })
+            }
+        }
+    }
+
+
+    suspend fun cancelOrder(orderId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+
+            val response = webService.cancelOrder(orderId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    cancelOrderResponse.postValue(response.body()?.data!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        cancelOrder(orderId)
                     }
                 })
             }
