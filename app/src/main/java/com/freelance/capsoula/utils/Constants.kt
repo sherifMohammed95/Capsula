@@ -11,6 +11,9 @@ object Constants {
     const val UPDATE_CART_NUMBER = "update_cart_number"
     const val OPEN_CHECKOUT = "open_checkout"
 
+    const val INTERCOME_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
+    const val INTERCOME_APP_ID = "zwlcn8xj"
+
     /**
      * Extras
      * */

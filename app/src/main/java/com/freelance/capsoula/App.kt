@@ -18,7 +18,9 @@ import com.freelance.capsoula.ui.products.productsModule
 import com.freelance.capsoula.ui.search.searchModule
 import com.freelance.capsoula.ui.stores.storesModule
 import com.freelance.capsoula.ui.subCategories.subCategoriesModule
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.Domain
+import io.intercom.android.sdk.Intercom
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -30,6 +32,7 @@ class App : Application() {
         Timber.plant(Timber.DebugTree())
         Domain.integrateWith(this)
         startDI()
+        initIntercom()
     }
 
     private fun startDI() {
@@ -44,5 +47,12 @@ class App : Application() {
                 )
             )
         }
+    }
+
+    private fun initIntercom() {
+        Intercom.initialize(
+            this, Constants.INTERCOME_API_KEY,
+            Constants.INTERCOME_APP_ID
+        )
     }
 }

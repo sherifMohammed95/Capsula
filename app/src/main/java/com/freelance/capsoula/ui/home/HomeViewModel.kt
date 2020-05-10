@@ -11,6 +11,9 @@ import com.freelance.capsoula.data.responses.HomeResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.utils.SingleLiveEvent
+import io.intercom.android.sdk.Intercom
+import io.intercom.android.sdk.UserAttributes
+import io.intercom.android.sdk.identity.Registration
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
@@ -25,6 +28,10 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         initRepository(repo)
         this.homeDataResponse = repo.homeDataResponse
         loadHomeData()
+
+        viewModelScope.launch(IO) {
+            loginToIntercom()
+        }
     }
 
     fun cartAction() {
@@ -123,5 +130,30 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         if (UserDataSource.getUser() != null)
             userNameText.set(UserDataSource.getUser()?.name)
         updateCartNumber()
+    }
+
+
+    private suspend fun loginToIntercom() {
+        if (UserDataSource.getUser() != null) {
+            val name = UserDataSource.getUser()?.name
+            val email = UserDataSource.getUser()?.email
+            val phone = UserDataSource.getUser()?.phone
+            val userID = UserDataSource.getUser()?.userId
+
+            val userAttrs = UserAttributes.Builder()
+                .withName(name)
+                .withEmail(email)
+                .withPhone(phone)
+                .withUserId(userID.toString())
+                .build()
+
+            val registration = Registration.create()
+                .withEmail(email!!)
+                .withUserId(userID.toString())
+                .withUserAttributes(userAttrs)
+
+            Intercom.client().registerIdentifiedUser(registration)
+            Intercom.client().updateUser(userAttrs)
+        }
     }
 }

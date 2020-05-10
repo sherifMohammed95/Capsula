@@ -32,17 +32,22 @@ import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityBrandsBinding
 import com.freelance.capsoula.databinding.ActivityCategoriesBinding
+import com.freelance.capsoula.ui.addAddress.AddAddressActivity
+import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.brands.BrandsActivity
 import com.freelance.capsoula.ui.categories.CategoriesActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
+import com.freelance.capsoula.ui.completeProfile.CompleteProfileActivity
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
+import com.freelance.capsoula.ui.splash.SplashActivity
 import com.freelance.capsoula.ui.stores.StoresActivity
 import com.freelance.capsoula.ui.subCategories.SubCategoriesActivity
 import com.freelance.capsoula.utils.Constants.OPEN_CHECKOUT
 import com.freelance.capsoula.utils.Constants.UPDATE_CART_NUMBER
 import com.freelance.capsoula.utils.MyContextWrapper
+import com.freelance.capsoula.utils.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_brands.view.*
 import kotlinx.android.synthetic.main.home_toolbar.*
@@ -187,9 +192,22 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     override fun onResume() {
         super.onResume()
 
-        if(this is ProductsActivity || this is StoresActivity || this is CategoriesActivity ||
-                this is SubCategoriesActivity || this is BrandsActivity || this is MyOrdersActivity)
+        if (this is ProductsActivity || this is StoresActivity || this is CategoriesActivity ||
+            this is SubCategoriesActivity || this is BrandsActivity || this is MyOrdersActivity
+        )
             updateCartNumber()
+
+        if (this is AuthenticationActivity || this is CompleteProfileActivity ||
+            this is AddAddressActivity
+        ) {
+            Utils.hideIntercom()
+        } else {
+            if (UserDataSource.getUser() != null)
+                Utils.showIntercom()
+            else
+                Utils.hideIntercom()
+        }
+
     }
 
     private fun showProgressLayout() {

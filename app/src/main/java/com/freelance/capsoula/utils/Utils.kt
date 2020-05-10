@@ -14,6 +14,7 @@ import android.preference.PreferenceManager
 import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
+import io.intercom.android.sdk.Intercom
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
@@ -178,5 +179,14 @@ object Utils {
                 return true
         }
         return false
+    }
+
+    fun showIntercom() {
+        Intercom.client().setLauncherVisibility(Intercom.Visibility.VISIBLE)
+        Intercom.client().setBottomPadding(450.toDp)
+    }
+
+    fun hideIntercom() {
+        Intercom.client().setLauncherVisibility(Intercom.Visibility.GONE)
     }
 }
