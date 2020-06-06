@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
 
 import cards.pay.paycardsrecognizer.sdk.Card
+import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 
 
 class SplashActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
 //                        testFun()
             if (UserDataSource.getUser() == null)
-                openAuthentication()
+                openUserTypes()
             else {
                 when {
                     UserDataSource.getUser()!!.phone.isNullOrEmpty() -> openCompleteProfile()
@@ -47,8 +48,8 @@ class SplashActivity : AppCompatActivity() {
         }, 2000)
     }
 
-    private fun openAuthentication() {
-        startActivity(Intent(this, AuthenticationActivity::class.java))
+    private fun openUserTypes() {
+        startActivity(Intent(this, UserTypesActivity::class.java))
         finish()
     }
 

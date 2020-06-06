@@ -51,8 +51,8 @@ class App : Application() {
 
     private fun initIntercom() {
         Intercom.initialize(
-            this, Constants.INTERCOME_API_KEY,
-            Constants.INTERCOME_APP_ID
+            this, Constants.INTERCOM_API_KEY,
+            Constants.INTERCOM_APP_ID
         )
     }
 }

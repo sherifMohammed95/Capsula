@@ -136,5 +136,7 @@
     <string name="estimated_date">Estimated Date</string>
     <string name="estimated_time">Estimated Time</string>
     <string name="order_is">Order is</string>
+    <string name="delivery_representative">Delivery Representative</string>
+    <string name="customer">Customer</string>
 
 </resources>

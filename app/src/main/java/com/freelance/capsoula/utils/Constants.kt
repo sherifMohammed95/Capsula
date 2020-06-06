@@ -13,8 +13,8 @@ object Constants {
     const val NOTIFICATIONS_IS_ENABLED = "notifications_is_enabled"
     const val FCM_TOKEN = "fcm_token"
 
-    const val INTERCOME_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
-    const val INTERCOME_APP_ID = "zwlcn8xj"
+    const val INTERCOM_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
+    const val INTERCOM_APP_ID = "zwlcn8xj"
 
     /**
      * Extras

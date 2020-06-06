@@ -116,13 +116,6 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
                 else -> cartNumberVisibility.set(false)
             }
         }
-
-
-//        if (UserDataSource.getUserCartSize() > 0) {
-//            cartNumberVisibility.set(true)
-//            cartNumberText.set(UserDataSource.getUserCartSize().toString())
-//        } else
-//            cartNumberVisibility.set(false)
     }
 
 
@@ -133,7 +126,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     }
 
 
-    private suspend fun loginToIntercom() {
+    private suspend  fun loginToIntercom() {
         if (UserDataSource.getUser() != null) {
             val name = UserDataSource.getUser()?.name
             val email = UserDataSource.getUser()?.email

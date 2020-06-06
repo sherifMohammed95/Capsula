@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.userTypes.UserTypesViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        tools:context=".ui.userTypes.UserTypesActivity">
+
+        <TextView
+            android:id="@+id/title_textView"
+            style="@style/bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_25"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:text="@string/welcome_to_capsula"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_30"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:background="@drawable/top_right_white_rounded_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_textView">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_130"
+                    android:layout_height="@dimen/dimen_130"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_90"
+                    android:background="@{vm.deliveryType?@drawable/field_blue_rounded_bg:@drawable/field_rounded_bg}"
+                    android:onClick="@{()->vm.deliveryTypeAction()}"
+                    android:scaleType="centerInside"
+                    android:src="@{vm.deliveryType?@drawable/ic_selected_delivery:@drawable/ic_unselected_delivery}"
+                    tools:background="@drawable/field_rounded_bg"
+                    tools:src="@drawable/ic_selected_delivery" />
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_6"
+                    android:text="@string/delivery_representative"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_18" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_130"
+                    android:layout_height="@dimen/dimen_130"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_60"
+                    android:background="@{vm.customerType?@drawable/field_blue_rounded_bg:@drawable/field_rounded_bg}"
+                    android:onClick="@{()->vm.customerTypeAction()}"
+                    android:scaleType="centerInside"
+                    android:src="@{vm.customerType?@drawable/ic_selected_customer:@drawable/ic_unselected_customer}"
+                    tools:background="@drawable/field_rounded_bg"
+                    tools:src="@drawable/ic_selected_customer" />
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_6"
+                    android:text="@string/customer"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_18" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

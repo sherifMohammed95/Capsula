@@ -76,11 +76,11 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
     //google services and firebase
-    implementation 'com.google.firebase:firebase-messaging:20.1.7'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
-    implementation 'com.google.firebase:firebase-core:17.4.1'
+    implementation 'com.google.firebase:firebase-core:17.4.2'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.1'
+    implementation 'com.google.firebase:firebase-analytics:17.4.2'
 
     // Retrofit and json
     def retrofitVersion = "2.6.2"
@@ -125,7 +125,7 @@ dependencies {
     implementation 'com.bluecrunch:bluecrunchverification:1.0.4'
 
     // Paytabs
-    compile(name:'paytabs_sdk-v4.0.1', ext:'aar')
+    compile(name: 'paytabs_sdk-v4.0.1', ext: 'aar')
     implementation 'com.github.dbachelder:CreditCardEntry:1.4.9'
     implementation 'cards.pay:paycardsrecognizer:1.1.0'
 
