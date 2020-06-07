@@ -7,6 +7,7 @@ import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityUserTypesBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserTypesActivity : BaseActivity<ActivityUserTypesBinding, UserTypesViewModel>(),
@@ -38,7 +39,7 @@ class UserTypesActivity : BaseActivity<ActivityUserTypesBinding, UserTypesViewMo
     }
 
     override fun openDeliveryAuthentication() {
-
+        startActivity(Intent(this, DeliveryAuthenticationActivity::class.java))
     }
 
     override fun onResume() {

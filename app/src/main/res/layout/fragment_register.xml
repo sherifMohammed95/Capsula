@@ -14,7 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/top_right_white_rounded_bg"
         android:orientation="vertical">
 
         <TextView
@@ -27,6 +26,7 @@
             android:textSize="@dimen/font_16" />
 
         <EditText
+            style="@style/medium"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
             android:layout_marginStart="@dimen/dimen_24"
@@ -62,6 +62,7 @@
             android:textSize="@dimen/font_16" />
 
         <EditText
+            style="@style/medium"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
             android:layout_marginStart="@dimen/dimen_24"
@@ -110,13 +111,14 @@
                 style="@style/medium"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="15"
                 android:layout_marginStart="@dimen/dimen_10"
+                android:layout_weight="15"
                 android:gravity="center"
                 android:text="+966"
                 android:textColor="@color/colorLabelText" />
 
             <EditText
+                style="@style/medium"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_50"
                 android:layout_weight="85"
@@ -150,6 +152,7 @@
             android:textSize="@dimen/font_16" />
 
         <EditText
+            style="@style/medium"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
             android:layout_marginStart="@dimen/dimen_24"
