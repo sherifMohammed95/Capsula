@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#37b6ff</color>
     <color name="colorAccent">#37b6ff</color>
     <color name="colorAccent20">#3337b6ff</color>
+    <color name="colorAccent60">#9937b6ff</color>
     <color name="colorBlue15">#260b0817</color>
     <color name="colorWhite30">#4Dffffff</color>
     <color name="colorLabelText">#5d5c71</color>
@@ -19,6 +20,7 @@
     <color name="colorPrice15">#26d0021b</color>
     <color name="colorCheckoutBg">#2f4256</color>
     <color name="colorScreenBg">#f8f8f8</color>
+    <color name="colorCircleBorder">#8037b6ff</color>
 </resources>
 
 

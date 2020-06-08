@@ -2,6 +2,7 @@ package com.freelance.capsoula.ui.addAddress
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.UserAddress
 import com.freelance.capsoula.data.repository.UserRepository
 import com.freelance.capsoula.databinding.ActivityAddAddressBinding
 import com.freelance.capsoula.ui.home.HomeActivity
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.gson.Gson
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
@@ -75,6 +78,17 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    override fun backWithResult() {
+        val returnIntent = Intent()
+        val address = UserAddress()
+        address.latitude = mViewModel.mLat
+        address.longitude = mViewModel.mLng
+        address.addressDesc = mViewModel.currentLocationText.get()!!
+        returnIntent.putExtra(Constants.EXTRA_ADD_NEW_ADDRESS, Gson().toJson(address))
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
     }
 
     override fun getMyViewModel(): AddAddressViewModel {
@@ -139,7 +153,6 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
                     addressFragments += address.getAddressLine(0)
                 } catch (ignored: Exception) {
                 }
-
             }
             locationMarker = mGoogleMap!!.addMarker(
                 MarkerOptions()

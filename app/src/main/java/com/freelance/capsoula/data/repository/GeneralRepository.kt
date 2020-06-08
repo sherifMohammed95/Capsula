@@ -2,6 +2,7 @@ package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
 import com.freelance.capsoula.data.responses.HomeResponse
+import com.freelance.capsoula.data.responses.NationalitiesResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
@@ -13,6 +14,7 @@ import kotlinx.coroutines.withContext
 class GeneralRepository : BaseRepository() {
 
     val homeDataResponse = SingleLiveEvent<HomeResponse>()
+    val nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
 
     suspend fun getHomeData(){
         try {
@@ -35,6 +37,33 @@ class GeneralRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getHomeData()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getNationalities(){
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.getNationalities()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    nationalitiesResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getNationalities()
                     }
                 })
             }

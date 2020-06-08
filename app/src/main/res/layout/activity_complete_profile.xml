@@ -83,6 +83,7 @@
                         android:textSize="@dimen/font_16" />
 
                     <EditText
+                        style="@style/medium"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_50"
                         android:layout_marginStart="@dimen/dimen_24"
@@ -119,6 +120,7 @@
                         android:textSize="@dimen/font_16" />
 
                     <EditText
+                        style="@style/medium"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_50"
                         android:layout_marginStart="@dimen/dimen_24"
@@ -175,6 +177,7 @@
                             android:textColor="@color/colorLabelText" />
 
                         <EditText
+                            style="@style/medium"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dimen_50"
                             android:layout_weight="85"

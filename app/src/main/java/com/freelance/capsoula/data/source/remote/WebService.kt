@@ -171,4 +171,7 @@ interface WebService {
 
     @PUT("Order/cancelOrder")
     suspend fun cancelOrder(@Query("orderId") orderId:Int): Response<BaseResponse<String>>
+
+    @GET("DeliveryManRegisteration/GetNationalities")
+    suspend fun getNationalities(): Response<BaseResponse<NationalitiesResponse>>
 }

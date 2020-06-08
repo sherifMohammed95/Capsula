@@ -6,17 +6,18 @@ import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityDeliveryAuthenticationBinding
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryLogin.DeliveryLoginFragment
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeliveryAuthenticationActivity :
     BaseActivity<ActivityDeliveryAuthenticationBinding, DeliveryAuthenticationViewModel>(),
     DeliveryAuthenticationNavigator {
 
-    private val mViewModel: DeliveryAuthenticationViewModel by viewModel()
+    val mViewModel: DeliveryAuthenticationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        openPersonalDetails()
     }
 
     override fun getMyViewModel(): DeliveryAuthenticationViewModel {
@@ -42,7 +43,10 @@ class DeliveryAuthenticationActivity :
     }
 
     override fun openPersonalDetails() {
-
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.delivery_container, PersonalDetailsFragment())
+            .commit()
     }
 
     override fun openCarDetails() {

@@ -138,5 +138,16 @@
     <string name="order_is">Order is</string>
     <string name="delivery_representative">Delivery Representative</string>
     <string name="customer">Customer</string>
+    <string name="personal_photo">Personal Photo</string>
+    <string name="full_name">Full name</string>
+    <string name="please_enter_valid_full_name">Please enter valid full name</string>
+    <string name="citizenship">Citizenship</string>
+    <string name="please_choose_your_citizenship">Please choose your citizenship</string>
+    <string name="nationalid">National ID</string>
+    <string name="please_enter_valid_national_id">Please enter valid national ID</string>
+    <string name="bank_account">Bank Account</string>
+    <string name="optional">( Optional )</string>
+    <string name="full_address">Full Address</string>
+    <string name="please_pick_a_personal_photo">Please pick a personal photo</string>
 
 </resources>

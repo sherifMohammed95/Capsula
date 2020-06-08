@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.data.repository.UserRepository
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
 import com.freelance.capsoula.utils.addCallback
@@ -33,6 +34,10 @@ class AddAddressViewModel(private val mRepository: UserRepository) :
     fun onAddAddressClick() {
         if (!ValidationUtils.isValidText(currentLocationText.get())) {
             currentLocationError.set(true)
+            return
+        }
+        if (fromWhere == Constants.FROM_DELIVERY_PERSONAL_DETAILS) {
+            navigator?.backWithResult()
             return
         }
         viewModelScope.launch(IO) {

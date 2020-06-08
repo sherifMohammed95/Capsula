@@ -172,4 +172,30 @@ object ValidationUtils {
     fun isValidCVC(cvc: String): Boolean {
         return cvc.length >= 3
     }
+
+
+
+    fun isValidSaudiIDNumber(id: String): Boolean {
+        val trimId = id.trim { it <= ' ' }
+        if (!trimId.matches("[0-9]+".toRegex())) {
+            return false
+        }
+        if (trimId.length != 10) {
+            return false
+        }
+        val type = Integer.parseInt(trimId.substring(0, 1))
+        if (type != 2 && type != 1) {
+            return false
+        }
+        var sum = 0
+        for (i in 0..9) {
+            sum += if (i % 2 == 0) {
+                val zfOdd = "%02d".format(Integer.parseInt(trimId.substring(i, i + 1)) * 2)
+                Integer.parseInt(zfOdd.substring(0, 1)) + Integer.parseInt(zfOdd.substring(1, 2))
+            } else {
+                Integer.parseInt(trimId.substring(i, i + 1))
+            }
+        }
+        return sum % 10 == 0
+    }
 }

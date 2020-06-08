@@ -31,6 +31,7 @@ object Constants {
     const val EXTRA_PRODUCT = "product"
     const val EXTRA_ORDER = "order"
     const val EXTRA_ORDER_ID = "order_id"
+    const val EXTRA_ADD_NEW_ADDRESS= "add_new_address"
 
 
     /**
@@ -56,6 +57,7 @@ object Constants {
     const val FROM_CHECKOUT_DETAILS = 10
     const val FROM_ORDER_DETAILS = 11
     const val FROM_MORE = 12
+    const val FROM_DELIVERY_PERSONAL_DETAILS = 13
 
 
     /**
