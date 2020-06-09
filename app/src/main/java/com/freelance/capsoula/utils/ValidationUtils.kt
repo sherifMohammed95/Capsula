@@ -38,6 +38,34 @@ object ValidationUtils {
         return matcher.matches()
     }
 
+    fun isValidSaudiVehiclePlateLetters(plateLetters: String): Boolean {
+        if (plateLetters.trim { it <= ' ' }.isEmpty()) {
+            return false
+        }
+        val regExpn =
+            ("^[\\u0600-\\u065F\\u066A-\\u06EF\\u06FA-\\u06FFa-zA-Z]+[\\u0600-\\u065F\\u066A-\\u06EF\\u06FA-\\u06FFa-zA-Z-_]*\$")
+        val pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(plateLetters)
+
+        var englishCount = 0
+        var arabicCount = 0
+        if (matcher.matches()) {
+            run {
+                var i = 0
+                while (i < plateLetters.length) {
+                    val c: Int = plateLetters.codePointAt(i)
+                    if (c in 0x0600..0x06E0)
+                        ++arabicCount
+                    else
+                        ++englishCount
+                    i += Character.charCount(c)
+                }
+            }
+            return arabicCount == plateLetters.length || englishCount == plateLetters.length
+        }
+        return false
+    }
+
     fun isValidPassword(password: String?): Boolean {
         if (password != null) {
             return (password.trim { it <= ' ' }.length >= 6)
@@ -172,7 +200,6 @@ object ValidationUtils {
     fun isValidCVC(cvc: String): Boolean {
         return cvc.length >= 3
     }
-
 
 
     fun isValidSaudiIDNumber(id: String): Boolean {

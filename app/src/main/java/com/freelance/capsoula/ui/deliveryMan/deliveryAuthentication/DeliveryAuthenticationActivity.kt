@@ -6,6 +6,7 @@ import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityDeliveryAuthenticationBinding
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryLogin.DeliveryLoginFragment
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.carDetails.CarDetailsFragment
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,7 +51,11 @@ class DeliveryAuthenticationActivity :
     }
 
     override fun openCarDetails() {
-
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.delivery_container, CarDetailsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun openRequiredDocuments() {

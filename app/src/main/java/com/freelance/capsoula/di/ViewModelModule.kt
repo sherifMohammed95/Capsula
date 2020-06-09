@@ -13,6 +13,7 @@ import com.freelance.capsoula.ui.checkout.fragment.done.DoneViewModel
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileViewModel
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationViewModel
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryLogin.DeliveryLoginViewModel
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.carDetails.CarDetailsViewModel
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsViewModel
 import com.freelance.capsoula.ui.forgetPassword.ForgetPasswordViewModel
 import com.freelance.capsoula.ui.home.HomeViewModel
@@ -59,4 +60,5 @@ val viewModelModule = module {
     viewModel<DeliveryAuthenticationViewModel>()
     viewModel<DeliveryLoginViewModel>()
     viewModel<PersonalDetailsViewModel>()
+    viewModel<CarDetailsViewModel>()
 }

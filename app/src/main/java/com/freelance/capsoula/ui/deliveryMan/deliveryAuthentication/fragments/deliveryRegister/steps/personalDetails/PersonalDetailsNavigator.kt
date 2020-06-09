@@ -4,7 +4,7 @@ interface PersonalDetailsNavigator {
 
     fun showImagePickerSheet()
 
-    fun showNatiolaitiesSheet()
+    fun showNationalitiesSheet()
 
     fun openNextStep()
 

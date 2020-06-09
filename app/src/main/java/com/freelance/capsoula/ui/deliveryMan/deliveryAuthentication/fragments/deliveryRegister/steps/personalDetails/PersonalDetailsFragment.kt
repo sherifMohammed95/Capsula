@@ -101,7 +101,7 @@ class PersonalDetailsFragment :
         startActivityForResult(intent, ADD_ADDRESS);
     }
 
-    override fun showNatiolaitiesSheet() {
+    override fun showNationalitiesSheet() {
         val fragment = BottomSelectionFragment.newInstance(
             getString(R.string.citizenship),
             mViewModel.nationalitiesList,

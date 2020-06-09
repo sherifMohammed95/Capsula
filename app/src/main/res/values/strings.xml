@@ -149,5 +149,18 @@
     <string name="optional">( Optional )</string>
     <string name="full_address">Full Address</string>
     <string name="please_pick_a_personal_photo">Please pick a personal photo</string>
+    <string name="car_details">Car Details</string>
+    <string name="car_brand">Car Brand</string>
+    <string name="please_choose_car_brand">Please choose car brand</string>
+    <string name="car_model">Car Model</string>
+    <string name="please_choose_car_model">Please choose car model</string>
+    <string name="model_year">Model Year</string>
+    <string name="please_choose_model_year">Please choose model year</string>
+    <string name="license_type">License Type</string>
+    <string name="please_choose_license_type">Please choose license type</string>
+    <string name="vehicle_plate_details">Vehicle Plate Details</string>
+    <string name="plate_number">Plate Number</string>
+    <string name="plate_letters">Plate Letters</string>
+    <string name="please_enter_vehicle_plate_details">Please enter valid vehicle plate details</string>
 
 </resources>
