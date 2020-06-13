@@ -164,14 +164,20 @@ interface WebService {
     suspend fun getOrders(): Response<BaseResponse<OrdersResponse>>
 
     @GET("Order/GetOrderDetails")
-    suspend fun getOrderDetails(@Query("orderId") orderId:Int): Response<BaseResponse<Order>>
+    suspend fun getOrderDetails(@Query("orderId") orderId: Int): Response<BaseResponse<Order>>
 
     @GET("Order/GetOrderTracking")
-    suspend fun getOrderTracking(@Query("orderId") orderId:Int): Response<BaseResponse<OrderTrackingResponse>>
+    suspend fun getOrderTracking(@Query("orderId") orderId: Int): Response<BaseResponse<OrderTrackingResponse>>
 
     @PUT("Order/cancelOrder")
-    suspend fun cancelOrder(@Query("orderId") orderId:Int): Response<BaseResponse<String>>
+    suspend fun cancelOrder(@Query("orderId") orderId: Int): Response<BaseResponse<String>>
 
     @GET("DeliveryManRegisteration/GetNationalities")
     suspend fun getNationalities(): Response<BaseResponse<NationalitiesResponse>>
+
+    @GET("DeliveryManRegisteration/GetRegisterBasicData")
+    suspend fun getRegisterBasicData(): Response<BaseResponse<DeliveryRegisterBasicResponse>>
+
+    @GET("DeliveryManRegisteration/GetCarModels/{carId}")
+    suspend fun getCarModels(@Path("carId") carId: Int): Response<BaseResponse<NationalitiesResponse>>
 }

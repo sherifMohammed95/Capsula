@@ -80,7 +80,7 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     }
 
     fun nextAction() {
-        if (!validate()) return
+//        if (!validate()) return
         navigator?.openNextStep()
     }
 

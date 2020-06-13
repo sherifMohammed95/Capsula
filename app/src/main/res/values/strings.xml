@@ -162,5 +162,6 @@
     <string name="plate_number">Plate Number</string>
     <string name="plate_letters">Plate Letters</string>
     <string name="please_enter_vehicle_plate_details">Please enter valid vehicle plate details</string>
+    <string name="choose_car_brand_first">Please choose car brand first</string>
 
 </resources>

@@ -125,9 +125,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
 
     fun hideKeyboard() {
-        if (baseActivity != null) {
-            baseActivity!!.hideKeyboard()
-        }
+        (activity as BaseActivity<*, *>)!!.hideKeyboard()
     }
 
 
@@ -138,7 +136,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         @StringRes negAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(
+        return (activity as BaseActivity<*, *>).showPopUp(
             messageId,
             posActionName,
             positiveAction,
@@ -173,7 +171,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         negAction: DialogInterface.OnClickListener,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(
+        return (activity as BaseActivity<*, *>).showPopUp(
             messageId,
             posActionName,
             positiveAction,
@@ -189,7 +187,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         positiveAction: DialogInterface.OnClickListener,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(messageId, posAction, positiveAction, isCancelable)
+        return (activity as BaseActivity<*, *>).showPopUp(messageId, posAction, positiveAction, isCancelable)
     }
 
 
@@ -200,7 +198,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         @StringRes negAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(
+        return (activity as BaseActivity<*, *>).showPopUp(
             message,
             posActionName,
             positiveAction,
@@ -214,7 +212,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         @StringRes posAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(messageId, posAction, isCancelable)
+        return (activity as BaseActivity<*, *>).showPopUp(messageId, posAction, isCancelable)
     }
 
     fun showPopUp(
@@ -224,7 +222,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         negAction: String,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(
+        return (activity as BaseActivity<*, *>).showPopUp(
             title,
             message,
             posAction,
@@ -240,7 +238,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         posAction: String,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(title, message, posAction, isCancelable)
+        return (activity as BaseActivity<*, *>).showPopUp(title, message, posAction, isCancelable)
     }
 
     fun showPopUp(
@@ -249,7 +247,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         positiveAction: DialogInterface.OnClickListener,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(message, posAction, positiveAction, isCancelable)
+        return (activity as BaseActivity<*, *>).showPopUp(message, posAction, positiveAction, isCancelable)
     }
 
     fun showPopUp(
@@ -257,7 +255,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         @StringRes posAction: Int,
         isCancelable: Boolean
     ): AlertDialog {
-        return baseActivity!!.showPopUp(message, posAction, isCancelable)
+        return (activity as BaseActivity<*, *>).showPopUp(message, posAction, isCancelable)
     }
 
 

@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
+import com.freelance.capsoula.data.responses.DeliveryRegisterBasicResponse
 import com.freelance.capsoula.data.responses.HomeResponse
 import com.freelance.capsoula.data.responses.NationalitiesResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -15,8 +16,10 @@ class GeneralRepository : BaseRepository() {
 
     val homeDataResponse = SingleLiveEvent<HomeResponse>()
     val nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
+    val carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
+    val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
 
-    suspend fun getHomeData(){
+    suspend fun getHomeData() {
         try {
             withContext(Dispatchers.Main) {
                 showLoadingLayout.value = true
@@ -43,7 +46,7 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
-    suspend fun getNationalities(){
+    suspend fun getNationalities() {
         try {
             withContext(Dispatchers.Main) {
                 progressLoading.value = true
@@ -70,13 +73,67 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
-    suspend fun getUpdatedCart(){
+    suspend fun getCarModels(carId:Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.getCarModels(carId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    carModelsResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getCarModels(carId)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getRegisterBasicData() {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.getRegisterBasicData()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    deliveryRegisterBasicResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getRegisterBasicData()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getUpdatedCart() {
         try {
 
             val response = webService.getUpdatedCart()
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if(!response.body()?.data?.list.isNullOrEmpty()){
+                    if (!response.body()?.data?.list.isNullOrEmpty()) {
                         val user = UserDataSource.getUser()
                         user?.cartContent = response.body()?.data?.list
                         UserDataSource.saveUser(user)

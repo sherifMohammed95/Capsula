@@ -2,17 +2,27 @@ package com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.d
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.data.SpinnerModel
+import com.freelance.capsoula.data.repository.GeneralRepository
+import com.freelance.capsoula.data.responses.DeliveryRegisterBasicResponse
+import com.freelance.capsoula.data.responses.NationalitiesResponse
+import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
 import com.freelance.capsoula.utils.addCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class CarDetailsViewModel : BaseViewModel<CarDetailsNavigator>() {
+class CarDetailsViewModel(val repo: GeneralRepository) : BaseViewModel<CarDetailsNavigator>() {
 
-    var selectedCarBrandId = -1
-    var selectedCarModelId = -1
-    var selectedModelYearId = -1
-    var selectedLicenseTypeId = -1
+    var deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
+    var carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
+
+    var selectedCarBrandPos = -1
+    var selectedCarModelPos = -1
+    var selectedModelYearPos = -1
+    var selectedLicenseTypePos = -1
 
     var carBrands = ArrayList<SpinnerModel>()
     var carModels = ArrayList<SpinnerModel>()
@@ -33,6 +43,10 @@ class CarDetailsViewModel : BaseViewModel<CarDetailsNavigator>() {
     var hasVehiclePlateError = ObservableBoolean(false)
 
     init {
+        initRepository(repo)
+        this.deliveryRegisterBasicResponse = repo.deliveryRegisterBasicResponse
+        this.carModelsResponse = repo.carModelsResponse
+        loadRegisterBasicData()
         carBrandText.addCallback {
             if (it != null)
                 hasCarBrandError.set(false)
@@ -69,6 +83,18 @@ class CarDetailsViewModel : BaseViewModel<CarDetailsNavigator>() {
         navigator?.openNextStep()
     }
 
+    private fun loadRegisterBasicData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.getRegisterBasicData()
+        }
+    }
+
+    fun loadCarModels() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.getCarModels(carId = carBrands[selectedCarBrandPos].selectionID!!)
+        }
+    }
+
     private fun validate(): Boolean {
         var isValid = true
 
@@ -102,7 +128,7 @@ class CarDetailsViewModel : BaseViewModel<CarDetailsNavigator>() {
             hasVehiclePlateError.set(true)
         }
 
-        if(!ValidationUtils.isValidSaudiVehiclePlateLetters(plateLetterText.get()!!)){
+        if (!ValidationUtils.isValidSaudiVehiclePlateLetters(plateLetterText.get()!!)) {
             isValid = false
             hasVehiclePlateError.set(true)
         }
