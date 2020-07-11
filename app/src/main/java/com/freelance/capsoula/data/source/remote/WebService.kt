@@ -14,6 +14,10 @@ interface WebService {
     suspend fun login(@Body request: LoginRequest):
             Response<BaseResponse<AuthenticationResponse>>
 
+    @POST("DeliveryManRegisteration/Login")
+    suspend fun deliveryLogin(@Body request: LoginRequest):
+            Response<BaseResponse<DeliveryAuthenticationResponse>>
+
     @POST("Authentication/Register")
     suspend fun register(@Body request: RegisterRequest):
             Response<BaseResponse<AuthenticationResponse>>
@@ -180,4 +184,7 @@ interface WebService {
 
     @GET("DeliveryManRegisteration/GetCarModels/{carId}")
     suspend fun getCarModels(@Path("carId") carId: Int): Response<BaseResponse<NationalitiesResponse>>
+
+    @POST("DeliveryManRegisteration/Register")
+    suspend fun deliveryRegister(@Body request:DeliveryRegisterRequest):Response<BaseResponse<String>>
 }

@@ -2,12 +2,14 @@ package com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityDeliveryAuthenticationBinding
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryLogin.DeliveryLoginFragment
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.carDetails.CarDetailsFragment
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsFragment
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.requiredDocuments.RequiredDocumentsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeliveryAuthenticationActivity :
@@ -37,6 +39,7 @@ class DeliveryAuthenticationActivity :
 
 
     override fun openLogin() {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.delivery_container, DeliveryLoginFragment())
@@ -44,6 +47,7 @@ class DeliveryAuthenticationActivity :
     }
 
     override fun openPersonalDetails() {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.delivery_container, PersonalDetailsFragment())
@@ -59,6 +63,10 @@ class DeliveryAuthenticationActivity :
     }
 
     override fun openRequiredDocuments() {
-
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.delivery_container, RequiredDocumentsFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

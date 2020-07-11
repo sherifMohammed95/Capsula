@@ -81,8 +81,10 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
 
     override fun showCarModelsSheet() {
         if (mViewModel.selectedCarBrandPos == -1) {
-            showPopUp("", getString(R.string.choose_car_brand_first),
-                getString(android.R.string.ok), false)
+            showPopUp(
+                "", getString(R.string.choose_car_brand_first),
+                getString(android.R.string.ok), false
+            )
             return
         }
         val fragment = BottomSelectionFragment.newInstance(
@@ -133,6 +135,25 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
     }
 
     override fun openNextStep() {
-        TODO("Not yet implemented")
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.carTypeId =
+            mViewModel.carBrands[mViewModel.selectedCarBrandPos].id
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.carModelId =
+            mViewModel.carModels[mViewModel.selectedCarModelPos].id
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.yearId =
+            mViewModel.modelYears[mViewModel.selectedModelYearPos].id
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateLetters =
+            mViewModel.plateLetterText.get()!!
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateNumber =
+             mViewModel.plateNumberText.get()!!.toInt()
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehicleTypeId =
+            mViewModel.licenseTypes[mViewModel.selectedLicenseTypePos].id
+
+
+        (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openRequiredDocuments()
     }
 }

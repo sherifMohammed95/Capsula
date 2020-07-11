@@ -48,7 +48,7 @@ open class BaseRepository : KoinComponent {
             } catch (e1: IOException) {
                 e1.printStackTrace()
             }
-            500 -> {
+            500,503 -> {
                 apiErrorMessage.value = (Domain.application.getString(R.string.went_wrong))
             }
         }

@@ -18,6 +18,7 @@ class AuthenticationRepository : BaseRepository() {
     val completeProfileResponse = SingleLiveEvent<Void>()
     val checkUserExistResponse = SingleLiveEvent<Void>()
     val resetPasswordResponse = SingleLiveEvent<Void>()
+    val deliveryRegisterResponse = SingleLiveEvent<String>()
 
     suspend fun login(phoneOrEmail: String, password: String) {
         try {
@@ -56,6 +57,41 @@ class AuthenticationRepository : BaseRepository() {
         }
     }
 
+    suspend fun deliveryLogin(phoneOrEmail: String, password: String) {
+        try {
+            withContext(Main) {
+                progressLoading.value = true
+            }
+            val request = LoginRequest()
+            request.password = password
+            request.phoneOrMail = phoneOrEmail
+            val response = webService.deliveryLogin(request)
+            if (response.isSuccessful && response.body()!!.data!!.token.isNotEmpty()) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                UserDataSource.saveDeliveryUser(response.body()!!.data!!.authUserData)
+                UserDataSource.saveUserToken(response.body()!!.data!!.token)
+
+                withContext(Main) {
+                    loginResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        deliveryLogin(phoneOrEmail, password)
+                    }
+                })
+            }
+        }
+    }
+
     suspend fun register(request: RegisterRequest) {
         try {
             withContext(Main) {
@@ -88,6 +124,40 @@ class AuthenticationRepository : BaseRepository() {
             }
         }
     }
+
+
+    suspend fun deliveryRegister(request: DeliveryRegisterRequest) {
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.deliveryRegister(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+
+                withContext(Main) {
+                    deliveryRegisterResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        deliveryRegister(request)
+                    }
+                })
+            }
+        }
+    }
+
 
     suspend fun loginWithGoogle(token: String) {
         try {

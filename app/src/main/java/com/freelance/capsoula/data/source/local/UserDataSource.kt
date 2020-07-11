@@ -1,5 +1,6 @@
 package com.freelance.capsoula.data.source.local
 
+import com.freelance.capsoula.data.DeliveryUser
 import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.User
@@ -23,10 +24,22 @@ class UserDataSource {
             preferencesGateway.save(USER, Gson().toJson(user))
         }
 
+        fun saveDeliveryUser(user: DeliveryUser?) {
+            preferencesGateway.save(USER, Gson().toJson(user))
+        }
+
+
         fun getUser(): User? {
             return Gson().fromJson(
                 preferencesGateway.load(USER, ""),
                 User::class.java
+            )
+        }
+
+        fun getDeliveryUser(): DeliveryUser? {
+            return Gson().fromJson(
+                preferencesGateway.load(USER, ""),
+                DeliveryUser::class.java
             )
         }
 

@@ -2,11 +2,13 @@ package com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication
 
 import androidx.databinding.ObservableBoolean
 import com.freelance.base.BaseViewModel
+import com.freelance.capsoula.data.requests.DeliveryRegisterRequest
 
 class DeliveryAuthenticationViewModel : BaseViewModel<DeliveryAuthenticationNavigator>() {
 
-    var loginTab = ObservableBoolean(false)
-    var registerTab = ObservableBoolean(true)
+    var request = DeliveryRegisterRequest()
+     var loginTab = ObservableBoolean(false)
+     var registerTab = ObservableBoolean(true)
 
 
     fun onLoginTabClick() {

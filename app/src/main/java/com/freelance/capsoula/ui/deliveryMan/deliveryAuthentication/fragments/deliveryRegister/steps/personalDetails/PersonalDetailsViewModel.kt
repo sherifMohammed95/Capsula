@@ -19,7 +19,7 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     BaseViewModel<PersonalDetailsNavigator>() {
 
     var nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
-    var selectedNatiolityID = -1
+    var selectedNatiolityPos = -1
     var nationalitiesList = ArrayList<SpinnerModel>()
 
     var fullAddressObj = UserAddress()
@@ -80,7 +80,7 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     }
 
     fun nextAction() {
-//        if (!validate()) return
+        if (!validate()) return
         navigator?.openNextStep()
     }
 
@@ -123,7 +123,7 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
             hasFullAddressError.set(true)
         }
 
-        if (personalPhotoBase64.isNullOrEmpty()) {
+        if (personalPhotoBase64.isEmpty()) {
             isValid = false
             hasPersonalPhotoError.set(true)
         }

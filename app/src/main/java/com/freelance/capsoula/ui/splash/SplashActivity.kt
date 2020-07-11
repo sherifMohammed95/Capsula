@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
 
 import cards.pay.paycardsrecognizer.sdk.Card
+import com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity
 import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 
 
@@ -35,10 +36,11 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 //                        testFun()
-            if (UserDataSource.getUser() == null)
+            if (UserDataSource.getUser() == null && UserDataSource.getDeliveryUser() == null)
                 openUserTypes()
             else {
                 when {
+                    UserDataSource.getDeliveryUser() != null -> openDeliveryHome()
                     UserDataSource.getUser()!!.phone.isNullOrEmpty() -> openCompleteProfile()
                     UserDataSource.getUser()!!.userAddresses.isNullOrEmpty() -> openAddAddress()
                     else -> openHome()
@@ -65,6 +67,11 @@ class SplashActivity : AppCompatActivity() {
 
     private fun openHome() {
         startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+    }
+
+    private fun openDeliveryHome() {
+        startActivity(Intent(this, DeliveryHomeActivity::class.java))
         finish()
     }
 
@@ -120,7 +127,9 @@ class SplashActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == PaymentParams.PAYMENT_REQUEST_CODE) {
             Log.e("Tag", data!!.getStringExtra(PaymentParams.RESPONSE_CODE))
             Log.e("Tag", data.getStringExtra(PaymentParams.TRANSACTION_ID))
-            if (data.hasExtra(PaymentParams.TOKEN) && data.getStringExtra(PaymentParams.TOKEN)!!.isNotEmpty()) {
+            if (data.hasExtra(PaymentParams.TOKEN) && data.getStringExtra(PaymentParams.TOKEN)!!
+                    .isNotEmpty()
+            ) {
                 Log.e("Tag", data.getStringExtra(PaymentParams.TOKEN))
                 Log.e("Tag", data.getStringExtra(PaymentParams.CUSTOMER_EMAIL))
                 Log.e("Tag", data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD))

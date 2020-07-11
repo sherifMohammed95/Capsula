@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <data>
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="@drawable/home_tab_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.60">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:src="@drawable/ic_home"
+                app:layout_constraintBottom_toBottomOf="@+id/home_textView"
+                app:layout_constraintEnd_toStartOf="@+id/home_textView"
+                app:layout_constraintTop_toTopOf="@+id/home_textView" />
+
+            <TextView
+                android:id="@+id/home_textView"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="70dp"
+                android:gravity="center"
+                android:text="@string/home"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:background="@drawable/more_tab_bg"
+            android:onClick="@{()->navigator.openMore()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.60">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:src="@drawable/ic_more"
+                android:tint="@color/colorLabelText"
+                app:layout_constraintBottom_toBottomOf="@+id/more_textView"
+                app:layout_constraintEnd_toStartOf="@+id/more_textView"
+                app:layout_constraintTop_toTopOf="@+id/more_textView" />
+
+            <TextView
+                android:id="@+id/more_textView"
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="120dp"
+                android:gravity="center"
+                android:text="@string/more"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

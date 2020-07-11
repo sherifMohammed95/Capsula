@@ -37,7 +37,7 @@ object Constants {
     /**
      * APIs Constants
      * **/
-    const val BASE_URL = "http://capsulav2-001-site1.itempurl.com/api/"
+    const val BASE_URL = "http://capsulasa-001-site2.itempurl.com/api/"
     const val CONTENT_TYPE = "application/json"
 
 
@@ -79,6 +79,11 @@ object Constants {
      * **/
     const val INSURANCE_NUMBER_ID = 2
     const val PRESCRIPTION_ID = 1
+    const val CAR_LICENSE = 3
+    const val CAR_FRONT = 4
+    const val CAR_BACK = 5
+    const val CAR_REGISTRATION = 6
+    const val NATIONAL_ID_IMAGE = 7
 
     /**
      * Payment methods

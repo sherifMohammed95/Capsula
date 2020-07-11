@@ -163,5 +163,18 @@
     <string name="plate_letters">Plate Letters</string>
     <string name="please_enter_vehicle_plate_details">Please enter valid vehicle plate details</string>
     <string name="choose_car_brand_first">Please choose car brand first</string>
+    <string name="required_documents">Required Documents</string>
+    <string name="car_licence">Car Licence</string>
+    <string name="please_pick_this_photo">Please pick this photo</string>
+    <string name="car_front_image">Car Front Image</string>
+    <string name="car_back_image">Car Back Image</string>
+    <string name="car_registration">Car Registration</string>
+    <string name="i_agree_on">I agree on</string>
+    <string name="terms_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="please_agree_on_terms_and_conditions">Please agree on terms and conditions</string>
+    <string name="my_orders_list">My Orders List</string>
+    <string name="order_id">Order ID:</string>
+    <string name="order_in_progress">Order In Progress</string>
+    <string name="order_to">Order to</string>
 
 </resources>
