@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="order"
+            type="com.freelance.capsoula.data.DeliveryOrder" />
+
     </data>
 
     <LinearLayout
@@ -46,6 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_5"
+                        android:text="@{order.orderCode}"
                         android:textColor="@color/colorOrderId"
                         android:textSize="@dimen/font_12"
                         app:layout_constraintBottom_toBottomOf="@+id/order_id_label"
@@ -66,6 +73,7 @@
                         android:text="@string/order_in_progress"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/font_12"
+                        android:visibility="@{order.statusId == 2?View.VISIBLE:View.INVISIBLE}"
                         app:layout_constraintBottom_toBottomOf="@+id/order_id_label"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/order_id_label" />
@@ -86,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:text="@string/order_to"
+                    android:text="@{order.customerName}"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_16" />
 
@@ -105,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:text="12345678"
+                    android:text="@{order.phoneNumber}"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_16" />
 
@@ -124,7 +132,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:text="@string/order_to"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_16"
+                    android:maxLines="1"
+                    android:text="@{order.customerAddress}"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_16" />
 

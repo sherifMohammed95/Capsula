@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
+import com.freelance.capsoula.data.responses.DeliveryOrdersResponse
 import com.freelance.capsoula.data.responses.DeliveryRegisterBasicResponse
 import com.freelance.capsoula.data.responses.HomeResponse
 import com.freelance.capsoula.data.responses.NationalitiesResponse
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 class GeneralRepository : BaseRepository() {
 
     val homeDataResponse = SingleLiveEvent<HomeResponse>()
+    val deliveryHomeDataResponse = SingleLiveEvent<DeliveryOrdersResponse>()
     val nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
     val carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
     val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
@@ -40,6 +42,33 @@ class GeneralRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getHomeData()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getDeliveryHomeData() {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.getDeliveryHomeData()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    deliveryHomeDataResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getDeliveryHomeData()
                     }
                 })
             }

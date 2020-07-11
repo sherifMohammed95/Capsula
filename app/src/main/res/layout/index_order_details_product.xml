@@ -14,7 +14,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="210dp"
         android:layout_marginEnd="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_16"
         app:cardBackgroundColor="@android:color/white"
@@ -64,6 +64,15 @@ cool kick" />
                 android:textSize="@dimen/font_12"
                 tools:text="2 Pieces" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:text="@{product.storeName}"
+                android:layout_marginBottom="@dimen/dimen_3"
+                android:textColor="@color/colorOrderId"
+                android:textSize="@dimen/font_12"
+                tools:text="2 Pieces" />
 
             <TextView
                 android:id="@+id/price_textView"

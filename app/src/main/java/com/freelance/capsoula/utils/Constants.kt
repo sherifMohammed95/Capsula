@@ -13,6 +13,8 @@ object Constants {
     const val NOTIFICATIONS_IS_ENABLED = "notifications_is_enabled"
     const val FCM_TOKEN = "fcm_token"
 
+    var REFRESH_DELIVERY_ORDER = false
+
     const val INTERCOM_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
     const val INTERCOM_APP_ID = "zwlcn8xj"
 
@@ -31,7 +33,7 @@ object Constants {
     const val EXTRA_PRODUCT = "product"
     const val EXTRA_ORDER = "order"
     const val EXTRA_ORDER_ID = "order_id"
-    const val EXTRA_ADD_NEW_ADDRESS= "add_new_address"
+    const val EXTRA_ADD_NEW_ADDRESS = "add_new_address"
 
 
     /**

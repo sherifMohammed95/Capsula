@@ -38,6 +38,8 @@ import com.freelance.capsoula.ui.brands.BrandsActivity
 import com.freelance.capsoula.ui.categories.CategoriesActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
@@ -198,7 +200,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             updateCartNumber()
 
         if (this is AuthenticationActivity || this is CompleteProfileActivity ||
-            this is AddAddressActivity
+            this is AddAddressActivity || this is DeliveryAuthenticationActivity ||
+            this is DeliveryHomeActivity
         ) {
             Utils.hideIntercom()
         } else {

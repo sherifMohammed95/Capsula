@@ -71,12 +71,12 @@ class Order {
     }
 
     fun getPaymentMethod(): String {
-        return when {
-            paymentMethodId?.value == CASH.value -> Domain.application.getString(R.string.cash_on_delivery)
-            orderStatusId?.value == STC_PAY.value -> Domain.application.getString(R.string.stc_pay)
-            orderStatusId?.value == MADA.value -> Domain.application.getString(R.string.mada)
-            orderStatusId?.value == CREDIT_CARD.value -> Domain.application.getString(R.string.credit_card)
-            orderStatusId?.value == GOOGLE_PAY.value -> Domain.application.getString(R.string.google_pay)
+        return when (paymentMethodId?.value) {
+            CASH.value -> Domain.application.getString(R.string.cash_on_delivery)
+            STC_PAY.value -> Domain.application.getString(R.string.stc_pay)
+            MADA.value -> Domain.application.getString(R.string.mada)
+            CREDIT_CARD.value -> Domain.application.getString(R.string.credit_card)
+            GOOGLE_PAY.value -> Domain.application.getString(R.string.google_pay)
             else -> ""
         }
     }

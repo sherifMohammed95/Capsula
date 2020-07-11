@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.source.remote
 
 import com.freelance.base.BaseResponse
+import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.requests.*
@@ -46,6 +47,9 @@ interface WebService {
 
     @GET("Home/GetHomeData")
     suspend fun getHomeData(): Response<BaseResponse<HomeResponse>>
+
+    @GET("DeliveryMan/GetOrders")
+    suspend fun getDeliveryHomeData(): Response<BaseResponse<DeliveryOrdersResponse>>
 
     @GET("Brand/GetBrands")
     suspend fun getBrands(
@@ -169,6 +173,9 @@ interface WebService {
 
     @GET("Order/GetOrderDetails")
     suspend fun getOrderDetails(@Query("orderId") orderId: Int): Response<BaseResponse<Order>>
+
+    @GET("DeliveryMan/GetOrderDetails/{orderId}")
+    suspend fun getDeliveryOrderDetails(@Path("orderId") orderId: Int): Response<BaseResponse<DeliveryOrder>>
 
     @GET("Order/GetOrderTracking")
     suspend fun getOrderTracking(@Query("orderId") orderId: Int): Response<BaseResponse<OrderTrackingResponse>>

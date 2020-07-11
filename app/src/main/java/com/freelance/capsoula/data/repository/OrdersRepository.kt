@@ -1,6 +1,7 @@
 package com.freelance.capsoula.data.repository
 
 import com.freelance.base.BaseResponse
+import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.responses.OrderTrackingResponse
 import com.freelance.capsoula.data.responses.OrdersResponse
@@ -18,6 +19,7 @@ class OrdersRepository : BaseRepository() {
     val ordersResponse = SingleLiveEvent<BaseResponse<OrdersResponse>>()
     val orderTrackingResponse = SingleLiveEvent<BaseResponse<OrderTrackingResponse>>()
     val orderDetailsResponse = SingleLiveEvent<BaseResponse<Order>>()
+    val deliveryOrderDetailsResponse = SingleLiveEvent<BaseResponse<DeliveryOrder>>()
     val cancelOrderResponse = SingleLiveEvent<String>()
 
     suspend fun getOrders(showLoading: Boolean) {
@@ -70,6 +72,34 @@ class OrdersRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getOrderDetails(orderId)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getDeliveryOrderDetails(orderId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+
+            val response = webService.getDeliveryOrderDetails(orderId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    deliveryOrderDetailsResponse.postValue(response.body()!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getDeliveryOrderDetails(orderId)
                     }
                 })
             }

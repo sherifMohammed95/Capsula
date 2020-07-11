@@ -30,8 +30,7 @@ class Product {
     }
 
     fun getVatText(): String {
-        return Domain.application.getString(R.string.vat) + " " +
-                Domain.application.getString(R.string.rsd) + " " + vat.toString()
+        return Domain.application.getString(R.string.vat) + " " + vat.toString() + "%"
     }
 
     fun getOrderDetailsQuantityText(): String {
