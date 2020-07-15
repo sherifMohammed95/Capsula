@@ -42,7 +42,22 @@ val moreModule = module {
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
         )
     }
+
+    single(named(DELIVERY_MORE_LIST)) {
+        arrayListOf(
+            MoreItem(R.drawable.ic_personal, androidContext().getString(R.string.personal_details)),
+            MoreItem(R.drawable.ic_history, androidContext().getString(R.string.history)),
+            MoreItem(
+                R.drawable.ic_wallet,
+                androidContext().getString(R.string.my_wallet)
+            ),
+            MoreItem(R.drawable.ic_language, androidContext().getString(R.string.arabic)),
+
+            MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
+        )
+    }
 }
 
 const val GUEST_MORE_LIST = "guest_more_list"
-const val LOGGED_MORE_LIST = "logged_more_list" 
+const val LOGGED_MORE_LIST = "logged_more_list"
+const val DELIVERY_MORE_LIST = "delivery_more_list"

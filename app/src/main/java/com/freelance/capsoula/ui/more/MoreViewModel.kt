@@ -28,6 +28,10 @@ class MoreViewModel(val repo: CartRepository) : BaseViewModel<MoreNavigator>() {
             Domain.application.getString(R.string.login) -> navigator?.openLogin()
 
             Domain.application.getString(R.string.logout) -> navigator?.logout()
+
+            Domain.application.getString(R.string.history) -> navigator?.openHistory()
+
+            Domain.application.getString(R.string.my_wallet) -> navigator?.openMyWallet()
         }
     }
 

@@ -40,6 +40,9 @@ import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileActivity
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
+import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
+import com.freelance.capsoula.ui.more.MoreActivity
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
@@ -201,11 +204,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
 
         if (this is AuthenticationActivity || this is CompleteProfileActivity ||
             this is AddAddressActivity || this is DeliveryAuthenticationActivity ||
-            this is DeliveryHomeActivity
+            this is DeliveryHomeActivity || this is DeliveryOrderDetailsActivity ||
+            this is HistoryActivity
         ) {
             Utils.hideIntercom()
         } else {
-            if (UserDataSource.getUser() != null)
+            if (UserDataSource.getDeliveryUser() != null && this is MoreActivity)
+                Utils.hideIntercom()
+            else if (UserDataSource.getUser() != null)
                 Utils.showIntercom()
             else
                 Utils.hideIntercom()

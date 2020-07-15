@@ -5,13 +5,14 @@ object Constants {
     const val BEARER = "Bearer "
     const val TOKEN = "token"
     const val LANGUAGE = "language"
-    const val PER_PAGE = 50
+    const val PER_PAGE = 70
     const val FROM_WHERE = "from_where"
     const val USER_CART = "user_cart"
     const val UPDATE_CART_NUMBER = "update_cart_number"
     const val OPEN_CHECKOUT = "open_checkout"
     const val NOTIFICATIONS_IS_ENABLED = "notifications_is_enabled"
     const val FCM_TOKEN = "fcm_token"
+    const val FROM_HISTORY = "from_history"
 
     var REFRESH_DELIVERY_ORDER = false
 

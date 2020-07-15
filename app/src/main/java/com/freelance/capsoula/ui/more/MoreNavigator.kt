@@ -12,4 +12,8 @@ interface MoreNavigator {
 
     fun logout()
 
+    fun openHistory()
+
+    fun openMyWallet()
+
 }

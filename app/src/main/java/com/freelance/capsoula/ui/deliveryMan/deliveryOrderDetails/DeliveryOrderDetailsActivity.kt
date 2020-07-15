@@ -10,6 +10,7 @@ import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.databinding.ActivityDeliveryOrderDetailsBinding
 import com.freelance.capsoula.ui.orderDetails.adapters.ProductsDetailsAdapter
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.Utils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_delivery_order_details.*
 import org.koin.android.ext.android.inject
@@ -32,7 +33,7 @@ class DeliveryOrderDetailsActivity :
     private fun getIntentsData() {
         mViewModel.mOrder =
             Gson().fromJson(intent.getStringExtra(Constants.EXTRA_ORDER), DeliveryOrder::class.java)
-
+        mViewModel.fromHistory.set(intent.getBooleanExtra(Constants.FROM_HISTORY, false))
         mViewModel.loadOrderDetails()
     }
 
@@ -43,6 +44,16 @@ class DeliveryOrderDetailsActivity :
                 viewDataBinding?.order = it.data
                 mAdapter.setData(it.data?.products!!)
             }
+        })
+
+        mViewModel.startDeliveryResponse.observe(this, Observer {
+            Constants.REFRESH_DELIVERY_ORDER = true
+            backAction()
+        })
+
+        mViewModel.finishDeliveryResponse.observe(this, Observer {
+            Constants.REFRESH_DELIVERY_ORDER = true
+            backAction()
         })
     }
 

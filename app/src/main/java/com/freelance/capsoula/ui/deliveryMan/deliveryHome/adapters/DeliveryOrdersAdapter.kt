@@ -14,6 +14,7 @@ import com.freelance.capsoula.ui.brands.adapters.BrandsAdapter
 class DeliveryOrdersAdapter :
     BaseRecyclerAdapter<DeliveryOrder, DeliveryOrdersAdapter.DeliveryOrdersViewHolder>() {
 
+    lateinit var onNavigateClickListener: OnNavigateClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryOrdersViewHolder {
         val binding: IndexDeliveryHomeOrderBinding = DataBindingUtil.inflate(
@@ -25,8 +26,12 @@ class DeliveryOrdersAdapter :
 
     override fun onBindViewHolder(holder: DeliveryOrdersViewHolder, position: Int) {
         holder.bind(items!![position])
-        holder.itemView.setOnClickListener {
+        holder.binding.parentLayout.setOnClickListener {
             onITemClickListener.onItemClick(position, items!![position])
+        }
+
+        holder.binding.navigateTextView.setOnClickListener {
+            onNavigateClickListener.onNavigateClick(items!![position])
         }
     }
 
@@ -37,5 +42,9 @@ class DeliveryOrdersAdapter :
             binding.order = order
             binding.executePendingBindings()
         }
+    }
+
+    interface OnNavigateClickListener {
+        fun onNavigateClick(item: DeliveryOrder)
     }
 }

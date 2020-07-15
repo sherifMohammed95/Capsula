@@ -193,5 +193,18 @@ interface WebService {
     suspend fun getCarModels(@Path("carId") carId: Int): Response<BaseResponse<NationalitiesResponse>>
 
     @POST("DeliveryManRegisteration/Register")
-    suspend fun deliveryRegister(@Body request:DeliveryRegisterRequest):Response<BaseResponse<String>>
+    suspend fun deliveryRegister(@Body request: DeliveryRegisterRequest): Response<BaseResponse<String>>
+
+    @GET("DeliveryMan/StartDelivery/{orderId}")
+    suspend fun startDelivery(@Path("orderId") orderId: Int): Response<BaseResponse<Any>>
+
+    @GET("DeliveryMan/EndDelivery/{orderId}")
+    suspend fun endDelivery(@Path("orderId") orderId: Int): Response<BaseResponse<Any>>
+
+    @GET("DeliveryMan/GetOrdersHistory")
+    suspend fun getHistory(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int,
+        @Query("date") date:String
+    ): Response<BaseResponse<DeliveryOrdersResponse>>
 }

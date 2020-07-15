@@ -11,8 +11,10 @@ import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.databinding.ActivityDeliveryHomeBinding
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.adapters.DeliveryOrdersAdapter
 import com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
+import com.freelance.capsoula.ui.more.MoreActivity
 import com.freelance.capsoula.ui.orderDetails.OrderDetailsActivity
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.Utils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_delivery_home.*
 import org.koin.android.ext.android.inject
@@ -24,7 +26,8 @@ val deliveryHomeModule = module {
 }
 
 class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryHomeViewModel>(),
-    DeliveryHomeNavigator, BaseRecyclerAdapter.OnITemClickListener<DeliveryOrder> {
+    DeliveryHomeNavigator, BaseRecyclerAdapter.OnITemClickListener<DeliveryOrder>,
+    DeliveryOrdersAdapter.OnNavigateClickListener {
 
     private val mViewModel: DeliveryHomeViewModel by viewModel()
     private val mAdapter: DeliveryOrdersAdapter by inject()
@@ -48,6 +51,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     private fun initRecyclerView() {
         delivery_orders_recyclerView.adapter = mAdapter
         mAdapter.onITemClickListener = this
+        mAdapter.onNavigateClickListener = this
     }
 
     override fun onResume() {
@@ -73,12 +77,17 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     }
 
     override fun openMore() {
-
+        startActivity(Intent(this, MoreActivity::class.java))
     }
 
     override fun onItemClick(pos: Int, item: DeliveryOrder) {
         val intent = Intent(this, DeliveryOrderDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_ORDER, Gson().toJson(item))
+        intent.putExtra(Constants.FROM_HISTORY, false)
         startActivity(intent)
+    }
+
+    override fun onNavigateClick(item: DeliveryOrder) {
+        Utils.navigateToLocation(this,item.customerLat.toString(), item.customerLong.toString())
     }
 }

@@ -391,12 +391,14 @@
                     android:background="@drawable/button_rounded_bg"
                     android:backgroundTint="@{order.statusId == 2?@color/colorPrice:@color/colorPrimary}"
                     android:gravity="center"
+                    android:onClick="@{()->vm.takeAction()}"
                     android:paddingStart="@dimen/dimen_20"
                     android:paddingEnd="@dimen/dimen_20"
-                    android:textAllCaps="false"
                     android:text="@{order.statusId == 2 ?@string/finish_delivery:@string/start_delivery }"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_16" />
+                    android:textSize="@dimen/font_16"
+                    android:visibility="@{vm.fromHistory?View.GONE:View.VISIBLE}" />
             </LinearLayout>
         </ScrollView>
 
@@ -404,6 +406,16 @@
             layout="@layout/loading_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

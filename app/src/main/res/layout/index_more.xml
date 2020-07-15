@@ -31,10 +31,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_30"
             android:text="@{item.text}"
-            android:layout_gravity="center_vertical"
+            android:textAlignment="viewStart"
+            android:layout_gravity="center_vertical|start"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_18"
-            tools:text="Personal Details" />
+            tools:text="Personal Details"
+            tools:ignore="RtlCompat" />
     </LinearLayout>
 </layout>

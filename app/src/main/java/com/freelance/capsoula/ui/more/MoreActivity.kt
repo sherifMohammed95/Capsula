@@ -13,6 +13,7 @@ import com.freelance.capsoula.data.MoreItem
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityMoreBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
@@ -31,6 +32,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     private val mViewModel: MoreViewModel by viewModel()
     private val guestList: ArrayList<MoreItem> by inject(named(GUEST_MORE_LIST))
     private val loggedList: ArrayList<MoreItem> by inject(named(LOGGED_MORE_LIST))
+    private val deliveryList: ArrayList<MoreItem> by inject(named(DELIVERY_MORE_LIST))
     private val mAdapter: MoreAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +54,11 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun onResume() {
         super.onResume()
-        if (UserDataSource.getUser() == null)
-            mAdapter.setData(guestList)
-        else
-            mAdapter.setData(loggedList)
+        when {
+            UserDataSource.getDeliveryUser() != null -> mAdapter.setData(deliveryList)
+            UserDataSource.getUser() == null -> mAdapter.setData(guestList)
+            else -> mAdapter.setData(loggedList)
+        }
     }
 
     private fun initRecyclerView() {
@@ -112,8 +115,16 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun logout() {
         UserDataSource.saveUser(null)
+        UserDataSource.saveDeliveryUser(null)
         val intent = Intent(this, AuthenticationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    override fun openHistory() {
+        startActivity(Intent(this, HistoryActivity::class.java))
+    }
+
+    override fun openMyWallet() {
     }
 }

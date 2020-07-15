@@ -25,8 +25,15 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity"></activity>
-        <activity android:name=".ui.deliveryMan.deliveryHome.DeliveryHomeActivity" />
+        <activity android:name=".ui.deliveryMan.history.HistoryActivity"></activity>
+        <activity
+            android:name=".ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.deliveryMan.deliveryHome.DeliveryHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity"
             android:screenOrientation="portrait"

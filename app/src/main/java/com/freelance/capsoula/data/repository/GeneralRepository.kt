@@ -6,6 +6,7 @@ import com.freelance.capsoula.data.responses.DeliveryRegisterBasicResponse
 import com.freelance.capsoula.data.responses.HomeResponse
 import com.freelance.capsoula.data.responses.NationalitiesResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,7 @@ class GeneralRepository : BaseRepository() {
 
     val homeDataResponse = SingleLiveEvent<HomeResponse>()
     val deliveryHomeDataResponse = SingleLiveEvent<DeliveryOrdersResponse>()
+    val historyResponse = SingleLiveEvent<DeliveryOrdersResponse>()
     val nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
     val carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
     val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
@@ -75,6 +77,34 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
+    suspend fun getHistory(pageNo: Int, date: String) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val response = webService.getHistory(pageNo, Constants.PER_PAGE, date)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    historyResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getHistory(pageNo, date)
+                    }
+                })
+            }
+        }
+    }
+
+
     suspend fun getNationalities() {
         try {
             withContext(Dispatchers.Main) {
@@ -102,7 +132,7 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
-    suspend fun getCarModels(carId:Int) {
+    suspend fun getCarModels(carId: Int) {
         try {
             withContext(Dispatchers.Main) {
                 progressLoading.value = true
