@@ -17,6 +17,7 @@ import com.freelance.capsoula.databinding.FragmentRequiredDocumentsBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.IMAGE_PICKER_OPTIONS_LIST
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
+import com.freelance.capsoula.ui.terms.TermsActivity
 import com.freelance.capsoula.utils.ImageUtil
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
@@ -62,7 +63,8 @@ class RequiredDocumentsFragment :
 
     private fun subscribeToLiveData() {
         mViewModel.deliveryRegisterResponse.observe(this, Observer {
-            showPopUp(it, android.R.string.ok,
+            showPopUp(
+                it, android.R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface, i ->
                     (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openLogin()
                 }, false
@@ -105,6 +107,10 @@ class RequiredDocumentsFragment :
             mViewModel.carRegistrationBase64
 
         mViewModel.register((activity as DeliveryAuthenticationActivity).mViewModel.request)
+    }
+
+    override fun openTerms() {
+        startActivity(Intent(activity, TermsActivity::class.java))
     }
 
     private fun showImagePickerFragment() {

@@ -22,6 +22,7 @@ class GeneralRepository : BaseRepository() {
     val nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
     val carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
     val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
+    val termsResponse = SingleLiveEvent<String>()
 
     suspend fun getHomeData() {
         try {
@@ -205,6 +206,33 @@ class GeneralRepository : BaseRepository() {
             }
         } catch (e: Exception) {
 
+        }
+    }
+
+    suspend fun getTerms() {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+            val response = webService.getTerms()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    termsResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getTerms()
+                    }
+                })
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.history.HistoryNavigator" />
+            type="com.freelance.capsoula.ui.terms.TermsNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/history"
+            android:text="@string/terms_conditions_title"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_18"
             app:layout_constraintBottom_toBottomOf="@+id/back_imageView"
@@ -41,18 +41,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/back_imageView" />
 
-        <ImageView
-            android:id="@+id/filter_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_22"
-            android:onClick="@{()->navigator.openFilter()}"
-            android:padding="@dimen/dimen_5"
-            android:src="@drawable/ic_filter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

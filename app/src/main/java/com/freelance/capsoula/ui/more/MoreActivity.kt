@@ -17,6 +17,7 @@ import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
+import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
 import io.reactivex.functions.Action
@@ -116,7 +117,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     override fun logout() {
         UserDataSource.saveUser(null)
         UserDataSource.saveDeliveryUser(null)
-        val intent = Intent(this, AuthenticationActivity::class.java)
+        val intent = Intent(this, UserTypesActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

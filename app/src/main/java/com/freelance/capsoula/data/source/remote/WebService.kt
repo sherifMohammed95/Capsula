@@ -205,6 +205,9 @@ interface WebService {
     suspend fun getHistory(
         @Query("PageNumber") pageNo: Int,
         @Query("PageSize") pageSize: Int,
-        @Query("date") date:String
+        @Query("date") date: String
     ): Response<BaseResponse<DeliveryOrdersResponse>>
+
+    @GET("DeliveryManRegisteration/GetTermsAndConditions")
+    suspend fun getTerms(): Response<BaseResponse<String>>
 }

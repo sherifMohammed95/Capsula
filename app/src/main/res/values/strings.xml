@@ -1,7 +1,7 @@
 <resources>
-    <string name="google_key">AIzaSyCEDuW1Pdl_r3WO3whLsavoBYswbM3E9XU</string>
+    <string name="google_key">AIzaSyCx2XM-jUdvo5cOSJWIBwcayQEL4MO9-OQ</string>
     <string name="facebook_app_id">890517214714148</string>
-    <string name="app_name">Capsoula</string>
+    <string name="app_name">Capsula</string>
     <string name="loading">Loading</string>
     <string name="try_again">Try again</string>
     <string name="went_wrong">Something went wrong</string>
@@ -171,6 +171,7 @@
     <string name="car_registration">Car Registration</string>
     <string name="i_agree_on">I agree on</string>
     <string name="terms_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="terms_conditions_title">Terms &amp; Conditions</string>
     <string name="please_agree_on_terms_and_conditions">Please agree on terms and conditions</string>
     <string name="my_orders_list">My Orders List</string>
     <string name="order_id">Order ID:</string>

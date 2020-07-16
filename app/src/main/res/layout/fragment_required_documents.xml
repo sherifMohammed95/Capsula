@@ -326,6 +326,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->navigator.openTerms()}"
                     android:text="@string/please_agree_on_terms_and_conditions"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="@dimen/font_12"
