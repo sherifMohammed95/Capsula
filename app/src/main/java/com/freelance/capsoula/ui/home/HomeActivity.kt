@@ -60,7 +60,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     override fun onResume() {
         super.onResume()
         mViewModel.updateToolbarData()
-        mViewModel.loadUpdatedCart()
+        if (UserDataSource.getUser() != null)
+            mViewModel.loadUpdatedCart()
     }
 
     private fun initRecyclerViews() {
@@ -78,11 +79,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     private fun subscribeToLiveData() {
-        mViewModel.homeDataResponse.observe(this, Observer {
-            if (it != null) {
-                homeCategoriesAdapter.setData(it.categoriesData)
-                homeBrandsAdapter.setData(it.brandsData)
-                homeStoresAdapter.setData(it.storesData)
+//        mViewModel.homeDataResponse.observe(this, Observer {
+//            if (it != null) {
+//                homeCategoriesAdapter.setData(it.categoriesData)
+//                homeBrandsAdapter.setData(it.brandsData)
+//                homeStoresAdapter.setData(it.storesData)
+//            }
+//        })
+
+        mViewModel.storesResponse.observe(this, Observer {
+            if (it.data?.storesList != null) {
+                homeStoresAdapter.setData(it.data?.storesList!!)
             }
         })
 

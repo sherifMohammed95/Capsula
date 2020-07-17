@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.checkout.fragment.cart
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -88,6 +89,19 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
         mViewModel.validCart.observe(viewLifecycleOwner, Observer {
             openDetailsStep()
         })
+
+        mViewModel.differentProductMsg.observe(viewLifecycleOwner, Observer {
+            val message = getString(R.string.your_cart_contains) + " " + it + " " +
+                    getString(R.string.do_u_wish)
+            showPopUp("", message, R.string.new_order,
+                DialogInterface.OnClickListener { _, _ ->
+                    run {
+                       mViewModel.addProductsToCart()
+                    }
+                }
+                , getString(android.R.string.cancel), false)
+        })
+
     }
 
     override fun getMyViewModel(): CartViewModel {

@@ -28,6 +28,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
     private var cartItems = ArrayList<CartRequest>()
     var mProduct = Product()
     var mOrder: Order? = null
+    var differentProductMsg = SingleLiveEvent<String>()
 
     init {
         initRepository(repo)
@@ -58,19 +59,35 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
             cartList = UserDataSource.getUserCart()
 //            updateDataView()
         } else {
-            if (UserDataSource.getUserCartSize() > 0) {
-                if (UserDataSource.getUser()?.cartContent!!.size > 0) {
-                    combineLocalCartWithUserCart()
-                } else
-                    cartList = UserDataSource.getUserCart()
-//                addProductsToCart()
-            } else {
+            if (UserDataSource.getUser()?.cartContent?.size!! > 0) {
                 cartList = UserDataSource.getUser()?.cartContent!!
-//                updateDataView()
+            } else {
+                if (UserDataSource.getUserCart().size > 0) {
+                    cartList = UserDataSource.getUserCart()
+                }
             }
+            UserDataSource.deleteCart()
+//            if (UserDataSource.getUserCartSize() > 0) {
+//                if (UserDataSource.getUser()?.cartContent!!.size > 0) {
+//                    combineLocalCartWithUserCart()
+//                } else
+//                    cartList = UserDataSource.getUserCart()
+////                addProductsToCart()
+//            } else {
+//                cartList = UserDataSource.getUser()?.cartContent!!
+////                updateDataView()
+//            }
 
             if (mOrder != null) {
-                combineOrderProductsWithUserCart()
+                val storeName = mOrder!!.products?.get(0)?.let {
+                    UserDataSource.checkCartFromTheSameStore(it)
+                }
+                if (storeName != null && storeName.contentEquals(""))
+                    combineOrderProductsWithUserCart()
+                else {
+                    differentProductMsg.value = storeName
+                    return
+                }
             }
             addProductsToCart()
         }

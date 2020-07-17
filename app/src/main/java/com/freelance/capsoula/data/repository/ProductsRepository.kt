@@ -74,6 +74,35 @@ class ProductsRepository : BaseRepository() {
         }
     }
 
+    suspend fun getCategoryProducts(pageNo: Int, catId: Int, storeId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+
+            val response =
+                webService.getCategoryProducts(pageNo, Constants.PER_PAGE, catId, storeId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    productsResponse.postValue(response.body()!!)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getCategoryProducts(pageNo, catId, storeId)
+                    }
+                })
+            }
+        }
+    }
+
     suspend fun getStoreProducts(pageNo: Int, subCatId: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {

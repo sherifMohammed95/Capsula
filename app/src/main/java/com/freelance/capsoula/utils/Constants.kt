@@ -2,6 +2,7 @@ package com.freelance.capsoula.utils
 
 object Constants {
     const val USER = "user"
+    const val DELIVERY_USER = "delivery_user"
     const val BEARER = "Bearer "
     const val TOKEN = "token"
     const val LANGUAGE = "language"

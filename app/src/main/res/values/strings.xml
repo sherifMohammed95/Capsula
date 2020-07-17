@@ -184,5 +184,8 @@
     <string name="my_wallet">My Wallet</string>
     <string name="arabic">العربية</string>
     <string name="english">English</string>
+    <string name="new_order">New Order</string>
+    <string name="your_cart_contains">Your cart contains items from</string>
+    <string name="do_u_wish">\n.Do you wish to clear your cart and start a new order here?</string>
 
 </resources>

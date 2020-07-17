@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.repository.GeneralRepository
 import com.freelance.capsoula.data.responses.HomeResponse
+import com.freelance.capsoula.data.responses.StoresResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNavigator>() {
     var homeDataResponse = SingleLiveEvent<HomeResponse>()
+    var storesResponse = SingleLiveEvent<BaseResponse<StoresResponse>>()
     var cartNumberText = ObservableField<String>("")
     var userNameText = ObservableField<String>("User")
     var cartNumberVisibility = ObservableBoolean(false)
@@ -27,7 +30,9 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     init {
         initRepository(repo)
         this.homeDataResponse = repo.homeDataResponse
-        loadHomeData()
+        this.storesResponse = repo.storesResponse
+//        loadHomeData()
+        loadStores()
 
         viewModelScope.launch(IO) {
             loginToIntercom()
@@ -89,6 +94,12 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         }
     }
 
+    private fun loadStores() {
+        viewModelScope.launch(IO) {
+            repo.getStores(1)
+        }
+    }
+
     fun loadUpdatedCart() {
         viewModelScope.launch(IO) {
             repo.getUpdatedCart()
@@ -105,13 +116,13 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
                 cartNumberVisibility.set(false)
         } else {
             when {
-                UserDataSource.getUserCartSize() > 0 -> {
-                    cartNumberVisibility.set(true)
-                    cartNumberText.set(UserDataSource.getUserCartSize().toString())
-                }
                 UserDataSource.getUser()?.cartContent?.size!! > 0 -> {
                     cartNumberVisibility.set(true)
                     cartNumberText.set(UserDataSource.getUser()?.cartContent?.size!!.toString())
+                }
+                UserDataSource.getUserCartSize() > 0 -> {
+                    cartNumberVisibility.set(true)
+                    cartNumberText.set(UserDataSource.getUserCartSize().toString())
                 }
                 else -> cartNumberVisibility.set(false)
             }
@@ -126,7 +137,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     }
 
 
-    private suspend  fun loginToIntercom() {
+    private suspend fun loginToIntercom() {
         if (UserDataSource.getUser() != null) {
             val name = UserDataSource.getUser()?.name
             val email = UserDataSource.getUser()?.email

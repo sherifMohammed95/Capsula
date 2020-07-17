@@ -514,14 +514,15 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
                 cart_number_textView.visibility = View.INVISIBLE
         } else {
             when {
-                UserDataSource.getUserCartSize() > 0 -> {
-                    cart_number_textView.visibility = View.VISIBLE
-                    cart_number_textView.text = UserDataSource.getUserCartSize().toString()
-                }
                 UserDataSource.getUser()?.cartContent?.size!! > 0 -> {
                     cart_number_textView.visibility = View.VISIBLE
                     cart_number_textView.text =
                         UserDataSource.getUser()?.cartContent?.size!!.toString()
+                    UserDataSource.deleteCart()
+                }
+                UserDataSource.getUserCartSize() > 0 -> {
+                    cart_number_textView.visibility = View.VISIBLE
+                    cart_number_textView.text = UserDataSource.getUserCartSize().toString()
                 }
                 else -> cart_number_textView.visibility = View.INVISIBLE
             }

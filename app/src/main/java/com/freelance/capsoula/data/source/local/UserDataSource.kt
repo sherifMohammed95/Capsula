@@ -4,6 +4,7 @@ import com.freelance.capsoula.data.DeliveryUser
 import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.Product
 import com.freelance.capsoula.data.User
+import com.freelance.capsoula.utils.Constants.DELIVERY_USER
 import com.freelance.capsoula.utils.Constants.OPEN_CHECKOUT
 import com.freelance.capsoula.utils.Constants.TOKEN
 import com.freelance.capsoula.utils.Constants.UPDATE_CART_NUMBER
@@ -18,14 +19,14 @@ import org.greenrobot.eventbus.EventBus
 class UserDataSource {
     companion object {
 
-        private val productListType = object : TypeToken<List<Product>>() {}.type
+        val productListType = object : TypeToken<List<Product>>() {}.type
 
         fun saveUser(user: User?) {
             preferencesGateway.save(USER, Gson().toJson(user))
         }
 
         fun saveDeliveryUser(user: DeliveryUser?) {
-            preferencesGateway.save(USER, Gson().toJson(user))
+            preferencesGateway.save(DELIVERY_USER, Gson().toJson(user))
         }
 
 
@@ -38,7 +39,7 @@ class UserDataSource {
 
         fun getDeliveryUser(): DeliveryUser? {
             return Gson().fromJson(
-                preferencesGateway.load(USER, ""),
+                preferencesGateway.load(DELIVERY_USER, ""),
                 DeliveryUser::class.java
             )
         }
@@ -83,6 +84,27 @@ class UserDataSource {
                 preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))
                 EventBus.getDefault().postSticky(MessageEvent(UPDATE_CART_NUMBER))
             }
+        }
+
+        fun checkCartFromTheSameStore(product: Product): String {
+            val userCart: ArrayList<Product>
+            if (getUser() == null) {
+                val jsonString = preferencesGateway.load(USER_CART, "")
+                if (!jsonString.isNullOrEmpty()) {
+                    userCart = Gson().fromJson(jsonString, productListType)
+                    for (i in 0 until userCart.size) {
+                        if (!userCart[i].storeName!!.contentEquals(product.storeName!!))
+                            return userCart[i].storeName!!
+                    }
+                }
+            } else {
+                userCart = getUser()?.cartContent!!
+                for (i in 0 until userCart.size) {
+                    if (!userCart[i].storeName!!.contentEquals(product.storeName!!))
+                        return userCart[i].storeName!!
+                }
+            }
+            return ""
         }
 
         fun checkProductExistInCart(

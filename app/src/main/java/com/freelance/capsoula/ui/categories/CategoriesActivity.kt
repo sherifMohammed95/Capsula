@@ -10,6 +10,7 @@ import com.freelance.capsoula.data.Category
 import com.freelance.capsoula.data.repository.CategoriesRepository
 import com.freelance.capsoula.databinding.ActivityCategoriesBinding
 import com.freelance.capsoula.ui.categories.adapters.CategoriesAdapter
+import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.subCategories.SubCategoriesActivity
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
@@ -84,7 +85,7 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
     }
 
     override fun onItemClick(pos: Int, item: Category) {
-        val intent = Intent(this, SubCategoriesActivity::class.java)
+        val intent = Intent(this, ProductsActivity::class.java)
         intent.putExtra(Constants.EXTRA_CATEGORY, Gson().toJson(item))
         intent.putExtra(Constants.EXTRA_STORE_ID, mViewModel.storeId)
         startActivity(intent)

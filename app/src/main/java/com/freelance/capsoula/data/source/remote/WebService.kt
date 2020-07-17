@@ -105,6 +105,14 @@ interface WebService {
         @Query("subCategoryId") subCategoryId: Int
     ): Response<BaseResponse<ProductsResponse>>
 
+    @GET("Item/GetItemsByStoreCategoryId")
+    suspend fun getCategoryProducts(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int,
+        @Query("categoryId") categoryId: Int,
+        @Query("storeId") storeId: Int
+    ): Response<BaseResponse<ProductsResponse>>
+
     @GET("Item/GetItemsByStoreSubCategoryId")
     suspend fun getStoreProducts(
         @Query("PageNumber") pageNo: Int,

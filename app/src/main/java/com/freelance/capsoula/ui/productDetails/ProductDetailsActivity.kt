@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.productDetails
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,19 +30,40 @@ class ProductDetailsActivity :
         subscribeToLiveData()
     }
 
-    private fun subscribeToLiveData(){
+    private fun subscribeToLiveData() {
         mViewModel.cartResponse.observe(this, Observer {
             val user = UserDataSource.getUser()
             user?.cartContent = it
             UserDataSource.saveUser(user)
             EventBus.getDefault().postSticky(MessageEvent(Constants.UPDATE_CART_NUMBER))
-            showPopUp(getString(R.string.cart),getString(R.string.product_added_to_cart),
-                getString(android.R.string.ok),false)
+            showPopUp(
+                getString(R.string.cart), getString(R.string.product_added_to_cart),
+                getString(android.R.string.ok), false
+            )
         })
 
         mViewModel.productaddedMsg.observe(this, Observer {
-            showPopUp(getString(R.string.cart),getString(R.string.product_added_to_cart),
-                getString(android.R.string.ok),false)
+            showPopUp(
+                getString(R.string.cart), getString(R.string.product_added_to_cart),
+                getString(android.R.string.ok), false
+            )
+        })
+
+        mViewModel.differentProductMsg.observe(this, Observer {
+            val message = getString(R.string.your_cart_contains) + " " + it + " " +
+                    getString(R.string.do_u_wish)
+            showPopUp("", message, R.string.new_order,
+                DialogInterface.OnClickListener { _, _ ->
+                    run {
+                        if (UserDataSource.getUser() == null) {
+                            UserDataSource.deleteCart()
+                            UserDataSource.addProductToCart(mViewModel.product)
+                        } else {
+                            mViewModel.addProductToCart()
+                        }
+                    }
+                }
+                , getString(android.R.string.cancel), false)
         })
     }
 
@@ -60,16 +82,20 @@ class ProductDetailsActivity :
     }
 
     private fun getIntentsData() {
-        mViewModel.product = Gson().fromJson(intent.getStringExtra(Constants.EXTRA_PRODUCT),
-            Product::class.java)
+        mViewModel.product = Gson().fromJson(
+            intent.getStringExtra(Constants.EXTRA_PRODUCT),
+            Product::class.java
+        )
         viewDataBinding?.product = mViewModel.product
 
-        mViewModel.fromCart.set(intent.getIntExtra(Constants.FROM_WHERE,-1)
-                == Constants.FROM_CART)
+        mViewModel.fromCart.set(
+            intent.getIntExtra(Constants.FROM_WHERE, -1)
+                    == Constants.FROM_CART
+        )
 
     }
 
     override fun openCheckout() {
-        startActivity(Intent(this,CheckoutActivity::class.java))
+        startActivity(Intent(this, CheckoutActivity::class.java))
     }
 }

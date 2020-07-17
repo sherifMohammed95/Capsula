@@ -19,6 +19,7 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     var brandId = -1
     var storeId = -1
     var subCategory = Category()
+    var mCategory = Category()
     var fromWhere = 0
     var mProduct = Product()
     var cartResponse = SingleLiveEvent<ArrayList<Product>>()
@@ -38,6 +39,12 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     fun getSubCategoryProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             mRepository.getSubCategoryProducts(pageNo, subCategory.categoryId)
+        }
+    }
+
+    fun getCategoryProducts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            mRepository.getCategoryProducts(pageNo, mCategory.categoryId, storeId)
         }
     }
 

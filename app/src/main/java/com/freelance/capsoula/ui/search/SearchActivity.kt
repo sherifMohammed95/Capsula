@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.search
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -96,14 +97,15 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     override fun openFilterList() {
         val fragment: BottomSelectionFragment = BottomSelectionFragment
-            .newInstance(getString(R.string.sort_by), mFilterTypeList, Action2 { pos, item ->
-                run {
-                    mViewModel.selectedFilterTypePos = pos
-                    mViewModel.filterType = item!!.selectionID!!
-                    mViewModel.pageNo = 1
-                    mViewModel.getSearchResults()
-                }
-            }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false,
+            .newInstance(
+                getString(R.string.sort_by), mFilterTypeList, Action2 { pos, item ->
+                    run {
+                        mViewModel.selectedFilterTypePos = pos
+                        mViewModel.filterType = item!!.selectionID!!
+                        mViewModel.pageNo = 1
+                        mViewModel.getSearchResults()
+                    }
+                }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false,
                 showAddNewAddressText = false
             )
 
@@ -112,15 +114,41 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     override fun onPlusClick(product: Product) {
         mViewModel.mProduct = product
+        val storeName = UserDataSource.checkCartFromTheSameStore(product)
         if (UserDataSource.getUser() == null) {
-            UserDataSource.addProductToCart(product)
-            mViewModel.updateCartNumber()
+            if (storeName.contentEquals("")) {
+                UserDataSource.addProductToCart(product)
+                mViewModel.updateCartNumber()
+            } else {
+                val message = getString(R.string.your_cart_contains) + " " + storeName + " " +
+                        getString(R.string.do_u_wish)
+                showPopUp("", message, R.string.new_order,
+                    DialogInterface.OnClickListener { _, _ ->
+                        UserDataSource.deleteCart()
+                        UserDataSource.addProductToCart(product)
+                    }
+                    , getString(android.R.string.cancel), false)
+            }
         } else {
-            if(UserDataSource.checkProductExistInCart(UserDataSource.getUser()?.cartContent!!,
-                    product)) {
+            if (UserDataSource.checkProductExistInCart(
+                    UserDataSource.getUser()?.cartContent!!,
+                    product
+                )
+            ) {
                 openCheckout()
-            } else
-                mViewModel.addProductToCart()
+            } else {
+                if (storeName.contentEquals(""))
+                    mViewModel.addProductToCart()
+                else {
+                    val message = getString(R.string.your_cart_contains) + " " + storeName + " " +
+                            getString(R.string.do_u_wish)
+                    showPopUp("", message, R.string.new_order,
+                        DialogInterface.OnClickListener { _, _ ->
+                            mViewModel.addProductToCart()
+                        }
+                        , getString(android.R.string.cancel), false)
+                }
+            }
         }
     }
 
