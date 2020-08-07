@@ -1,15 +1,16 @@
 package com.freelance.capsoula.ui.checkout.fragment.details
 
 import android.Manifest
+import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseFragment
 import com.freelance.capsoula.R
@@ -20,20 +21,22 @@ import com.freelance.capsoula.data.UserAddress
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.FragmentDetailsBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
-import com.freelance.capsoula.ui.checkout.fragment.cart.CartViewModel
 import com.freelance.capsoula.utils.Constants
-import com.freelance.capsoula.utils.Domain
 import com.freelance.capsoula.utils.ImageUtil
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
+import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
+import com.oppwa.mobile.connect.checkout.meta.CheckoutStorePaymentDetailsMode
+import com.oppwa.mobile.connect.exception.PaymentError
+import com.oppwa.mobile.connect.provider.Connect
 import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import rx.functions.Action2
+import kotlin.math.round
+
 
 class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>(), DetailsNavigator {
 
@@ -56,8 +59,15 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToLiveData()
-        calCostDetails()
+        mViewModel.getDeliveryCost()
     }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
+            ?.setImageResource(R.drawable.details_progress_bar)
+    }
+
 
     override fun getMyViewModel(): DetailsViewModel {
         return mViewModel
@@ -82,35 +92,84 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
             prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
                 it.priceInOffer!!.toDouble()
             else
-                it.price.toDouble()
+                it.price
 
             total += (it.quantity * prodPrice)
         }
 
-        estimated_total_value.text = total.toString()
+        val estimatedTotal =
+            round((total + delivery_cost_value.text.toString().toDouble()) * 100) / 100
         items_cost_value.text = total.toString()
-        delivery_cost_value.text = " " + 0.0
+        estimated_total_value.text = estimatedTotal.toString()
     }
 
     private fun subscribeToLiveData() {
+        mViewModel.deliveryCostResponse.observe(viewLifecycleOwner, Observer {
+            val cost = round((it.toString().toDouble() * 100)) / 100
+            delivery_cost_value.text = cost.toString()
+            calCostDetails()
+        })
         mViewModel.updateDefaultAddressResponse.observe(viewLifecycleOwner, Observer {
             mViewModel.setSelectedAddressPos()
             mViewModel.deliveryAddressText.set(mViewModel.selectedAddress.text)
+            mViewModel.getDeliveryCost()
         })
 
         mViewModel.successEvent.observe(viewLifecycleOwner, Observer {
             if (mViewModel.selectedPaymentMethodValue == Constants.CASH)
                 (activity as CheckoutActivity).openDoneFragment()
             else {
+                mViewModel.prepareCheckout()
+            }
+        })
 
+        mViewModel.checkTotalCostEvent.observe(viewLifecycleOwner, Observer {
+
+            if (estimated_total_value.text.toString().toDouble() > 500 &&
+                mViewModel.selectedPaymentMethodValue == Constants.CASH
+            ) {
+                showPopUp(
+                    "", getString(R.string.proceed_online_payment),
+                    getString(android.R.string.ok), false
+                )
+            } else {
+                if (mViewModel.selectedPaymentMethodValue == Constants.CASH) {
+                    mViewModel.resoursePath = ""
+                    mViewModel.submitCheckoutDetails()
+                } else {
+                    mViewModel.prepareCheckout()
+                }
+            }
+        })
+
+        mViewModel.checkoutIdResponse.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                openHyperPayCheckout(it)
             }
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
-            ?.setImageResource(R.drawable.details_progress_bar)
+    private fun openHyperPayCheckout(checkoutId: String) {
+        val paymentBrands: MutableSet<String> = LinkedHashSet()
+        paymentBrands.add("VISA")
+        paymentBrands.add("MADA")
+        val checkoutSettings =
+            CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
+        checkoutSettings.locale = "en_US";
+        checkoutSettings.storePaymentDetailsMode = CheckoutStorePaymentDetailsMode.ALWAYS
+        checkoutSettings.shopperResultUrl = "capsula://result";
+
+        val intent =
+            Intent(activity, com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity::class.java)
+        intent.putExtra(
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.CHECKOUT_SETTINGS,
+            checkoutSettings
+        )
+
+        startActivityForResult(
+            intent,
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.REQUEST_CODE_CHECKOUT
+        )
     }
 
     private fun openCamera() {
@@ -140,10 +199,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                 mViewModel.paymentMethodText.set(item.text)
                 when (pos) {
                     0 -> mViewModel.selectedPaymentMethodValue = Constants.CASH
-                    1 -> mViewModel.selectedPaymentMethodValue = Constants.CRDIT_CARD
-                    2 -> mViewModel.selectedPaymentMethodValue = Constants.GOOGLE_PAY
-                    3 -> mViewModel.selectedPaymentMethodValue = Constants.STC_PAY
-                    4 -> mViewModel.selectedPaymentMethodValue = Constants.MADA
+                    1 -> mViewModel.selectedPaymentMethodValue = Constants.MADA
                 }
             },
             mViewModel.selectedPaymentMethodPos,
@@ -225,30 +281,60 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            when (requestCode) {
-                REQUEST_GALLERY -> {
-                    val contentURI = data.data
-                    var bitmap =
-                        MediaStore.Images.Media.getBitmap(activity!!.contentResolver, contentURI)
-                    mViewModel.currentPickedImageUri.set(contentURI)
-                    bitmap = ImageUtil.getResizedBitmap(bitmap, 800)
-                    convertBitmapToBase64(bitmap)
-                    mViewModel.prescriptionError.set(false)
-                }
-                REQUEST_CAMERA -> {
-                    var thumbnail = data.extras?.get("data") as Bitmap
-                    mViewModel.currentPickedImageUri.set(
-                        ImageUtil.getImageUri(
-                            activity!!,
-                            thumbnail
+
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    REQUEST_GALLERY -> {
+                        val contentURI = data?.data
+                        var bitmap =
+                            MediaStore.Images.Media.getBitmap(
+                                activity!!.contentResolver,
+                                contentURI
+                            )
+                        mViewModel.currentPickedImageUri.set(contentURI)
+                        bitmap = ImageUtil.getResizedBitmap(bitmap, 800)
+                        convertBitmapToBase64(bitmap)
+                        mViewModel.prescriptionError.set(false)
+                    }
+                    REQUEST_CAMERA -> {
+                        var thumbnail = data?.extras?.get("data") as Bitmap
+                        mViewModel.currentPickedImageUri.set(
+                            ImageUtil.getImageUri(
+                                activity!!,
+                                thumbnail
+                            )
                         )
-                    )
-                    thumbnail = ImageUtil.getResizedBitmap(thumbnail, 800)
-                    convertBitmapToBase64(thumbnail)
-                    mViewModel.prescriptionError.set(false)
+                        thumbnail = ImageUtil.getResizedBitmap(thumbnail, 800)
+                        convertBitmapToBase64(thumbnail)
+                        mViewModel.prescriptionError.set(false)
+                    }
                 }
             }
+
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_OK -> {
+
+                /* resource path if needed */
+                val resourcePath =
+                    data?.getStringExtra(
+                        com.oppwa.mobile.connect.checkout.dialog
+                            .CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH
+                    )
+
+                Toast.makeText(activity, resourcePath, Toast.LENGTH_LONG).show()
+            }
+
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_ERROR -> {
+                val error: PaymentError? =
+                    data?.getParcelableExtra(
+                        com.oppwa.mobile.connect.checkout
+                            .dialog.CheckoutActivity.CHECKOUT_RESULT_ERROR
+                    )
+
+                Toast.makeText(activity, error?.errorInfo, Toast.LENGTH_LONG).show()
+
+            }
+
         }
     }
 

@@ -16,6 +16,8 @@ class UserRepository : BaseRepository() {
     val addAddressResponse = SingleLiveEvent<Void>()
     val updateDefaultAddressResponse = SingleLiveEvent<Void>()
     val successEvent = SingleLiveEvent<Void>()
+    val deliveryCostResponse = SingleLiveEvent<Double>()
+    val checkoutIdResponse = SingleLiveEvent<String>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -51,7 +53,7 @@ class UserRepository : BaseRepository() {
         }
     }
 
-    suspend fun updateDefaultAddress(addressId:Int) {
+    suspend fun updateDefaultAddress(addressId: Int) {
 
         try {
             withContext(Main) {
@@ -103,6 +105,68 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         submitCheckoutDetails(request)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getDeliveryCost() {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.getDeliveryCost()
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                deliveryCostResponse.postValue(response.body()!!.data!!)
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getDeliveryCost()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun prepareCheckout(paymentMethod: Int) {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.prepareCheckout(paymentMethod)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                checkoutIdResponse.postValue(response.body()!!.data!!)
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        prepareCheckout(paymentMethod)
                     }
                 })
             }

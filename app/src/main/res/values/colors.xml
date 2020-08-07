@@ -23,6 +23,9 @@
     <color name="colorScreenBg">#f8f8f8</color>
     <color name="colorCircleBorder">#8037b6ff</color>
     <color name="colorOrderId">#004081</color>
+
+
+    <color name="checkout_color_accent">#37b6ff</color>
 </resources>
 
 

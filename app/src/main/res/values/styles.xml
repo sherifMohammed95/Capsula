@@ -82,10 +82,41 @@
 
 
     <style name="MaterialAlertDialog.Rounded" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MaterialAlertDialog.Rounded
+        </item>
     </style>
 
     <style name="ShapeAppearanceOverlay.MaterialAlertDialog.Rounded" parent="">
         <item name="cornerSize">@dimen/dimen_10</item>
     </style>
+
+
+    <style name="NewCheckoutTheme" parent="Theme.Checkout.Light">
+        <item name="headerBackground">@color/checkout_color_accent</item>
+        <item name="cancelButtonTintColor">@android:color/white</item>
+        <item name="cameraTintColor">@color/checkout_color_accent</item>
+
+        <item name="checkoutButtonStyle">@style/NewCheckoutTheme.Button</item>
+        <item name="checkoutEditTextStyle">@style/NewCheckoutTheme.EditText</item>
+    </style>
+
+    <style name="NewCheckoutTheme.Button" parent="Checkout.Button.Light">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:layout_marginStart">@dimen/dimen_80</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_80</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_40</item>
+        <item name="android:background">@drawable/button_rounded_bg</item>
+        <item name="android:width">@dimen/dimen_180</item>
+        <item name="android:height">@dimen/dimen_65</item>
+    </style>
+
+    <style name="NewCheckoutTheme.EditText" parent="Checkout.EditText.Light">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColorHint">@color/colorLabelText</item>
+        <item name="android:textColor">@color/colorLabelText</item>
+    </style>
+
 </resources>

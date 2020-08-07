@@ -38,14 +38,20 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     var selectedPaymentMethodPos = -1
     var selectedPaymentMethodValue = -1
     var selectedDeliveryAddressPos = -1
+    var resoursePath = ""
 
     var updateDefaultAddressResponse = SingleLiveEvent<Void>()
     var successEvent = SingleLiveEvent<Void>()
+    var checkTotalCostEvent = SingleLiveEvent<Void>()
+    var deliveryCostResponse = SingleLiveEvent<Double>()
+    var checkoutIdResponse = SingleLiveEvent<String>()
 
     init {
         initRepository(repo)
         this.updateDefaultAddressResponse = repo.updateDefaultAddressResponse
         this.successEvent = repo.successEvent
+        this.deliveryCostResponse = repo.deliveryCostResponse
+        this.checkoutIdResponse = repo.checkoutIdResponse
         showPrescription.set(UserDataSource.getUser()?.cartContent?.find { it.isTreatment } != null)
         setImageUri()
         setSelectedAddressPos()
@@ -93,7 +99,7 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     fun nextAction() {
         if (!validate())
             return
-        submitCheckoutDetails()
+        checkTotalCostEvent.call()
     }
 
     private fun validate(): Boolean {
@@ -118,6 +124,12 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
         }
     }
 
+    fun getDeliveryCost() {
+        viewModelScope.launch(IO) {
+            repo.getDeliveryCost()
+        }
+    }
+
     fun submitCheckoutDetails() {
         val request = CheckoutDetailsRequest()
         request.insuranceNumberImage = insuranceNumberBase64
@@ -126,6 +138,12 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
 
         viewModelScope.launch(IO) {
             repo.submitCheckoutDetails(request)
+        }
+    }
+
+    fun prepareCheckout() {
+        viewModelScope.launch(IO) {
+            repo.prepareCheckout(selectedPaymentMethodValue)
         }
     }
 

@@ -183,7 +183,7 @@ object Utils {
 
     fun showIntercom() {
         Intercom.client().setLauncherVisibility(Intercom.Visibility.VISIBLE)
-        Intercom.client().setBottomPadding(450.toDp)
+        Intercom.client().setBottomPadding(700.toDp)
     }
 
     fun hideIntercom() {

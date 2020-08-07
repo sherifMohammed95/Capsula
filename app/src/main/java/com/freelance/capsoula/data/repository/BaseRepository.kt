@@ -25,11 +25,11 @@ open class BaseRepository : KoinComponent {
     fun handleNetworkError(mAction: Action) {
         progressLoading.value = false
         showLoadingLayout.value = false
-        if (!Utils.isConnectingToInternet(Domain.application)) {
+//        if (!Utils.isConnectingToInternet(Domain.application)) {
             this.mAction = mAction
             networkMessageError.value = Domain.application.getString(R.string.no_internet_message)
             return
-        }
+//        }
     }
 
     fun handleApiError(errorMessage: String, code: Int) {

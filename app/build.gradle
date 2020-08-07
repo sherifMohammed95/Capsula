@@ -124,11 +124,13 @@ dependencies {
 
     implementation 'com.bluecrunch:bluecrunchverification:1.0.4'
 
-    // Paytabs
-    compile(name: 'paytabs_sdk-v4.0.1', ext: 'aar')
-    implementation 'com.github.dbachelder:CreditCardEntry:1.4.9'
-    implementation 'cards.pay:paycardsrecognizer:1.1.0'
-
+    //Hyper-pay
+    implementation(name: 'oppwa.mobile-2.55.0', ext: 'aar')
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.google.android.gms:play-services-wallet:18.0.0'
+    implementation 'io.card:android-sdk:5.5.1'
 
     // Intercom
     implementation 'io.intercom.android:intercom-sdk-base:6.+'

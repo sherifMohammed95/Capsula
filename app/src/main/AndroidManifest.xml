@@ -25,7 +25,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.terms.TermsActivity"></activity>
+        <activity android:name=".ui.terms.TermsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".ui.deliveryMan.history.HistoryActivity"
             android:screenOrientation="portrait"
@@ -142,6 +144,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            tools:replace="android:theme,android:windowSoftInputMode"
+            android:name="com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity"
+            android:theme="@style/NewCheckoutTheme"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false"
+            android:launchMode="singleTop"/>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -164,6 +174,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <service
+            android:name="com.oppwa.mobile.connect.service.ConnectService"
+            android:exported="false"/>
     </application>
 
 </manifest>

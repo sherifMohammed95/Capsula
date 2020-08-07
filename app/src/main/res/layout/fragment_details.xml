@@ -257,6 +257,7 @@
                     android:layout_marginStart="@dimen/dimen_22"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:layout_marginEnd="@dimen/dimen_22"
+                    android:visibility="gone"
                     android:text="@string/do_you_have_a_promo_code"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_14" />
@@ -320,7 +321,7 @@
                             android:layout_marginStart="@dimen/dimen_16"
                             android:layout_marginTop="@dimen/dimen_10"
                             android:layout_marginBottom="@dimen/dimen_22"
-                            android:text="@string/estimated_total"
+                            android:text="@string/total"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/font_15"
                             app:layout_constraintBottom_toBottomOf="parent"

@@ -218,4 +218,11 @@ interface WebService {
 
     @GET("DeliveryManRegisteration/GetTermsAndConditions")
     suspend fun getTerms(): Response<BaseResponse<String>>
+
+    @GET("CheckOut/GetDeliveryCost")
+    suspend fun getDeliveryCost(): Response<BaseResponse<Double>>
+
+    @GET("CheckOut/PrepareCheckout/{paymentMethodType}")
+    suspend fun prepareCheckout(@Path("paymentMethodType") paymentMethodType: Int):
+            Response<BaseResponse<String>>
 }
