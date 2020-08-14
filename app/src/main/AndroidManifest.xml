@@ -68,7 +68,18 @@
         <activity
             android:name=".ui.checkout.CheckoutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <data android:scheme="capsula"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.productDetails.ProductDetailsActivity"
             android:screenOrientation="portrait"

@@ -2,6 +2,7 @@ package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
 import com.freelance.capsoula.data.requests.CheckoutDetailsRequest
+import com.freelance.capsoula.data.responses.PaymentDetailsResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
@@ -16,7 +17,7 @@ class UserRepository : BaseRepository() {
     val addAddressResponse = SingleLiveEvent<Void>()
     val updateDefaultAddressResponse = SingleLiveEvent<Void>()
     val successEvent = SingleLiveEvent<Void>()
-    val deliveryCostResponse = SingleLiveEvent<Double>()
+    val paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     val checkoutIdResponse = SingleLiveEvent<String>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
@@ -124,7 +125,7 @@ class UserRepository : BaseRepository() {
                 withContext(Main) {
                     progressLoading.value = false
                 }
-                deliveryCostResponse.postValue(response.body()!!.data!!)
+                paymentDetailsResponse.postValue(response.body()!!.data!!)
 
             } else {
                 withContext(Main) {

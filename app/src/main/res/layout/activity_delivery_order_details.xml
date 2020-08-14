@@ -287,6 +287,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_5"
+                            android:text="@{order.deliveryCostText}"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
@@ -351,17 +352,30 @@
                             app:layout_constraintTop_toTopOf="@+id/delivery_cost_label" />
 
                         <TextView
-                            android:id="@+id/vat_rsd"
+                            android:id="@+id/vat_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_5"
                             android:text="@{order.vatCostText}"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/vat_label"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/delivery_cost_rsd"
+                            app:layout_constraintStart_toEndOf="@+id/vat_rsd"
                             app:layout_constraintTop_toTopOf="@+id/vat_label"
-                            tools:text="12.0%" />
+                            tools:text="12.0" />
+
+                        <TextView
+                            android:id="@+id/vat_rsd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_90"
+                            android:text="@string/rsd"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/vat_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label" />
 
 
                         <TextView

@@ -14,6 +14,7 @@ import com.freelance.capsoula.data.PaymentMethodOption.GOOGLE_PAY
 import com.freelance.capsoula.data.PaymentMethodOption.CREDIT_CARD
 import com.freelance.capsoula.utils.DateUtils
 import com.freelance.capsoula.utils.Domain
+import kotlin.math.round
 
 class Order {
 
@@ -28,13 +29,25 @@ class Order {
     var itemsCost = 0.0
     var finalTotalCost = 0.0
     var products: ArrayList<Product>? = null
+    var orderCode = ""
+    var vatCost = 0.0
+    var deliveryCost = 0.0
 
     fun getFinalCost(): String {
-        return "" + finalTotalCost
+        return "" + round(finalTotalCost * 100) / 100
     }
 
     fun getItemsCostText(): String {
-        return "" + itemsCost
+        return "" + round(itemsCost * 100) / 100
+    }
+
+    fun getDeliveryCostText(): String {
+        return "" + round(deliveryCost * 100) / 100
+    }
+
+
+    fun getVatCostText(): String {
+        return "" + round(vatCost * 100) / 100
     }
 
     fun hasDocument(): Boolean {

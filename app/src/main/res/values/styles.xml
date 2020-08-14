@@ -108,8 +108,6 @@
         <item name="android:layout_marginEnd">@dimen/dimen_80</item>
         <item name="android:layout_marginBottom">@dimen/dimen_40</item>
         <item name="android:background">@drawable/button_rounded_bg</item>
-        <item name="android:width">@dimen/dimen_180</item>
-        <item name="android:height">@dimen/dimen_65</item>
     </style>
 
     <style name="NewCheckoutTheme.EditText" parent="Checkout.EditText.Light">

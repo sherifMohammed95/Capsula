@@ -220,7 +220,7 @@ interface WebService {
     suspend fun getTerms(): Response<BaseResponse<String>>
 
     @GET("CheckOut/GetDeliveryCost")
-    suspend fun getDeliveryCost(): Response<BaseResponse<Double>>
+    suspend fun getDeliveryCost(): Response<BaseResponse<PaymentDetailsResponse>>
 
     @GET("CheckOut/PrepareCheckout/{paymentMethodType}")
     suspend fun prepareCheckout(@Path("paymentMethodType") paymentMethodType: Int):

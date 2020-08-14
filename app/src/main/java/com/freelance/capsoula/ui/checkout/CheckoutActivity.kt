@@ -1,18 +1,18 @@
 package com.freelance.capsoula.ui.checkout
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.databinding.ActivityCheckoutBinding
 import com.freelance.capsoula.ui.checkout.fragment.cart.CartFragment
 import com.freelance.capsoula.ui.checkout.fragment.details.DetailsFragment
 import com.freelance.capsoula.ui.checkout.fragment.done.DoneFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import androidx.fragment.app.Fragment
-import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel>(),
     CheckoutNavigator {
@@ -41,6 +41,15 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
         viewDataBinding?.vm = mViewModel
         viewModel = mViewModel
         mViewModel.navigator = this
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        if (intent!!.scheme.equals("capsula")) {
+            val checkoutId = intent.data!!.getQueryParameter("id")
+//            Toast.makeText(this, "new intent", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getIntentsData() {

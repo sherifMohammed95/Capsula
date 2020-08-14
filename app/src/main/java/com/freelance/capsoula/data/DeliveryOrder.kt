@@ -4,6 +4,7 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.utils.Domain
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlin.math.round
 
 class DeliveryOrder {
     @SerializedName("orderId")
@@ -70,33 +71,43 @@ class DeliveryOrder {
     @Expose
     var statusId = 0
 
-    var products : ArrayList<Product>? = null
+    var products: ArrayList<Product>? = null
+
+    var deliveryCost = 0.0
 
     fun getPaymentMethod(): String {
         return when (paymentMethodId?.value) {
             PaymentMethodOption.CASH.value -> Domain.application.getString(
-                R.string.cash_on_delivery)
+                R.string.cash_on_delivery
+            )
             PaymentMethodOption.STC_PAY.value -> Domain.application.getString(
-                R.string.stc_pay)
+                R.string.stc_pay
+            )
             PaymentMethodOption.MADA.value -> Domain.application.getString(R.string.mada)
             PaymentMethodOption.CREDIT_CARD.value -> Domain.application.getString(
-                R.string.credit_card)
+                R.string.credit_card
+            )
             PaymentMethodOption.GOOGLE_PAY.value -> Domain.application.getString(
-                R.string.google_pay)
+                R.string.google_pay
+            )
             else -> ""
         }
     }
 
     fun getFinalCost(): String {
-        return "" + finalTotalCost
+        return "" + round(finalTotalCost * 100) / 100
     }
 
     fun getItemsCostText(): String {
-        return "" + itemsCost
+        return "" + round(itemsCost * 100) / 100
     }
 
     fun getVatCostText(): String {
-        return "$vatCost%"
+        return "" + round(vatCost * 100) / 100
+    }
+
+    fun getDeliveryCostText(): String {
+        return "" + round(deliveryCost * 100) / 100
     }
 
 

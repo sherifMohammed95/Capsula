@@ -117,6 +117,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     override fun logout() {
         UserDataSource.saveUser(null)
         UserDataSource.saveDeliveryUser(null)
+        UserDataSource.saveUserToken("")
         val intent = Intent(this, UserTypesActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

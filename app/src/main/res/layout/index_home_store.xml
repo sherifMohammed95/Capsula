@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="store"
             type="com.freelance.capsoula.data.Store" />
@@ -12,39 +14,63 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_20"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/dimen_20"
         app:cardElevation="3dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:paddingBottom="@dimen/dimen_10"
+            android:layout_height="match_parent">
 
-            <ImageView
-                imageURL="@{store.imageLink}"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_100"
-                android:scaleType="centerCrop" />
 
-            <TextView
-                style="@style/medium"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dimen_3"
-                android:layout_marginEnd="@dimen/dimen_3"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="@{store.storeName}"
-                android:textColor="@color/colorBlack50"
-                android:textSize="@dimen/font_14"
-                tools:text="Babies sherif sherif" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    imageURL="@{store.imageLink}"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{store.storeName}"
+                    android:textColor="@color/colorBlack50"
+                    android:textSize="@dimen/font_12"
+                    tools:text="Babies sherif sherif shshs hshsh hshsh hshs hsh hshs jsshsh hshs" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:text="@{store.distanceText}"
+                    android:textColor="@color/colorPrice"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{store.distance>0 ? View.VISIBLE:View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Distance: 100 KM" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>

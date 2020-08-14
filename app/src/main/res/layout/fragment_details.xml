@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="payment"
+            type="com.freelance.capsoula.data.responses.PaymentDetailsResponse" />
+
+        <variable
             name="vm"
             type="com.freelance.capsoula.ui.checkout.fragment.details.DetailsViewModel" />
 
@@ -257,10 +261,10 @@
                     android:layout_marginStart="@dimen/dimen_22"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:layout_marginEnd="@dimen/dimen_22"
-                    android:visibility="gone"
                     android:text="@string/do_you_have_a_promo_code"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/font_14" />
+                    android:textSize="@dimen/font_14"
+                    android:visibility="gone" />
 
                 <TextView
                     style="@style/medium"
@@ -314,6 +318,18 @@
                             app:layout_constraintTop_toBottomOf="@+id/items_cost_label" />
 
                         <TextView
+                            android:id="@+id/vat_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:text="@string/vat"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/delivery_cost_label" />
+
+                        <TextView
                             android:id="@+id/estimate_total_label"
                             style="@style/bold"
                             android:layout_width="wrap_content"
@@ -326,7 +342,7 @@
                             android:textSize="@dimen/font_15"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/delivery_cost_label" />
+                            app:layout_constraintTop_toBottomOf="@+id/vat_label" />
 
 
                         <TextView
@@ -334,6 +350,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_5"
+                            android:text="@{payment.deliveryCostText}"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
@@ -343,11 +360,26 @@
                             tools:text="50" />
 
                         <TextView
+                            android:id="@+id/vat_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{payment.vatCostText}"
+                            android:textColor="@color/colorLabelText50"
+                            android:layout_marginStart="@dimen/dimen_5"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/vat_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label"
+                            app:layout_constraintStart_toEndOf="@+id/vat_rsd"
+                            tools:text="12.0" />
+
+                        <TextView
                             android:id="@+id/estimated_total_value"
                             style="@style/bold"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_5"
+                            android:text="@{payment.finalCost}"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/font_15"
                             app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
@@ -362,6 +394,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_5"
+                            android:text="@{payment.itemsCostText}"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/items_cost_label"
@@ -396,14 +429,26 @@
                             app:layout_constraintTop_toTopOf="@+id/delivery_cost_label" />
 
                         <TextView
+                            android:id="@+id/vat_rsd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_90"
+                            android:text="@string/rsd"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/vat_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label" />
+
+                        <TextView
                             android:id="@+id/estimated_total_rsd"
                             style="@style/bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="87dp"
+                            android:text="@string/rsd"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/font_15"
-                            android:text="@string/rsd"
                             app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/estimate_total_label" />

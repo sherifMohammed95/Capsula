@@ -1,8 +1,6 @@
 package com.freelance.capsoula.ui.checkout.fragment.details
 
 import android.Manifest
-import android.R.attr
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
@@ -30,12 +28,13 @@ import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
 import com.oppwa.mobile.connect.checkout.meta.CheckoutStorePaymentDetailsMode
 import com.oppwa.mobile.connect.exception.PaymentError
 import com.oppwa.mobile.connect.provider.Connect
+import com.oppwa.mobile.connect.provider.Transaction
+import com.oppwa.mobile.connect.provider.TransactionType
 import kotlinx.android.synthetic.main.fragment_details.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import rx.functions.Action2
-import kotlin.math.round
 
 
 class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>(), DetailsNavigator {
@@ -84,30 +83,28 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         mViewModel.navigator = this
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun calCostDetails() {
-        var total = 0.0
-        var prodPrice: Double
-        UserDataSource.getUser()?.cartContent?.forEach {
-            prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
-                it.priceInOffer!!.toDouble()
-            else
-                it.price
-
-            total += (it.quantity * prodPrice)
-        }
-
-        val estimatedTotal =
-            round((total + delivery_cost_value.text.toString().toDouble()) * 100) / 100
-        items_cost_value.text = total.toString()
-        estimated_total_value.text = estimatedTotal.toString()
-    }
+//    @SuppressLint("SetTextI18n")
+//    private fun calCostDetails() {
+//        var total = 0.0
+//        var prodPrice: Double
+//        UserDataSource.getUser()?.cartContent?.forEach {
+//            prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
+//                it.priceInOffer!!.toDouble()
+//            else
+//                it.price
+//
+//            total += (it.quantity * prodPrice)
+//        }
+//
+//        val estimatedTotal =
+//            round((total + delivery_cost_value.text.toString().toDouble()) * 100) / 100
+//        items_cost_value.text = total.toString()
+//        estimated_total_value.text = estimatedTotal.toString()
+//    }
 
     private fun subscribeToLiveData() {
-        mViewModel.deliveryCostResponse.observe(viewLifecycleOwner, Observer {
-            val cost = round((it.toString().toDouble() * 100)) / 100
-            delivery_cost_value.text = cost.toString()
-            calCostDetails()
+        mViewModel.paymentDetailsResponse.observe(viewLifecycleOwner, Observer {
+            viewDataBinding?.payment = it
         })
         mViewModel.updateDefaultAddressResponse.observe(viewLifecycleOwner, Observer {
             mViewModel.setSelectedAddressPos()
@@ -116,11 +113,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         })
 
         mViewModel.successEvent.observe(viewLifecycleOwner, Observer {
-            if (mViewModel.selectedPaymentMethodValue == Constants.CASH)
-                (activity as CheckoutActivity).openDoneFragment()
-            else {
-                mViewModel.prepareCheckout()
-            }
+            (activity as CheckoutActivity).openDoneFragment()
         })
 
         mViewModel.checkTotalCostEvent.observe(viewLifecycleOwner, Observer {
@@ -151,8 +144,12 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
     private fun openHyperPayCheckout(checkoutId: String) {
         val paymentBrands: MutableSet<String> = LinkedHashSet()
-        paymentBrands.add("VISA")
-        paymentBrands.add("MADA")
+        if (mViewModel.selectedPaymentMethodValue == Constants.CREDIT_CARD) {
+            paymentBrands.add("VISA")
+            paymentBrands.add("MASTER")
+        } else if (mViewModel.selectedPaymentMethodValue == Constants.MADA)
+            paymentBrands.add("MADA")
+
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
         checkoutSettings.locale = "en_US";
@@ -199,7 +196,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
                 mViewModel.paymentMethodText.set(item.text)
                 when (pos) {
                     0 -> mViewModel.selectedPaymentMethodValue = Constants.CASH
-                    1 -> mViewModel.selectedPaymentMethodValue = Constants.MADA
+                    1 -> mViewModel.selectedPaymentMethodValue = Constants.CREDIT_CARD
+                    2 -> mViewModel.selectedPaymentMethodValue = Constants.MADA
                 }
             },
             mViewModel.selectedPaymentMethodPos,
@@ -314,14 +312,31 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
             com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_OK -> {
 
+                val transaction: Transaction? =
+                    data?.getParcelableExtra(
+                        com.oppwa.mobile.connect.checkout.dialog
+                            .CheckoutActivity.CHECKOUT_RESULT_TRANSACTION
+                    )
+
                 /* resource path if needed */
-                val resourcePath =
+                mViewModel.resoursePath =
                     data?.getStringExtra(
                         com.oppwa.mobile.connect.checkout.dialog
                             .CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH
                     )
 
-                Toast.makeText(activity, resourcePath, Toast.LENGTH_LONG).show()
+                mViewModel.submitCheckoutDetails()
+
+//                Toast.makeText(activity, mViewModel.resoursePath, Toast.LENGTH_LONG).show()
+//
+//                if (transaction?.transactionType == TransactionType.SYNC) {
+//                    /* check the result of synchronous transaction */
+//                    Toast.makeText(activity, "sync", Toast.LENGTH_LONG).show()
+//                } else {
+//                    /* wait for the asynchronous transaction callback in the onNewIntent() */
+//                    Toast.makeText(activity, "async", Toast.LENGTH_LONG).show()
+//                }
+
             }
 
             com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_ERROR -> {

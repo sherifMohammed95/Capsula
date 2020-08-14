@@ -93,7 +93,7 @@ object Constants {
      * Payment methods
      * **/
     const val CASH = 1
-    const val CRDIT_CARD = 4
+    const val CREDIT_CARD = 4
     const val STC_PAY = 3
     const val MADA = 5
     const val GOOGLE_PAY = 6

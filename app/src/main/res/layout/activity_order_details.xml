@@ -146,27 +146,27 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_12"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_12"
+                    android:minHeight="@dimen/dimen_70"
                     app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="@dimen/dimen_15"
                     app:cardElevation="3dp"
                     app:cardUseCompatPadding="true">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:layout_marginEnd="@dimen/dimen_16"
-                            android:ellipsize="end"
                             android:gravity="center_vertical|start"
-                            android:maxLines="1"
                             android:text="@{order.deliveryAddress}"
                             android:textAlignment="viewStart"
                             android:textColor="@color/colorLabelText"
@@ -177,7 +177,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="Jeddah" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -287,6 +287,18 @@
                             app:layout_constraintTop_toBottomOf="@+id/items_cost_label" />
 
                         <TextView
+                            android:id="@+id/vat_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:text="@string/vat"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/delivery_cost_label" />
+
+                        <TextView
                             android:id="@+id/estimate_total_label"
                             style="@style/bold"
                             android:layout_width="wrap_content"
@@ -299,7 +311,7 @@
                             android:textSize="@dimen/font_15"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/delivery_cost_label" />
+                            app:layout_constraintTop_toBottomOf="@+id/vat_label" />
 
 
                         <TextView
@@ -309,6 +321,7 @@
                             android:layout_marginStart="@dimen/dimen_5"
                             android:textColor="@color/colorLabelText50"
                             android:textSize="@dimen/font_14"
+                            android:text="@{order.deliveryCostText}"
                             app:layout_constraintBottom_toBottomOf="@+id/delivery_cost_label"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/delivery_cost_rsd"
@@ -370,6 +383,19 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/delivery_cost_label" />
 
+
+                        <TextView
+                            android:id="@+id/vat_rsd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_90"
+                            android:text="@string/rsd"
+                            android:textColor="@color/colorLabelText50"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/vat_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label" />
+
                         <TextView
                             android:id="@+id/estimated_total_rsd"
                             style="@style/bold"
@@ -382,6 +408,22 @@
                             app:layout_constraintBottom_toBottomOf="@+id/estimate_total_label"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/estimate_total_label" />
+
+                        <TextView
+                            android:id="@+id/vat_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{order.vatCostText}"
+                            android:textColor="@color/colorLabelText50"
+                            android:layout_marginStart="@dimen/dimen_5"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="@+id/vat_label"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label"
+                            app:layout_constraintStart_toEndOf="@+id/vat_rsd"
+                            tools:text="12.0" />
+
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

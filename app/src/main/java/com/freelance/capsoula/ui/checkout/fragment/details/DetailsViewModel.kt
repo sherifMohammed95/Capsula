@@ -10,6 +10,7 @@ import com.freelance.capsoula.custom.bottomSheet.BottomSheetModel
 import com.freelance.capsoula.data.UserAddress
 import com.freelance.capsoula.data.repository.UserRepository
 import com.freelance.capsoula.data.requests.CheckoutDetailsRequest
+import com.freelance.capsoula.data.responses.PaymentDetailsResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -38,19 +39,19 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     var selectedPaymentMethodPos = -1
     var selectedPaymentMethodValue = -1
     var selectedDeliveryAddressPos = -1
-    var resoursePath = ""
+    var resoursePath:String? = ""
 
     var updateDefaultAddressResponse = SingleLiveEvent<Void>()
     var successEvent = SingleLiveEvent<Void>()
     var checkTotalCostEvent = SingleLiveEvent<Void>()
-    var deliveryCostResponse = SingleLiveEvent<Double>()
+    var paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     var checkoutIdResponse = SingleLiveEvent<String>()
 
     init {
         initRepository(repo)
         this.updateDefaultAddressResponse = repo.updateDefaultAddressResponse
         this.successEvent = repo.successEvent
-        this.deliveryCostResponse = repo.deliveryCostResponse
+        this.paymentDetailsResponse = repo.paymentDetailsResponse
         this.checkoutIdResponse = repo.checkoutIdResponse
         showPrescription.set(UserDataSource.getUser()?.cartContent?.find { it.isTreatment } != null)
         setImageUri()
@@ -135,6 +136,7 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
         request.insuranceNumberImage = insuranceNumberBase64
         request.prescriptionImage = prescriptionBase64
         request.paymentMethodType = this.selectedPaymentMethodValue
+        request.resourcePath = this.resoursePath
 
         viewModelScope.launch(IO) {
             repo.submitCheckoutDetails(request)

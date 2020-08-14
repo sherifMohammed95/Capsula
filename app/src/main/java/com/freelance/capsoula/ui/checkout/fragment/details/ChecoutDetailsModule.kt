@@ -20,8 +20,8 @@ val checkoutDetailsModule = module {
         arrayListOf(
             PaymentMethod(1,R.drawable.ic_cash,androidContext()
                 .getString(R.string.cash_on_delivery)),
-//            PaymentMethod(2,R.drawable.ic_credit,androidContext()
-//                .getString(R.string.credit_card)),
+            PaymentMethod(2,R.drawable.ic_credit,androidContext()
+                .getString(R.string.credit_card)),
 //            PaymentMethod(3,R.drawable.ic_google_pay,androidContext()
 //                .getString(R.string.google_pay)),
 //            PaymentMethod(4,R.drawable.ic_stc_pay,androidContext()
