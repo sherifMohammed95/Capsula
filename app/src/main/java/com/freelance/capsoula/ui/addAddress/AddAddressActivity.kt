@@ -59,6 +59,11 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         initMapView()
         getIntentsData()
         subscribeToLiveData()
+//        getMyCurrentLocation()
+    }
+
+    fun getMyCurrentLocation() {
+        initGoogleAPIClient()
     }
 
     private fun subscribeToLiveData() {
@@ -191,7 +196,7 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         val rlp = locationButton.layoutParams as RelativeLayout.LayoutParams
         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-        rlp.setMargins(0, 0, 500, 700)
+        rlp.setMargins(0, 0, 500, 1000)
 
 //        locationButton.setImageResource(R.drawable.ic_navigate)
     }
@@ -202,10 +207,10 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         locationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest!!.interval = (10 * 1000).toLong() // 10 seconds
         locationRequest!!.fastestInterval = (5 * 1000).toLong() // 5 seconds
-        GpsUtils.onGpsListener {
-            if (!it)
-                GpsUtils(this).turnGPSOn { getLocation() }
-        }
+
+        GpsUtils(this).turnGPSOn {
+                isGPSEnable -> getLocation() }
+
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult == null) {
