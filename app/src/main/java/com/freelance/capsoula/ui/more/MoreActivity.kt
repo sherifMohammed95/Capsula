@@ -1,18 +1,25 @@
 package com.freelance.capsoula.ui.more
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseActivity
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
+import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
 import com.freelance.capsoula.data.MoreItem
+import com.freelance.capsoula.data.PaymentMethod
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityMoreBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
+import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
@@ -20,12 +27,19 @@ import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.ImageUtil
+import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
+import com.oppwa.mobile.connect.checkout.meta.CheckoutStorePaymentDetailsMode
+import com.oppwa.mobile.connect.exception.PaymentError
+import com.oppwa.mobile.connect.provider.Connect
+import com.oppwa.mobile.connect.provider.Transaction
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_more.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
+import rx.functions.Action2
 
 class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNavigator,
     BaseRecyclerAdapter.OnITemClickListener<MoreItem> {
@@ -34,6 +48,8 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     private val guestList: ArrayList<MoreItem> by inject(named(GUEST_MORE_LIST))
     private val loggedList: ArrayList<MoreItem> by inject(named(LOGGED_MORE_LIST))
     private val deliveryList: ArrayList<MoreItem> by inject(named(DELIVERY_MORE_LIST))
+    private val paymentMethodList: ArrayList<PaymentMethod> by inject(named(ADD_PAYMENT_METHOD))
+
     private val mAdapter: MoreAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +61,16 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
         initRecyclerView()
         subscribeToLiveData()
+
     }
 
     private fun subscribeToLiveData() {
-        mViewModel.deleteCartResponse.observe(this, Observer {
-            logout()
+        mViewModel.checkoutIdResponse.observe(this, Observer {
+            openHyperPay(it)
+        })
+
+        mViewModel.saveCardResponse.observe(this, Observer {
+            showPopUp("", it, getString(android.R.string.ok),false)
         })
     }
 
@@ -129,4 +150,95 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun openMyWallet() {
     }
+
+    override fun addPaymentCard() {
+        showPaymentMethodSheet()
+
+    }
+
+    override fun showPaymentMethodSheet() {
+        val fragment = BottomSelectionFragment.newInstance(
+            getString(R.string.payment_method),
+            paymentMethodList,
+            Action2 { pos, item ->
+                when (pos) {
+                    0 -> {
+                        mViewModel.selectedPaymentMethodValue = Constants.CREDIT_CARD
+                        mViewModel.prepareRegistration()
+                    }
+                    1 -> {
+                        mViewModel.selectedPaymentMethodValue = Constants.MADA
+                        mViewModel.prepareRegistration()
+                    }
+                }
+            },
+            -1,
+            showClearText = false,
+            showIconImage = true,
+            showAddNewAddressText = false
+        )
+        fragment.show(supportFragmentManager, fragment.tag)
+    }
+
+    private fun openHyperPay(checkoutId: String) {
+        val paymentBrands: MutableSet<String> = LinkedHashSet()
+        if (mViewModel.selectedPaymentMethodValue == Constants.CREDIT_CARD) {
+            paymentBrands.add("VISA")
+            paymentBrands.add("MASTER")
+        } else if (mViewModel.selectedPaymentMethodValue == Constants.MADA)
+            paymentBrands.add("MADA")
+
+        val checkoutSettings =
+            CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
+        checkoutSettings.locale = "en_US";
+//        checkoutSettings.storePaymentDetailsMode = CheckoutStorePaymentDetailsMode.ALWAYS
+        checkoutSettings.shopperResultUrl = "capsula://result";
+
+        val intent =
+            Intent(this, com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity::class.java)
+        intent.putExtra(
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.CHECKOUT_SETTINGS,
+            checkoutSettings
+        )
+
+        startActivityForResult(
+            intent,
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.REQUEST_CODE_CHECKOUT
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (resultCode) {
+
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_OK -> {
+
+                /* resource path if needed */
+                mViewModel.resoursePath =
+                    data?.getStringExtra(
+                        com.oppwa.mobile.connect.checkout.dialog
+                            .CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH
+                    )
+
+                mViewModel.saveCard()
+
+//                Toast.makeText(this, mViewModel.resoursePath, Toast.LENGTH_LONG).show()
+
+            }
+
+            com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity.RESULT_ERROR -> {
+                val error: PaymentError? =
+                    data?.getParcelableExtra(
+                        com.oppwa.mobile.connect.checkout
+                            .dialog.CheckoutActivity.CHECKOUT_RESULT_ERROR
+                    )
+
+                Toast.makeText(this, error?.errorInfo, Toast.LENGTH_LONG).show()
+
+            }
+
+        }
+    }
+
 }

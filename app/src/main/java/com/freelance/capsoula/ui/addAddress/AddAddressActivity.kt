@@ -59,11 +59,6 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         initMapView()
         getIntentsData()
         subscribeToLiveData()
-//        getMyCurrentLocation()
-    }
-
-    fun getMyCurrentLocation() {
-        initGoogleAPIClient()
     }
 
     private fun subscribeToLiveData() {

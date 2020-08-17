@@ -16,4 +16,8 @@ interface MoreNavigator {
 
     fun openMyWallet()
 
+    fun addPaymentCard()
+
+    fun showPaymentMethodSheet()
+
 }

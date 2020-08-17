@@ -5,17 +5,23 @@ import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.MoreItem
 import com.freelance.capsoula.data.repository.CartRepository
+import com.freelance.capsoula.data.repository.UserRepository
 import com.freelance.capsoula.utils.Domain
 import com.freelance.capsoula.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MoreViewModel(val repo: CartRepository) : BaseViewModel<MoreNavigator>() {
-    var deleteCartResponse = SingleLiveEvent<Void>()
+class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
+
+    var checkoutIdResponse = SingleLiveEvent<String>()
+    var saveCardResponse = SingleLiveEvent<String>()
+    var selectedPaymentMethodValue = -1
+    var resoursePath:String? = ""
 
     init {
         initRepository(repo)
-        this.deleteCartResponse = repo.deleteCartResponse
+        this.checkoutIdResponse = repo.checkoutIdResponse
+        this.saveCardResponse = repo.saveCardResponse
     }
 
     fun navigate(item: MoreItem) {
@@ -32,12 +38,20 @@ class MoreViewModel(val repo: CartRepository) : BaseViewModel<MoreNavigator>() {
             Domain.application.getString(R.string.history) -> navigator?.openHistory()
 
             Domain.application.getString(R.string.my_wallet) -> navigator?.openMyWallet()
+
+            Domain.application.getString(R.string.manage_payment_methods) -> navigator?.addPaymentCard()
         }
     }
 
-    private fun deleteCart() {
+    fun prepareRegistration() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.deleteCart()
+            repo.prepareRegistration(selectedPaymentMethodValue)
+        }
+    }
+
+    fun saveCard() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.saveCard(selectedPaymentMethodValue,resoursePath!!)
         }
     }
 }

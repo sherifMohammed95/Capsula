@@ -225,4 +225,14 @@ interface WebService {
     @GET("CheckOut/PrepareCheckout/{paymentMethodType}")
     suspend fun prepareCheckout(@Path("paymentMethodType") paymentMethodType: Int):
             Response<BaseResponse<String>>
+
+    @GET("CheckOut/PrepareRegisteration/{registerMethodType}")
+    suspend fun prepareRegistration(@Path("registerMethodType") paymentMethodType: Int):
+            Response<BaseResponse<String>>
+
+    @GET("CheckOut/SaveCard")
+    suspend fun saveCard(
+        @Query("registerMethodType") paymentMethodType: Int,
+        @Query("resourcePath") resourcePath: String
+    ): Response<BaseResponse<String>>
 }

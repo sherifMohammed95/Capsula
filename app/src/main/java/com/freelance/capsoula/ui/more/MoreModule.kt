@@ -2,6 +2,8 @@ package com.freelance.capsoula.ui.more
 
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.MoreItem
+import com.freelance.capsoula.data.PaymentMethod
+import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
@@ -56,8 +58,23 @@ val moreModule = module {
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
         )
     }
+
+    single(named(ADD_PAYMENT_METHOD)) {
+        arrayListOf(
+            PaymentMethod(2,R.drawable.ic_credit,androidContext()
+                .getString(R.string.credit_card)),
+//            PaymentMethod(3,R.drawable.ic_google_pay,androidContext()
+//                .getString(R.string.google_pay)),
+//            PaymentMethod(4,R.drawable.ic_stc_pay,androidContext()
+//                .getString(R.string.stc_pay)),
+            PaymentMethod(3,R.drawable.ic_mada,androidContext()
+                .getString(R.string.mada))
+
+        )
+    }
 }
 
 const val GUEST_MORE_LIST = "guest_more_list"
 const val LOGGED_MORE_LIST = "logged_more_list"
 const val DELIVERY_MORE_LIST = "delivery_more_list"
+const val ADD_PAYMENT_METHOD = "add_payment_method"

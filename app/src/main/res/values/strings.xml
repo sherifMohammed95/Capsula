@@ -190,6 +190,7 @@
     <string name="proceed_online_payment">Total Cost is great than 500 RSD, so you have to proceed with online payment</string>
 
     <string name="checkout_layout_text_pay">Pay Now</string>
+    <string name="checkout_layout_text_register">Register</string>
     <string name="km">KM</string>
     <string name="store_distance">Distance:</string>
 

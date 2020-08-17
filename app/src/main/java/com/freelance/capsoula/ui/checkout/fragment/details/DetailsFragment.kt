@@ -83,24 +83,6 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         mViewModel.navigator = this
     }
 
-//    @SuppressLint("SetTextI18n")
-//    private fun calCostDetails() {
-//        var total = 0.0
-//        var prodPrice: Double
-//        UserDataSource.getUser()?.cartContent?.forEach {
-//            prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
-//                it.priceInOffer!!.toDouble()
-//            else
-//                it.price
-//
-//            total += (it.quantity * prodPrice)
-//        }
-//
-//        val estimatedTotal =
-//            round((total + delivery_cost_value.text.toString().toDouble()) * 100) / 100
-//        items_cost_value.text = total.toString()
-//        estimated_total_value.text = estimatedTotal.toString()
-//    }
 
     private fun subscribeToLiveData() {
         mViewModel.paymentDetailsResponse.observe(viewLifecycleOwner, Observer {

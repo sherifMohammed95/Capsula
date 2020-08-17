@@ -19,6 +19,7 @@ class UserRepository : BaseRepository() {
     val successEvent = SingleLiveEvent<Void>()
     val paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     val checkoutIdResponse = SingleLiveEvent<String>()
+    val saveCardResponse = SingleLiveEvent<String>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -168,6 +169,68 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         prepareCheckout(paymentMethod)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun prepareRegistration(paymentMethod: Int) {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.prepareRegistration(paymentMethod)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                checkoutIdResponse.postValue(response.body()!!.data!!)
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        prepareRegistration(paymentMethod)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun saveCard(paymentMethod: Int, resoursePath: String) {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.saveCard(paymentMethod, resoursePath)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                saveCardResponse.postValue(response.body()!!.data!!)
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        saveCard(paymentMethod, resoursePath)
                     }
                 })
             }
