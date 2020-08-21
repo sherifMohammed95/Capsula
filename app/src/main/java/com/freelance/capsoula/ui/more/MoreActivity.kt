@@ -24,6 +24,7 @@ import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
+import com.freelance.capsoula.ui.userProfile.UserProfileActivity
 import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
@@ -70,7 +71,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         })
 
         mViewModel.saveCardResponse.observe(this, Observer {
-            showPopUp("", it, getString(android.R.string.ok),false)
+            showPopUp("", it, getString(android.R.string.ok), false)
         })
     }
 
@@ -126,7 +127,8 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     }
 
     override fun openPersonalDetails() {
-
+        if (UserDataSource.getUser() != null)
+            startActivity(Intent(this, UserProfileActivity::class.java))
     }
 
     override fun openLogin() {

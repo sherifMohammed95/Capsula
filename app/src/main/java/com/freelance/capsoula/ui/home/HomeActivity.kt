@@ -1,39 +1,29 @@
 package com.freelance.capsoula.ui.home
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.freelance.base.BaseActivity
-import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
-import com.freelance.capsoula.data.Store
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityHomeBinding
-import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.brands.BrandsActivity
 import com.freelance.capsoula.ui.categories.CategoriesActivity
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.home.adapters.HomeBrandsAdapter
 import com.freelance.capsoula.ui.home.adapters.HomeCategoriesAdapter
 import com.freelance.capsoula.ui.home.adapters.HomeStoresAdapter
+import com.freelance.capsoula.ui.more.MoreActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
 import com.freelance.capsoula.ui.stores.StoresActivity
-import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import android.os.Handler
-import android.view.View
-import com.freelance.capsoula.data.MessageEvent
-import com.freelance.capsoula.ui.checkout.CheckoutActivity
-import com.freelance.capsoula.ui.more.MoreActivity
-import io.reactivex.functions.Action
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {

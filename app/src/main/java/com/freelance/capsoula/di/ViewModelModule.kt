@@ -32,6 +32,7 @@ import com.freelance.capsoula.ui.search.SearchViewModel
 import com.freelance.capsoula.ui.stores.StoresViewModel
 import com.freelance.capsoula.ui.subCategories.SubCategoriesViewModel
 import com.freelance.capsoula.ui.terms.TermsViewModel
+import com.freelance.capsoula.ui.userProfile.UserProfileViewModel
 import com.freelance.capsoula.ui.userTypes.UserTypesViewModel
 import com.freelance.capsoula.ui.verification.VerificationViewModel
 import org.koin.androidx.experimental.dsl.viewModel
@@ -71,4 +72,5 @@ val viewModelModule = module {
     viewModel<DeliveryOrderDetailsViewModel>()
     viewModel<HistoryViewModel>()
     viewModel<TermsViewModel>()
+    viewModel<UserProfileViewModel>()
 }

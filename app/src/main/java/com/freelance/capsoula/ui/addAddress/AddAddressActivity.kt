@@ -59,6 +59,7 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         initMapView()
         getIntentsData()
         subscribeToLiveData()
+        initGoogleAPIClient()
     }
 
     private fun subscribeToLiveData() {
@@ -125,7 +126,7 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
         var addresses: List<Address>? = null
         try {
             mViewModel.mLat = latLng.latitude
-            mViewModel.mLng = latLng.latitude
+            mViewModel.mLng = latLng.longitude
             addresses = geocoder.getFromLocation(
                 latLng.latitude,
                 latLng.longitude,
@@ -168,7 +169,7 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
 
     override fun onMapReady(map: GoogleMap?) {
         mGoogleMap = map
-        getLocation()
+//        getLocation()
         setLocationButton()
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -251,7 +252,7 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
     private fun getLocation() {
         requestRunTimePermissionForStorage(this, Action1 {
             if (it) {
-                initGoogleAPIClient()
+//                initGoogleAPIClient()
                 mFusedLocationClient!!.lastLocation.addOnSuccessListener {
                     if (it != null) {
                         mLocation = it
@@ -269,4 +270,15 @@ class AddAddressActivity : BaseActivity<ActivityAddAddressBinding, AddAddressVie
             }
         })
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == Constants.GPS_REQUEST) {
+                getLocation()
+            }
+        }
+    }
+
+
 }

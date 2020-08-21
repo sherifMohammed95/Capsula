@@ -25,9 +25,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.terms.TermsActivity"
+        <activity android:name=".ui.userProfile.UserProfileActivity"></activity>
+        <activity
+            android:name=".ui.terms.TermsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.deliveryMan.history.HistoryActivity"
             android:screenOrientation="portrait"
@@ -67,17 +69,16 @@
             android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.checkout.CheckoutActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleTask">
-
+            android:theme="@style/AppTheme">
             <intent-filter>
-                <data android:scheme="capsula"/>
+                <data android:scheme="capsula" />
 
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
         <activity
@@ -154,14 +155,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            tools:replace="android:theme,android:windowSoftInputMode"
             android:name="com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/NewCheckoutTheme"
             android:windowSoftInputMode="adjustPan"
-            android:exported="false"
-            android:launchMode="singleTop"/>
+            tools:replace="android:theme,android:windowSoftInputMode" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -185,10 +185,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name="com.oppwa.mobile.connect.service.ConnectService"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
