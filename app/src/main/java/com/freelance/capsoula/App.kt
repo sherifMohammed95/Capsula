@@ -10,6 +10,7 @@ import com.freelance.capsoula.ui.categories.categoriesModule
 import com.freelance.capsoula.ui.checkout.fragment.cart.cartModule
 import com.freelance.capsoula.ui.checkout.fragment.details.checkoutDetailsModule
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.deliveryHomeModule
+import com.freelance.capsoula.ui.deliveryMan.wallet.walletModule
 import com.freelance.capsoula.ui.home.homeModule
 import com.freelance.capsoula.ui.more.moreModule
 import com.freelance.capsoula.ui.myOrders.ordersModule
@@ -44,7 +45,8 @@ class App : Application() {
                     networkModule, viewModelModule, authModule, addAddressModule, homeModule,
                     brandsModule, categoriesModule, storesModule, subCategoriesModule,
                     productsModule, searchModule, cartModule, checkoutDetailsModule, moreModule,
-                    ordersModule, orderDetailsModule, orderTrackingModule, deliveryHomeModule
+                    ordersModule, orderDetailsModule, orderTrackingModule, deliveryHomeModule,
+                    walletModule
                 )
             )
         }

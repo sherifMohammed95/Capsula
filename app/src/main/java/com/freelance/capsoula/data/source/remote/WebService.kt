@@ -3,6 +3,7 @@ package com.freelance.capsoula.data.source.remote
 import com.freelance.base.BaseResponse
 import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.data.Order
+import com.freelance.capsoula.data.Wallet
 import com.freelance.capsoula.data.requests.CartRequest
 import com.freelance.capsoula.data.requests.*
 import com.freelance.capsoula.data.responses.*
@@ -235,4 +236,7 @@ interface WebService {
         @Query("registerMethodType") paymentMethodType: Int,
         @Query("resourcePath") resourcePath: String
     ): Response<BaseResponse<String>>
+
+    @GET("DeliveryMan/Wallet")
+    suspend fun getWallet(): Response<BaseResponse<Wallet>>
 }

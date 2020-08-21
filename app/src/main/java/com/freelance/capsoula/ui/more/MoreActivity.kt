@@ -21,6 +21,7 @@ import com.freelance.capsoula.databinding.ActivityMoreBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
+import com.freelance.capsoula.ui.deliveryMan.wallet.WalletActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
@@ -151,6 +152,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     }
 
     override fun openMyWallet() {
+        startActivity(Intent(this, WalletActivity::class.java))
     }
 
     override fun addPaymentCard() {

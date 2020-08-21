@@ -193,5 +193,17 @@
     <string name="checkout_layout_text_register">Register</string>
     <string name="km">KM</string>
     <string name="store_distance">Distance:</string>
+    <string name="the_total_number_of_completed_orders">The total number of completed orders</string>
+    <string name="total_delivery_fee_in_cash">Total delivery cost in cash</string>
+    <string name="total_online_delivery_fee">Total online delivery cost</string>
+    <string name="total_delivery_fee">Total delivery cost</string>
+    <string name="discounts">Discounts</string>
+    <string name="cash_orders_fee">Cash orders cost</string>
+    <string name="bonuses">Bonuses</string>
+    <string name="compensation">Compensation</string>
+    <string name="balance">Balance</string>
+    <string name="payments">Payments</string>
+    <string name="collection">Collection</string>
+    <string name="final_balance">Final balance</string>
 
 </resources>
