@@ -46,6 +46,9 @@ interface WebService {
     @POST("UserProfile/ForgetPassword")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>
 
+    @PUT("UserProfile/ChangePassword")
+    suspend fun changePassword(@Body request: ChangePasswordRequest): Response<BaseResponse<String>>
+
     @GET("Home/GetHomeData")
     suspend fun getHomeData(): Response<BaseResponse<HomeResponse>>
 

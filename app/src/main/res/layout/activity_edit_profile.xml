@@ -279,6 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_25"
                     android:layout_marginTop="@dimen/dimen_16"
+                    android:onClick="@{()->navigator.changeUserPassword()}"
                     android:text="@string/change_password"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_14" />

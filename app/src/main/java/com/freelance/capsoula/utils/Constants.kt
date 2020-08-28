@@ -14,6 +14,7 @@ object Constants {
     const val NOTIFICATIONS_IS_ENABLED = "notifications_is_enabled"
     const val FCM_TOKEN = "fcm_token"
     const val FROM_HISTORY = "from_history"
+    const val FROM_CHANGE_PASSWORD = "from_change_password"
 
     var REFRESH_DELIVERY_ORDER = false
 

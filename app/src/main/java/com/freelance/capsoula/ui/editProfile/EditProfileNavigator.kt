@@ -7,4 +7,6 @@ interface EditProfileNavigator {
     fun showImagePickerSheet()
 
     fun changeUserAddress()
+
+    fun changeUserPassword()
 }

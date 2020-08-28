@@ -42,6 +42,7 @@
     <string name="reset_password">Reset Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
     <string name="reset">Reset</string>
     <string name="password_not_match">Password doesn\'t match</string>
     <string name="password_has_changed">Password has been changed successfully</string>
@@ -208,5 +209,6 @@
     <string name="edit_personal_details">Edit personal details</string>
     <string name="change_password"><u>Change Password</u></string>
     <string name="change_user_address">Change user address</string>
+    <string name="current_password">Current Password</string>
 
 </resources>

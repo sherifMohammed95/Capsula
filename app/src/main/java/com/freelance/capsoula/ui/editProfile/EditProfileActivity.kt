@@ -19,6 +19,7 @@ import com.freelance.capsoula.databinding.ActivityEditProfileBinding
 import com.freelance.capsoula.ui.addAddress.AddAddressActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.IMAGE_PICKER_OPTIONS_LIST
+import com.freelance.capsoula.ui.resetPassword.ResetPasswordActivity
 import com.freelance.capsoula.ui.userTypes.UserTypesViewModel
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ImageUtil
@@ -161,6 +162,12 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
             showAddNewAddressText = true
         )
         fragment.show(supportFragmentManager, fragment.tag);
+    }
+
+    override fun changeUserPassword() {
+        val intent = Intent(this,ResetPasswordActivity::class.java)
+        intent.putExtra(Constants.FROM_CHANGE_PASSWORD, true)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

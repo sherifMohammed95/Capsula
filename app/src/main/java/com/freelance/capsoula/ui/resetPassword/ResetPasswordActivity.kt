@@ -40,7 +40,15 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
     }
 
     private fun getIntentsData() {
-        mViewModel.phoneNumber = intent.getStringExtra(Constants.EXTRA_PHONE)!!
+        mViewModel.fromChangePassword.set(
+            intent.getBooleanExtra(
+                Constants.FROM_CHANGE_PASSWORD,
+                false
+            )
+        )
+        if (!mViewModel.fromChangePassword.get())
+            mViewModel.phoneNumber = intent.getStringExtra(Constants.EXTRA_PHONE)!!
+
     }
 
     private fun subscribeToLiveData() {
@@ -49,6 +57,15 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
                 "", getString(R.string.password_has_changed), getString(android.R.string.ok),
                 DialogInterface.OnClickListener { _, _ ->
                     openAuthentication()
+                }, false
+            )
+        })
+
+        mViewModel.changePasswordResponse.observe(this, Observer {
+            showPopUp(
+                "", getString(R.string.password_has_changed), getString(android.R.string.ok),
+                DialogInterface.OnClickListener { _, _ ->
+                    finish()
                 }, false
             )
         })

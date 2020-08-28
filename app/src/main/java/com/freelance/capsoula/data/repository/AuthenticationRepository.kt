@@ -18,6 +18,7 @@ class AuthenticationRepository : BaseRepository() {
     val completeProfileResponse = SingleLiveEvent<Void>()
     val checkUserExistResponse = SingleLiveEvent<Void>()
     val resetPasswordResponse = SingleLiveEvent<Void>()
+    val changePasswordResponse = SingleLiveEvent<String>()
     val deliveryRegisterResponse = SingleLiveEvent<String>()
 
     suspend fun login(phoneOrEmail: String, password: String) {
@@ -316,6 +317,34 @@ class AuthenticationRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(IO).launch {
                         resetPassword(request)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun changePassword(request: ChangePasswordRequest) {
+        try {
+            withContext(Main) {
+                progressLoading.value = true
+            }
+
+            val response = webService.changePassword(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    changePasswordResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        changePassword(request)
                     }
                 })
             }
