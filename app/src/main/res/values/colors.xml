@@ -23,6 +23,8 @@
     <color name="colorScreenBg">#f8f8f8</color>
     <color name="colorCircleBorder">#8037b6ff</color>
     <color name="colorOrderId">#004081</color>
+    <color name="colorPersonalImageBorder">#33979797</color>
+    <color name="colorBlurLayer">#4d060505</color>
 
 
     <color name="checkout_color_accent">#37b6ff</color>

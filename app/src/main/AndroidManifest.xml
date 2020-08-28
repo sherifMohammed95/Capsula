@@ -25,8 +25,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.deliveryMan.wallet.WalletActivity"></activity>
-        <activity android:name=".ui.userProfile.UserProfileActivity" />
+        <activity
+            android:name=".ui.editProfile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.deliveryMan.wallet.WalletActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.userProfile.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.terms.TermsActivity"
             android:screenOrientation="portrait"

@@ -75,7 +75,7 @@
                 android:layout_height="96dp"
                 android:background="@drawable/blue_circle_bg"
                 android:backgroundTint="@android:color/white"
-                android:visibility="visible">
+                android:visibility="@{user.hasImage() ?View.GONE:View.VISIBLE}">
 
                 <ImageView
                     android:id="@+id/avatar_imageView"
@@ -89,10 +89,11 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/user_imageView"
+                imageURL="@{user.imagePath}"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:background="@android:color/white"
-                android:visibility="gone"
+                android:visibility="@{user.hasImage() ?View.VISIBLE:View.GONE}"
                 app:riv_corner_radius="@dimen/dimen_50"
                 app:riv_mutate_background="true" />
 
@@ -110,10 +111,10 @@
             android:text="@{user.name}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_16"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/user_image_layout"
             tools:text="sherif mohammed" />
 

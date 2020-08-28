@@ -43,7 +43,7 @@ interface WebService {
     @GET("UserProfile/CheckUserExist/{phone}")
     suspend fun checkUserExist(@Path("phone") phone: String): Response<BaseResponse<Any>>
 
-    @POST("UserProfile/ChangeUserPassword")
+    @POST("UserProfile/ForgetPassword")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>
 
     @GET("Home/GetHomeData")

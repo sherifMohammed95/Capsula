@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="user"
+            type="com.freelance.capsoula.data.User" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.editProfile.EditProfileViewModel" />
+
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.editProfile.EditProfileNavigator" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScreenBg"
+        tools:context=".ui.editProfile.EditProfileActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/edit_profile_toolbar"
+                    app:navigator="@{navigator}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:onClick="@{()->navigator.showImagePickerSheet()}">
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/personal_photo_imageView"
+                        imageURL="@{vm.imageUrl}"
+                        userImageUri="@{vm.personalPhotoUri}"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_border_color="@color/colorPersonalImageBorder"
+                        app:riv_border_width="@dimen/dimen_1"
+                        app:riv_corner_radius="@dimen/dimen_40"
+                        app:riv_mutate_background="true" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/dimmed_view"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@color/colorBlurLayer"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_border_color="@color/colorPersonalImageBorder"
+                        app:riv_border_width="@dimen/dimen_1"
+                        app:riv_corner_radius="@dimen/dimen_40"
+                        app:riv_mutate_background="true" />
+
+                    <ImageView
+                        android:id="@+id/avatar_imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_photo"
+                        android:tint="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/personal_photo_imageView"
+                        app:layout_constraintEnd_toEndOf="@+id/personal_photo_imageView"
+                        app:layout_constraintStart_toStartOf="@+id/personal_photo_imageView"
+                        app:layout_constraintTop_toTopOf="@+id/personal_photo_imageView" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/full_name"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <EditText
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:text="@={vm.fullNameText}"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14"
+                    tools:text="sherif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_enter_valid_full_name"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasFullNameError?View.VISIBLE:View.GONE}" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/phone"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        style="@style/medium"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_weight="15"
+                        android:gravity="center"
+                        android:text="+966"
+                        android:textColor="@color/colorLabelText" />
+
+                    <EditText
+                        style="@style/medium"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_50"
+                        android:layout_weight="85"
+                        android:background="@android:color/transparent"
+                        android:inputType="number"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:text="@={vm.phoneText}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_14"
+                        tools:text="sherif@test.com" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_enter_a_valid_phone"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasPhoneError?View.VISIBLE:View.GONE}" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/email"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <EditText
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:text="@={vm.emailText}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14"
+                    tools:text="sherif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_enter_a_valid_email"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasEmailError?View.VISIBLE:View.GONE}" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/change_user_address"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:onClick="@{()->navigator.changeUserAddress()}">
+
+                    <ImageView
+                        android:id="@+id/address_arrow_imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:src="@drawable/ic_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/medium"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:text="@{vm.userAddress}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_14"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/address_arrow_imageView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Jeddah" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/change_password"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <Button
+                    style="@style/bold"
+                    android:layout_width="180dp"
+                    android:layout_height="@dimen/dimen_65"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:background="@drawable/button_rounded_bg"
+                    android:onClick="@{()->vm.saveAction()}"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_16" />
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

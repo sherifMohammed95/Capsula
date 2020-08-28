@@ -35,17 +35,15 @@ import kotlin.collections.ArrayList
 object BindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("imageURL", "progressLoading", requireAll = false)
-    fun bindImageURL(view: ImageView, url: String?, @Nullable progressLoading: ProgressBar?) {
-        progressLoading?.visibility = VISIBLE
+    @BindingAdapter("imageURL")
+    fun bindImageURL(view: ImageView, url: String?) {
         if (url != null && url.isNotEmpty()) {
             Glide.with(view.context)
                 .asBitmap()
                 .load(url)
                 .apply(
                     RequestOptions()
-                        .fitCenter()
-                        .override(600,600)
+                        .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
 //                        .placeholder(R.drawable.ic_logo_large)
                 )
@@ -87,6 +85,19 @@ object BindingAdapters {
                 .apply(
                     RequestOptions()
                         .centerInside())
+                .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("userImageUri")
+    fun bindUserImageUri(view: ImageView, uri: Uri?) {
+        if (uri != Uri.EMPTY) {
+            Glide.with(view.context)
+                .load(uri)
+                .apply(
+                    RequestOptions()
+                        .centerCrop())
                 .into(view)
         }
     }

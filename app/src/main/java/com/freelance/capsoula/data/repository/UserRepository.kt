@@ -2,6 +2,7 @@ package com.freelance.capsoula.data.repository
 
 import com.freelance.capsoula.data.requests.AddAddressRequest
 import com.freelance.capsoula.data.requests.CheckoutDetailsRequest
+import com.freelance.capsoula.data.requests.CompleteProfileRequest
 import com.freelance.capsoula.data.responses.PaymentDetailsResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
@@ -20,6 +21,7 @@ class UserRepository : BaseRepository() {
     val paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     val checkoutIdResponse = SingleLiveEvent<String>()
     val saveCardResponse = SingleLiveEvent<String>()
+    val updateUserProfileResponse = SingleLiveEvent<Void>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -231,6 +233,38 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         saveCard(paymentMethod, resoursePath)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun updateUserProfile(request: CompleteProfileRequest) {
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.completeProfile(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                UserDataSource.saveUser(response.body()!!.data!!.authUserData)
+                withContext(Main) {
+                    updateUserProfileResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        updateUserProfile(request)
                     }
                 })
             }

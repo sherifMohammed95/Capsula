@@ -1,10 +1,12 @@
 package com.freelance.capsoula.ui.userProfile
 
+import android.content.Intent
 import android.os.Bundle
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityUserProfileBinding
+import com.freelance.capsoula.ui.editProfile.EditProfileActivity
 import com.freelance.capsoula.utils.preferencesGateway
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,9 +18,12 @@ class UserProfileActivity : BaseActivity<ActivityUserProfileBinding, UserProfile
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         val user = UserDataSource.getUser()
         viewDataBinding?.user = user
-
     }
 
     override fun getMyViewModel(): UserProfileViewModel {
@@ -41,6 +46,6 @@ class UserProfileActivity : BaseActivity<ActivityUserProfileBinding, UserProfile
     }
 
     override fun openEditMode() {
-
+        startActivity(Intent(this, EditProfileActivity::class.java))
     }
 }

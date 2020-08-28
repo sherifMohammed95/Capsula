@@ -205,5 +205,8 @@
     <string name="payments">Payments</string>
     <string name="collection">Collection</string>
     <string name="final_balance">Final balance</string>
+    <string name="edit_personal_details">Edit personal details</string>
+    <string name="change_password"><u>Change Password</u></string>
+    <string name="change_user_address">Change user address</string>
 
 </resources>
