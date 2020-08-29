@@ -19,7 +19,7 @@
     <string name="password">Password</string>
     <string name="please_enter_a_valid_password">Please enter a valid password</string>
     <string name="register_with_social">Or register with social media</string>
-    <string name="name_should_be">Name should be at least 3 characters</string>
+    <string name="name_should_be">Name should be at least 2 characters</string>
     <string name="password_should_be">Password should be at least 6 characters</string>
     <string name="phone_or_email">Phone or Email</string>
     <string name="please_enter_a_valid_data">Please enter a valid data</string>
@@ -80,7 +80,7 @@
     <string name="items">Items</string>
     <string name="total">Total</string>
     <string name="product_added_to_cart">Product added to cart</string>
-    <string name="this_order_require_a_prescription">This Order require a prescription</string>
+    <string name="this_order_require_a_prescription">This Order requires a prescription</string>
     <string name="add_prescription">Add Prescription</string>
     <string name="delivery_address">Delivery Address</string>
     <string name="insurance_number">Insurance Number</string>
@@ -195,7 +195,7 @@
     <string name="km">KM</string>
     <string name="store_distance">Distance:</string>
     <string name="the_total_number_of_completed_orders">The total number of completed orders</string>
-    <string name="total_delivery_fee_in_cash">Total delivery cost in cash</string>
+    <string name="total_delivery_fee_in_cash">Total cash delivery cost</string>
     <string name="total_online_delivery_fee">Total online delivery cost</string>
     <string name="total_delivery_fee">Total delivery cost</string>
     <string name="discounts">Discounts</string>

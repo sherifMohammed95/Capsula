@@ -37,6 +37,7 @@
             android:paddingStart="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
             android:text="@={vm.nameText}"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             tools:text="sherif" />
@@ -73,6 +74,7 @@
             android:paddingStart="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
             android:text="@={vm.emailText}"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             tools:text="sherif@test.com" />
@@ -126,6 +128,7 @@
                 android:inputType="number"
                 android:paddingEnd="@dimen/dimen_10"
                 android:text="@={vm.phoneText}"
+                android:textAlignment="viewStart"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_14"
                 tools:text="sherif@test.com" />
@@ -163,6 +166,7 @@
             android:paddingStart="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
             android:text="@={vm.passwordText}"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             tools:text="sherif@test.com" />

@@ -37,6 +37,7 @@
             android:paddingStart="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
             android:text="@={vm.phoneOrEmailText}"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             tools:text="sherif" />
@@ -74,6 +75,7 @@
             android:paddingStart="@dimen/dimen_16"
             android:paddingEnd="@dimen/dimen_16"
             android:text="@={vm.passwordText}"
+            android:textAlignment="viewStart"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             tools:text="sherif@test.com" />

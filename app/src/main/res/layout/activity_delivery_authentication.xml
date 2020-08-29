@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_15"
                     android:layout_marginEnd="@dimen/dimen_25"
+                    android:visibility="gone"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_16"

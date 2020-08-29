@@ -115,7 +115,7 @@ object ValidationUtils {
         if (text.isNullOrEmpty()) return false
 
         val name = text.trim()
-        return name.length >= 3
+        return name.length >= 2
     }
 
     fun isValidHomePhone(homePhone: String?): Boolean {

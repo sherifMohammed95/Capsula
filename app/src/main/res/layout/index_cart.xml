@@ -78,6 +78,7 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:ellipsize="end"
+                        android:textAlignment="viewStart"
                         android:maxLines="2"
                         android:text="@{product.productName}"
                         android:textColor="@color/colorLabelText"
