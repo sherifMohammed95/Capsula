@@ -7,11 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.WorkManager
 import com.freelance.base.BaseActivity
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
@@ -27,12 +23,10 @@ import com.freelance.capsoula.utils.MyLocationManager
 import com.freelance.capsoula.utils.Utils
 import com.google.gson.Gson
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
-import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_delivery_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
-import rx.functions.Action1
 
 
 val deliveryHomeModule = module {
