@@ -242,4 +242,8 @@ interface WebService {
 
     @GET("DeliveryMan/Wallet")
     suspend fun getWallet(): Response<BaseResponse<Wallet>>
+
+    @PUT("DeliveryManRegisteration/UpdateLocation")
+    suspend fun updateDeliveryCurrentLocation(@Body request: AddAddressRequest):
+            Response<BaseResponse<Any>>
 }

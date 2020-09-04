@@ -210,5 +210,7 @@
     <string name="change_password"><u>Change Password</u></string>
     <string name="change_user_address">Change user address</string>
     <string name="current_password">Current Password</string>
+    <string name="store_address">Store Address</string>
+    <string name="should_enable_gps">You should enable GPS</string>
 
 </resources>

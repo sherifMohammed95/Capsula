@@ -75,6 +75,10 @@ class DeliveryOrder {
 
     var deliveryCost = 0.0
 
+    fun hasProducts():Boolean{
+        return !products.isNullOrEmpty()
+    }
+
     fun getPaymentMethod(): String {
         return when (paymentMethodId?.value) {
             PaymentMethodOption.CASH.value -> Domain.application.getString(

@@ -1,11 +1,14 @@
 package com.freelance.capsoula.data.repository
 
+import android.util.Log
 import com.freelance.capsoula.data.Wallet
+import com.freelance.capsoula.data.requests.AddAddressRequest
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,24 +19,24 @@ class DeliveryRepository : BaseRepository() {
     suspend fun getWallet() {
 
         try {
-            withContext(Dispatchers.Main) {
+            withContext(Main) {
 
                 showLoadingLayout.value = true
             }
 
             val response = webService.getWallet()
             if (response.isSuccessful) {
-                withContext(Dispatchers.Main) {
+                withContext(Main) {
                     showLoadingLayout.value = false
                     walletResponse.postValue(response.body()!!.data!!)
                 }
             } else {
-                withContext(Dispatchers.Main) {
+                withContext(Main) {
                     handleApiError(response.errorBody()!!.string(), response.code())
                 }
             }
         } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
+            withContext(Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getWallet()
@@ -43,4 +46,15 @@ class DeliveryRepository : BaseRepository() {
         }
     }
 
+    suspend fun updateDeliveryCurrentLocation(request: AddAddressRequest) {
+        try {
+            val response = webService.updateDeliveryCurrentLocation(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    Log.e("DELIVERY_LOCATION", "current location updated")
+                }
+            }
+        } catch (e: Exception) {
+        }
+    }
 }

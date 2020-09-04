@@ -213,5 +213,7 @@
     <string name="change_password"><u>تغيير كلمة السر</u></string>
     <string name="change_user_address">تغيير العنوان</string>
     <string name="current_password">كلمة السر الحالية</string>
+    <string name="store_address">عنوان المتجر</string>
+    <string name="should_enable_gps">يجب عليك تشغبل GPS</string>
 
 </resources>

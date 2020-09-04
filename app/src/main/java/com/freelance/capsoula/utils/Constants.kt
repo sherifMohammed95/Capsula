@@ -15,6 +15,9 @@ object Constants {
     const val FCM_TOKEN = "fcm_token"
     const val FROM_HISTORY = "from_history"
     const val FROM_CHANGE_PASSWORD = "from_change_password"
+    const val LATITUDE = "latitude"
+    const val LONGTUIDE = "longtuide"
+    const val GPS_CODE = 105
 
     var REFRESH_DELIVERY_ORDER = false
 

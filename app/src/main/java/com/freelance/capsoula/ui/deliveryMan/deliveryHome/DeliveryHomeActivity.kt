@@ -1,25 +1,39 @@
 package com.freelance.capsoula.ui.deliveryMan.deliveryHome
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.WorkManager
 import com.freelance.base.BaseActivity
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.databinding.ActivityDeliveryHomeBinding
+import com.freelance.capsoula.locationService.LocationServiceManager
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.adapters.DeliveryOrdersAdapter
 import com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
 import com.freelance.capsoula.ui.more.MoreActivity
-import com.freelance.capsoula.ui.orderDetails.OrderDetailsActivity
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.Constants.GPS_CODE
+import com.freelance.capsoula.utils.MyLocationManager
 import com.freelance.capsoula.utils.Utils
 import com.google.gson.Gson
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_delivery_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
+import rx.functions.Action1
+
 
 val deliveryHomeModule = module {
     factory { DeliveryOrdersAdapter() }
@@ -31,12 +45,12 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
 
     private val mViewModel: DeliveryHomeViewModel by viewModel()
     private val mAdapter: DeliveryOrdersAdapter by inject()
+    private val mLocationManager = MyLocationManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initRecyclerView()
         subscribeToLiveData()
-
     }
 
     private fun subscribeToLiveData() {
@@ -44,6 +58,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             if (!it.ordersList.isNullOrEmpty()) {
                 Constants.REFRESH_DELIVERY_ORDER = false
                 mAdapter.setData(it.ordersList!!)
+                getUserLocationAndScheduleService()
             }
         })
     }
@@ -88,6 +103,52 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     }
 
     override fun onNavigateClick(item: DeliveryOrder) {
-        Utils.navigateToLocation(this,item.customerLat.toString(), item.customerLong.toString())
+        Utils.navigateToLocation(this, item.customerLat.toString(), item.customerLong.toString())
+    }
+
+    private fun getUserLocationAndScheduleService() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            runWithPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) {
+                getCurrentLocation()
+            }
+        } else {
+            runWithPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) {
+                getCurrentLocation()
+            }
+        }
+
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+        if (mLocationManager.isGPSEnabled(this)) {
+            LocationServiceManager().startBackgroundService(this)
+        } else {
+            showPopUp(
+                getString(R.string.should_enable_gps), android.R.string.ok,
+                DialogInterface.OnClickListener { dialogInterface, i ->
+                    startActivityForResult(
+                        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+                        GPS_CODE
+                    )
+                }, false
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GPS_CODE && resultCode == 0) {
+            if (mLocationManager.isGPSEnabled(this))
+                getCurrentLocation()
+        } else {
+            //Users did not switch on the GPS
+        }
     }
 }

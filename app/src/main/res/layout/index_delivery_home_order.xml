@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_16"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="@string/phone"
+                        android:text="@string/store_address"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_14" />
 
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_16"
                         android:layout_marginTop="@dimen/dimen_5"
-                        android:text="@{order.phoneNumber}"
+                        android:text="@{order.storeAddress}"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_16" />
 
