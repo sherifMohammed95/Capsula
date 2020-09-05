@@ -20,4 +20,6 @@ interface MoreNavigator {
 
     fun showPaymentMethodSheet()
 
+    fun changeLanguage()
+
 }

@@ -52,6 +52,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         mViewModel.updateToolbarData()
         if (UserDataSource.getUser() != null)
             mViewModel.loadUpdatedCart()
+
+        if (mViewModel.storesList.size > 0)
+            mViewModel.loadStores(false)
+        else
+            mViewModel.loadStores(true)
     }
 
     private fun initRecyclerViews() {
@@ -79,6 +84,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
         mViewModel.storesResponse.observe(this, Observer {
             if (it.data?.storesList != null) {
+                mViewModel.storesList = it.data?.storesList!!
                 homeStoresAdapter.setData(it.data?.storesList!!)
             }
         })

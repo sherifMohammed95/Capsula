@@ -1,6 +1,7 @@
 package com.freelance.capsoula.ui.more
 
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.AppLanguage
 import com.freelance.capsoula.data.MoreItem
 import com.freelance.capsoula.data.PaymentMethod
 import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
@@ -15,13 +16,13 @@ val moreModule = module {
 
     single(named(GUEST_MORE_LIST)) {
         arrayListOf(
-            MoreItem(R.drawable.ic_help, androidContext().getString(R.string.help)),
-            MoreItem(R.drawable.ic_earn_share, androidContext().getString(R.string.share_earn)),
             MoreItem(
                 R.drawable.ic_enable_notifications,
                 androidContext().getString(R.string.enable_notifications)
             ),
+            MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
+            MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.login))
         )
     }
@@ -34,13 +35,13 @@ val moreModule = module {
                 R.drawable.ic_manage_payment,
                 androidContext().getString(R.string.manage_payment_methods)
             ),
-            MoreItem(R.drawable.ic_help, androidContext().getString(R.string.help)),
-            MoreItem(R.drawable.ic_earn_share, androidContext().getString(R.string.share_earn)),
             MoreItem(
                 R.drawable.ic_enable_notifications,
                 androidContext().getString(R.string.enable_notifications)
             ),
+            MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
+            MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
         )
     }
@@ -53,9 +54,16 @@ val moreModule = module {
                 R.drawable.ic_wallet,
                 androidContext().getString(R.string.my_wallet)
             ),
-            MoreItem(R.drawable.ic_language, androidContext().getString(R.string.arabic)),
-
+            MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
+            MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
+        )
+    }
+
+    single(named(LANGUAGES)) {
+        arrayListOf(
+            AppLanguage(0, androidContext().getString(R.string.english)),
+            AppLanguage(0, androidContext().getString(R.string.arabic))
         )
     }
 
@@ -78,3 +86,4 @@ const val GUEST_MORE_LIST = "guest_more_list"
 const val LOGGED_MORE_LIST = "logged_more_list"
 const val DELIVERY_MORE_LIST = "delivery_more_list"
 const val ADD_PAYMENT_METHOD = "add_payment_method"
+const val LANGUAGES = "languages"

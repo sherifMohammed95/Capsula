@@ -21,13 +21,16 @@ class GeneralRepository : BaseRepository() {
     val carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
     val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
     val termsResponse = SingleLiveEvent<String>()
+    val aboutResponse = SingleLiveEvent<String>()
 
     val storesResponse = SingleLiveEvent<BaseResponse<StoresResponse>>()
 
-    suspend fun getStores(pageNo: Int) {
+    suspend fun getStores(showLoading: Boolean, pageNo: Int) {
         try {
-            withContext(Dispatchers.Main) {
-                showLoadingLayout.value = true
+            if (showLoading) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = true
+                }
             }
 
             val response = webService.getStores(pageNo, Constants.PER_PAGE)
@@ -45,7 +48,7 @@ class GeneralRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getStores(pageNo)
+                        getStores(showLoading, pageNo)
                     }
                 })
             }
@@ -258,6 +261,33 @@ class GeneralRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getTerms()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getAbout() {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+            val response = webService.getAbout()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    aboutResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getAbout()
                     }
                 })
             }

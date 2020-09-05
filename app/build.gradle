@@ -122,7 +122,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
-    implementation 'com.bluecrunch:bluecrunchverification:1.0.5'
+    implementation 'com.bluecrunch:bluecrunchverification:1.0.4'
 
     //Hyper-pay
     implementation(name: 'oppwa.mobile-2.55.0', ext: 'aar')
@@ -135,6 +135,9 @@ dependencies {
     // Intercom
     implementation 'io.intercom.android:intercom-sdk-base:6.+'
     implementation 'io.intercom.android:intercom-sdk-fcm:5.+'
+
+    //Localization
+    implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
 
 
 }

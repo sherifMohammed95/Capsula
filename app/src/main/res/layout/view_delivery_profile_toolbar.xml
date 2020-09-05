@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="user"
+            type="com.freelance.capsoula.data.DeliveryUser" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileViewModel" />
+
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileNavigator" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_parent"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="@drawable/toolbar_rounded_bg">
+
+        <ImageView
+            android:id="@+id/back_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:onClick="@{()->navigator.backAction()}"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/edit_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_22"
+            android:onClick="@{()->navigator.openEditMode()}"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_textView"
+            style="@style/bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/personal_details"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_18"
+            app:layout_constraintBottom_toBottomOf="@+id/back_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_imageView" />
+
+        <LinearLayout
+            android:id="@+id/user_image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_textView">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/user_imageView"
+                imageURL="@{user.personalPicture}"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:background="@android:color/white"
+                app:riv_corner_radius="@dimen/dimen_50"
+                app:riv_mutate_background="true" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/username_textView"
+            style="@style/bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:text="@{user.fullName}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_image_layout"
+            tools:text="sherif mohammed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

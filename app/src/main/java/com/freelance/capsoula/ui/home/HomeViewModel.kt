@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseResponse
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.Store
 import com.freelance.capsoula.data.repository.GeneralRepository
 import com.freelance.capsoula.data.responses.HomeResponse
 import com.freelance.capsoula.data.responses.StoresResponse
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
+import com.freelance.capsoula.utils.Domain
 import com.freelance.capsoula.utils.SingleLiveEvent
 import io.intercom.android.sdk.Intercom
 import io.intercom.android.sdk.UserAttributes
@@ -22,17 +24,17 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNavigator>() {
     var homeDataResponse = SingleLiveEvent<HomeResponse>()
     var storesResponse = SingleLiveEvent<BaseResponse<StoresResponse>>()
-    var cartNumberText = ObservableField<String>("")
-    var userNameText = ObservableField<String>("User")
+    var cartNumberText = ObservableField("")
+    var userNameText = ObservableField(Domain.application.getString(R.string.user))
     var cartNumberVisibility = ObservableBoolean(false)
     var emptyCartMessage = SingleLiveEvent<Void>()
+    var storesList = ArrayList<Store>()
 
     init {
         initRepository(repo)
         this.homeDataResponse = repo.homeDataResponse
         this.storesResponse = repo.storesResponse
 //        loadHomeData()
-        loadStores()
 
         viewModelScope.launch(IO) {
             loginToIntercom()
@@ -94,9 +96,9 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         }
     }
 
-    private fun loadStores() {
+    fun loadStores(showLoading: Boolean) {
         viewModelScope.launch(IO) {
-            repo.getStores(1)
+            repo.getStores(showLoading, 1)
         }
     }
 

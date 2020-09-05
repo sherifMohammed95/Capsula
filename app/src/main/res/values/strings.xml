@@ -114,6 +114,7 @@
     <string name="share_earn">Share and Earn</string>
     <string name="enable_notifications">Enable Notifications</string>
     <string name="faqs">FAQs</string>
+    <string name="about">About US</string>
     <string name="logout">Logout</string>
     <string name="order_date">Order Date</string>
     <string name="total_price">Total Price</string>
@@ -185,6 +186,7 @@
     <string name="my_wallet">My Wallet</string>
     <string name="arabic">العربية</string>
     <string name="english">English</string>
+    <string name="change_lang">Change Language</string>
     <string name="new_order">New Order</string>
     <string name="your_cart_contains">Your cart contains items from</string>
     <string name="do_u_wish">\n.Do you wish to clear your cart and start a new order here?</string>
@@ -212,5 +214,7 @@
     <string name="current_password">Current Password</string>
     <string name="store_address">Store Address</string>
     <string name="should_enable_gps">You should enable GPS</string>
+    <string name="model">Model</string>
+    <string name="user">User</string>
 
 </resources>

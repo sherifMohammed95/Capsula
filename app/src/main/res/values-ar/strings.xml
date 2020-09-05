@@ -115,6 +115,7 @@
     <string name="share_earn">شارك واكسب</string>
     <string name="enable_notifications">تفعيل التنبيهات</string>
     <string name="faqs">الاسئلة الشائعة</string>
+    <string name="about">عن كبسولة</string>
     <string name="logout">تسجيل خروج</string>
     <string name="order_date">تاريخ الطلب</string>
     <string name="total_price">السعر الكلي</string>
@@ -186,6 +187,7 @@
     <string name="my_wallet">محفظتي</string>
     <string name="arabic">العربية</string>
     <string name="english">English</string>
+    <string name="change_lang">تغيير اللغه</string>
     <string name="new_order">طلب جديد</string>
     <string name="your_cart_contains">السلة تحتوى على منتجات من</string>
     <string name="do_u_wish">هل تريد حذف ما بالسلة والبدء بطلب جديد؟</string>
@@ -215,5 +217,7 @@
     <string name="current_password">كلمة السر الحالية</string>
     <string name="store_address">عنوان المتجر</string>
     <string name="should_enable_gps">يجب عليك تشغبل GPS</string>
+    <string name="model">موديل</string>
+    <string name="user">مستخدم</string>
 
 </resources>

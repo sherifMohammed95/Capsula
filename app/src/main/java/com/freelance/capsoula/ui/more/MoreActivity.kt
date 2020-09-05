@@ -14,6 +14,7 @@ import com.freelance.base.BaseActivity
 import com.freelance.base.BaseRecyclerAdapter
 import com.freelance.capsoula.R
 import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
+import com.freelance.capsoula.data.AppLanguage
 import com.freelance.capsoula.data.MoreItem
 import com.freelance.capsoula.data.PaymentMethod
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -21,15 +22,18 @@ import com.freelance.capsoula.databinding.ActivityMoreBinding
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
+import com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileActivity
 import com.freelance.capsoula.ui.deliveryMan.wallet.WalletActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
+import com.freelance.capsoula.ui.splash.SplashActivity
 import com.freelance.capsoula.ui.userProfile.UserProfileActivity
 import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 import com.freelance.capsoula.utils.AnimationUtils
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ImageUtil
+import com.freelance.capsoula.utils.preferencesGateway
 import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
 import com.oppwa.mobile.connect.checkout.meta.CheckoutStorePaymentDetailsMode
 import com.oppwa.mobile.connect.exception.PaymentError
@@ -51,6 +55,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     private val loggedList: ArrayList<MoreItem> by inject(named(LOGGED_MORE_LIST))
     private val deliveryList: ArrayList<MoreItem> by inject(named(DELIVERY_MORE_LIST))
     private val paymentMethodList: ArrayList<PaymentMethod> by inject(named(ADD_PAYMENT_METHOD))
+    private val appLangList: ArrayList<AppLanguage> by inject(named(LANGUAGES))
 
     private val mAdapter: MoreAdapter by inject()
 
@@ -130,6 +135,8 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     override fun openPersonalDetails() {
         if (UserDataSource.getUser() != null)
             startActivity(Intent(this, UserProfileActivity::class.java))
+        else if (UserDataSource.getDeliveryUser() != null)
+            startActivity(Intent(this, ViewProfileActivity::class.java))
     }
 
     override fun openLogin() {
@@ -182,6 +189,47 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
             showAddNewAddressText = false
         )
         fragment.show(supportFragmentManager, fragment.tag)
+    }
+
+    override fun changeLanguage() {
+        var selectedPos = if (preferencesGateway.load(Constants.LANGUAGE, "en")
+                .contentEquals("en"))
+            0
+        else
+            1
+        val fragment = BottomSelectionFragment.newInstance(
+            getString(R.string.change_lang),
+            appLangList,
+            Action2 { pos, item ->
+                when (pos) {
+                    0 -> {
+                        val newLang = "en"
+                        preferencesGateway.save(Constants.LANGUAGE, newLang)
+                        updateConfig(newLang)
+                        setNewLocale(newLang.toUpperCase())
+                        openSplash()
+                    }
+                    1 -> {
+                        val newLang = "ar"
+                        preferencesGateway.save(Constants.LANGUAGE, newLang)
+                        updateConfig(newLang)
+                        setNewLocale(newLang.toUpperCase())
+                        openSplash()
+                    }
+                }
+            },
+            selectedPos,
+            showClearText = false,
+            showIconImage = false,
+            showAddNewAddressText = false
+        )
+        fragment.show(supportFragmentManager, fragment.tag)
+    }
+
+    private fun openSplash() {
+        val intent = Intent(this, SplashActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
     private fun openHyperPay(checkoutId: String) {

@@ -220,8 +220,11 @@ interface WebService {
         @Query("date") date: String
     ): Response<BaseResponse<DeliveryOrdersResponse>>
 
-    @GET("DeliveryManRegisteration/GetTermsAndConditions")
+    @GET("Home/TermsAndConditions")
     suspend fun getTerms(): Response<BaseResponse<String>>
+
+    @GET("Home/About")
+    suspend fun getAbout(): Response<BaseResponse<String>>
 
     @GET("CheckOut/GetDeliveryCost")
     suspend fun getDeliveryCost(): Response<BaseResponse<PaymentDetailsResponse>>

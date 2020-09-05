@@ -14,6 +14,7 @@ import com.freelance.capsoula.R
 import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.databinding.ActivityDeliveryHomeBinding
 import com.freelance.capsoula.locationService.LocationServiceManager
+import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.adapters.DeliveryOrdersAdapter
 import com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
 import com.freelance.capsoula.ui.more.MoreActivity
@@ -23,6 +24,8 @@ import com.freelance.capsoula.utils.MyLocationManager
 import com.freelance.capsoula.utils.Utils
 import com.google.gson.Gson
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import kotlinx.android.synthetic.main.activity_delivery_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,6 +49,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         initRecyclerView()
         subscribeToLiveData()
     }
+
 
     private fun subscribeToLiveData() {
         mViewModel.deliveryHomeDataResponse.observe(this, Observer {
@@ -100,19 +104,46 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         Utils.navigateToLocation(this, item.customerLat.toString(), item.customerLong.toString())
     }
 
+    private val quickPermissionsOptions = QuickPermissionsOptions(
+        permanentDeniedMethod = { handleDenyPermissionsPermanently(it) },
+        rationaleMethod = { handleDenyPermissions(it) }
+    )
+
+    private fun handleDenyPermissions(arg: QuickPermissionsRequest) {
+        showPopUp(
+            R.string.permission_denied,
+            android.R.string.ok,
+            DialogInterface.OnClickListener { _, _ ->
+                arg.openAppSettings()
+            }, false
+        )
+    }
+
+    private fun handleDenyPermissionsPermanently(arg: QuickPermissionsRequest) {
+        showPopUp(
+            getString(R.string.permission_denied_permanently),
+            android.R.string.ok,
+            DialogInterface.OnClickListener { _, _ ->
+                arg.openAppSettings()
+            }, false
+        )
+    }
+
     private fun getUserLocationAndScheduleService() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             runWithPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                options = quickPermissionsOptions
             ) {
                 getCurrentLocation()
             }
         } else {
             runWithPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                options = quickPermissionsOptions
             ) {
                 getCurrentLocation()
             }

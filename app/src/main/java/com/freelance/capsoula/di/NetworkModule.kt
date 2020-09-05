@@ -5,6 +5,7 @@ import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.data.source.remote.WebService
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.Domain
+import com.freelance.capsoula.utils.preferencesGateway
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -57,7 +58,8 @@ fun provideLanguageInterceptor(): Interceptor {
         val request = original.newBuilder()
         runBlocking {
             val job = CoroutineScope(IO).launch {
-                request.addHeader("Accept-Language", "en")
+                request.addHeader("Accept-Language",
+                    preferencesGateway.load(Constants.LANGUAGE,"en"))
             }
             job.join()
         }

@@ -84,13 +84,13 @@
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_10"
             android:text="@{vm.userNameText}"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_22"
             app:layout_constraintBottom_toBottomOf="@+id/hello_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/hello_textView"
-            app:layout_constraintTop_toTopOf="@+id/hello_textView"
-            tools:text="Sherif" />
+            app:layout_constraintTop_toTopOf="@+id/hello_textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

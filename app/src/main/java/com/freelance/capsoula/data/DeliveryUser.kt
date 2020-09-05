@@ -1,5 +1,7 @@
 package com.freelance.capsoula.data
 
+import com.freelance.capsoula.R
+import com.freelance.capsoula.utils.Domain
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -112,4 +114,23 @@ class DeliveryUser {
     @SerializedName("addressDesc")
     @Expose
     var addressDesc: String? = null
+
+    fun getCarModelYearText(): String {
+        return Domain.application.getString(R.string.model) + " " + yearDesc
+    }
+
+    fun getCarPlatte(): String {
+        return "$vehiclePlateLetters $vehiclePlateNumber"
+    }
+
+    fun getPhoneWithCode(): String {
+        return "+966$phoneNumber"
+    }
+
+    fun getBankAccountText(): String {
+        if (bankAccountNumber.isNullOrEmpty())
+            return Domain.application.getString(R.string.bank_account)
+        else
+            return bankAccountNumber!!
+    }
 }

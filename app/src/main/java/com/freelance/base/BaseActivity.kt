@@ -3,11 +3,11 @@ package com.freelance.base
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -18,20 +18,15 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.freelance.capsoula.R
 import com.freelance.capsoula.data.MessageEvent
 import com.freelance.capsoula.data.source.local.UserDataSource
-import com.freelance.capsoula.databinding.ActivityBrandsBinding
-import com.freelance.capsoula.databinding.ActivityCategoriesBinding
 import com.freelance.capsoula.ui.addAddress.AddAddressActivity
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.brands.BrandsActivity
@@ -46,29 +41,28 @@ import com.freelance.capsoula.ui.more.MoreActivity
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import com.freelance.capsoula.ui.products.ProductsActivity
 import com.freelance.capsoula.ui.search.SearchActivity
-import com.freelance.capsoula.ui.splash.SplashActivity
 import com.freelance.capsoula.ui.stores.StoresActivity
 import com.freelance.capsoula.ui.subCategories.SubCategoriesActivity
 import com.freelance.capsoula.utils.Constants.OPEN_CHECKOUT
 import com.freelance.capsoula.utils.Constants.UPDATE_CART_NUMBER
+import com.freelance.capsoula.utils.Domain
 import com.freelance.capsoula.utils.MyContextWrapper
 import com.freelance.capsoula.utils.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.activity_brands.view.*
-import kotlinx.android.synthetic.main.home_toolbar.*
+import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
 import kotlinx.android.synthetic.main.loading_layout.*
 import kotlinx.android.synthetic.main.search_toolbar_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
-import kotlinx.android.synthetic.main.toolbar_layout.cart_number_textView
 import kotlinx.android.synthetic.main.toolbar_layout.search_toolbar_layout
 import kotlinx.android.synthetic.main.toolbar_layout.title_toolbar_textView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import rx.functions.Action1
+import java.util.*
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
-    AppCompatActivity(), BaseFragment.Callback {
+    AppCompatActivityBase(), BaseFragment.Callback {
 
     var viewDataBinding: T? = null
         private set
@@ -84,6 +78,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         viewDataBinding?.executePendingBindings()
         handleError()
         handleProgressLoading()
+    }
+
+    fun updateConfig(newLang: String) {
+        val loc = Locale(newLang)
+        Locale.setDefault(loc)
+        val cfg = Configuration()
+        cfg.locale = loc
+        Domain.application.resources.updateConfiguration(cfg, null)
     }
 
     private fun handleProgressLoading() {
@@ -432,14 +434,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     }
 
     override fun attachBaseContext(newBase: Context) {
-        //super.attachBaseContext(newBase)
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
-            val newLocale = "en"
-            val context: Context = MyContextWrapper.wrap(newBase, newLocale)
-            super.attachBaseContext(context)
-        } else {
-            super.attachBaseContext(newBase)
-        }
+        super.attachBaseContext(newBase)
     }
 
     fun hideKeyboard() {

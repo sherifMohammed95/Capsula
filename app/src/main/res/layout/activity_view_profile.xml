@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="user"
+            type="com.freelance.capsoula.data.DeliveryUser" />
+
+        <variable
+            name="vm"
+            type="com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileViewModel" />
+
+        <variable
+            name="navigator"
+            type="com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileNavigator" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScreenBg"
+        android:orientation="vertical"
+        tools:context=".ui.deliveryMan.viewProfile.ViewProfileActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/view_delivery_profile_toolbar"
+            app:navigator="@{navigator}"
+            app:user="@{user}" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/pager_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/pageIndicatorView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.rd.PageIndicatorView
+            android:id="@+id/pageIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pager_layout"
+            app:piv_animationType="worm"
+            app:piv_count="3"
+            app:piv_dynamicCount="true"
+            app:piv_interactiveAnimation="true"
+            app:piv_padding="@dimen/dimen_8"
+            app:piv_radius="@dimen/dimen_5"
+            app:piv_selectedColor="@color/colorPrimary"
+            app:piv_unselectedColor="@color/colorPrimary30"
+            app:piv_viewPager="@id/viewPager" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
