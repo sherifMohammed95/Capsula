@@ -9,6 +9,7 @@ import com.freelance.capsoula.data.SpinnerModel
 import com.freelance.capsoula.data.UserAddress
 import com.freelance.capsoula.data.repository.GeneralRepository
 import com.freelance.capsoula.data.responses.NationalitiesResponse
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
 import com.freelance.capsoula.utils.addCallback
@@ -19,6 +20,7 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     BaseViewModel<PersonalDetailsNavigator>() {
 
     var nationalitiesResponse = SingleLiveEvent<NationalitiesResponse>()
+    var saveApiRequestEvent = SingleLiveEvent<Void>()
     var selectedNatiolityPos = -1
     var nationalitiesList = ArrayList<SpinnerModel>()
 
@@ -32,6 +34,8 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     var bankAccountText = ObservableField<String>("")
     var fullAddressText = ObservableField<String>("")
 
+    var personalImageUrl = ObservableField("")
+
     var hasFullNameError = ObservableBoolean(false)
     var hasEmailError = ObservableBoolean(false)
     var hasPhoneError = ObservableBoolean(false)
@@ -39,6 +43,8 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     var hasNationalIdError = ObservableBoolean(false)
     var hasFullAddressError = ObservableBoolean(false)
     var hasPersonalPhotoError = ObservableBoolean(false)
+
+    var isEditMode = ObservableBoolean(false)
 
     var personalPhotoUri = ObservableField(Uri.EMPTY)
     var personalPhotoBase64 = ""
@@ -79,6 +85,30 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
         this.nationalitiesResponse = repo.nationalitiesResponse
     }
 
+    fun fillViewFromUserObject() {
+        val user = UserDataSource.getDeliveryUser()
+        personalImageUrl.set(user?.personalPicture)
+        emailText.set(user?.email)
+        phoneText.set(user?.phoneNumber)
+        citizenshipText.set(user?.nationalityDesc)
+        fullAddressText.set(user?.addressDesc)
+        fullAddressObj.addressDesc = user?.addressDesc!!
+        fullAddressObj.latitude = user.latitude
+        fullAddressObj.longitude = user.longitude
+        bankAccountText.set(user.bankAccountNumber)
+    }
+
+    fun setSelectedNationalityPos() {
+        val user = UserDataSource.getDeliveryUser()
+        val nationalityID = user?.nationalityId
+        this.nationalitiesList.forEachIndexed { index, item ->
+            if (item.id == nationalityID) {
+                selectedNatiolityPos = index
+                return@forEachIndexed
+            }
+        }
+    }
+
     fun nextAction() {
         if (!validate()) return
         navigator?.openNextStep()
@@ -93,9 +123,11 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
     private fun validate(): Boolean {
         var isValid = true
 
-        if (!ValidationUtils.isValidName(fullNameText.get())) {
-            isValid = false
-            hasFullNameError.set(true)
+        if (!isEditMode.get()) {
+            if (!ValidationUtils.isValidName(fullNameText.get())) {
+                isValid = false
+                hasFullNameError.set(true)
+            }
         }
 
         if (!ValidationUtils.isValidEmail(emailText.get()!!)) {
@@ -113,9 +145,11 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
             hasCitizenshipError.set(true)
         }
 
-        if (!ValidationUtils.isValidSaudiIDNumber(nationalIdText.get()!!)) {
-            isValid = false
-            hasNationalIdError.set(true)
+        if (!isEditMode.get()) {
+            if (!ValidationUtils.isValidSaudiIDNumber(nationalIdText.get()!!)) {
+                isValid = false
+                hasNationalIdError.set(true)
+            }
         }
 
         if (!ValidationUtils.isValidText(fullAddressText.get())) {
@@ -123,11 +157,42 @@ class PersonalDetailsViewModel(val repo: GeneralRepository) :
             hasFullAddressError.set(true)
         }
 
-        if (personalPhotoBase64.isEmpty()) {
-            isValid = false
-            hasPersonalPhotoError.set(true)
+        if (!isEditMode.get()) {
+            if (personalPhotoBase64.isEmpty()) {
+                isValid = false
+                hasPersonalPhotoError.set(true)
+            }
         }
 
+
         return isValid
+    }
+
+    fun validateForSaveRequest() {
+        var isValid = true
+
+        if (!ValidationUtils.isValidEmail(emailText.get()!!)) {
+            isValid = false
+            hasEmailError.set(true)
+        }
+
+        if (!ValidationUtils.isValidSaudiMobile(phoneText.get()!!)) {
+            isValid = false
+            hasPhoneError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(citizenshipText.get())) {
+            isValid = false
+            hasCitizenshipError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(fullAddressText.get())) {
+            isValid = false
+            hasFullAddressError.set(true)
+        }
+
+        if (isValid) {
+            saveApiRequestEvent.call()
+        }
     }
 }

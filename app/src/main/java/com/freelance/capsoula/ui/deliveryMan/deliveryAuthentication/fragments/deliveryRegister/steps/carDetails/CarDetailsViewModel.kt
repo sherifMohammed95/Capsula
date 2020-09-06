@@ -8,6 +8,7 @@ import com.freelance.capsoula.data.SpinnerModel
 import com.freelance.capsoula.data.repository.GeneralRepository
 import com.freelance.capsoula.data.responses.DeliveryRegisterBasicResponse
 import com.freelance.capsoula.data.responses.NationalitiesResponse
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
 import com.freelance.capsoula.utils.addCallback
@@ -18,6 +19,7 @@ class CarDetailsViewModel(val repo: GeneralRepository) : BaseViewModel<CarDetail
 
     var deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
     var carModelsResponse = SingleLiveEvent<NationalitiesResponse>()
+    var saveApiRequestEvent = SingleLiveEvent<Void>()
 
     var selectedCarBrandPos = -1
     var selectedCarModelPos = -1
@@ -41,6 +43,8 @@ class CarDetailsViewModel(val repo: GeneralRepository) : BaseViewModel<CarDetail
     var hasModelYearError = ObservableBoolean(false)
     var hasLicenseTypeError = ObservableBoolean(false)
     var hasVehiclePlateError = ObservableBoolean(false)
+
+    var isEditMode = ObservableBoolean(false)
 
     init {
         initRepository(repo)
@@ -75,6 +79,55 @@ class CarDetailsViewModel(val repo: GeneralRepository) : BaseViewModel<CarDetail
         plateNumberText.addCallback {
             if (it != null)
                 hasVehiclePlateError.set(false)
+        }
+    }
+
+    fun fillViewFromUserObject() {
+        val user = UserDataSource.getDeliveryUser()
+        carBrandText.set(user?.carTypeDesc)
+        carModelText.set(user?.carModelDesc)
+        modelYearText.set(user?.yearDesc)
+        plateNumberText.set(user?.vehiclePlateNumber.toString())
+        plateLetterText.set(user?.vehiclePlateLetters)
+        licenseTypeText.set(user?.vehicleTypeDesc)
+    }
+
+    fun setSelectedPos() {
+        val user = UserDataSource.getDeliveryUser()
+        val carBrandId = user?.carTypeId
+        carBrands.forEachIndexed { index, item ->
+            if (item.id == carBrandId) {
+                selectedCarBrandPos = index
+                return@forEachIndexed
+            }
+        }
+
+        val carYearId = user?.yearId
+        modelYears.forEachIndexed { index, item ->
+            if (item.id == carYearId) {
+                selectedModelYearPos = index
+                return@forEachIndexed
+            }
+        }
+
+        val carLicenceId = user?.vehicleTypeId
+        licenseTypes.forEachIndexed { index, item ->
+            if (item.id == carLicenceId) {
+                selectedLicenseTypePos = index
+                return@forEachIndexed
+            }
+        }
+        loadCarModels()
+    }
+
+    fun setCarModelSelectedPos() {
+        val user = UserDataSource.getDeliveryUser()
+        val carModelId = user?.carModelId
+        carModels.forEachIndexed { index, item ->
+            if (item.id == carModelId) {
+                selectedCarModelPos = index
+                return@forEachIndexed
+            }
         }
     }
 
@@ -133,5 +186,47 @@ class CarDetailsViewModel(val repo: GeneralRepository) : BaseViewModel<CarDetail
             hasVehiclePlateError.set(true)
         }
         return isValid
+    }
+
+    fun validateForSaveRequest() {
+        var isValid = true
+
+        if (!ValidationUtils.isValidText(carBrandText.get())) {
+            isValid = false
+            hasCarBrandError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(carModelText.get()!!)) {
+            isValid = false
+            hasCarModelError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(modelYearText.get()!!)) {
+            isValid = false
+            hasModelYearError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(modelYearText.get()!!)) {
+            isValid = false
+            hasModelYearError.set(true)
+        }
+
+        if (!ValidationUtils.isValidText(licenseTypeText.get()!!)) {
+            isValid = false
+            hasLicenseTypeError.set(true)
+        }
+
+        if (plateNumberText.get()!!.length <= 2) {
+            isValid = false
+            hasVehiclePlateError.set(true)
+        }
+
+        if (!ValidationUtils.isValidSaudiVehiclePlateLetters(plateLetterText.get()!!)) {
+            isValid = false
+            hasVehiclePlateError.set(true)
+        }
+        if (isValid) {
+            saveApiRequestEvent.call()
+        }
     }
 }

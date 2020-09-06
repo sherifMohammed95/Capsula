@@ -17,7 +17,10 @@ import com.freelance.capsoula.databinding.FragmentRequiredDocumentsBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.IMAGE_PICKER_OPTIONS_LIST
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsFragment
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
 import com.freelance.capsoula.ui.terms.TermsActivity
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ImageUtil
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
@@ -34,7 +37,7 @@ class RequiredDocumentsFragment :
     private val REQUEST_CAMERA = 1000
     private val REQUEST_GALLERY = 2000
 
-    private val mViewModel: RequiredDocumentsViewModel by viewModel()
+    val mViewModel: RequiredDocumentsViewModel by viewModel()
     private val imagePickerOptionsList: ArrayList<ImagePickerOption> by inject(
         named(
             IMAGE_PICKER_OPTIONS_LIST
@@ -43,7 +46,17 @@ class RequiredDocumentsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getBundles()
         subscribeToLiveData()
+    }
+
+    private fun getBundles() {
+        if (arguments != null) {
+            mViewModel.isEditMode.set(arguments!!.getBoolean(Constants.IS_EDIT_MODE))
+
+            if (mViewModel.isEditMode.get())
+                mViewModel.fillViewFromUserObject()
+        }
     }
 
     override fun getMyViewModel(): RequiredDocumentsViewModel {
@@ -62,7 +75,13 @@ class RequiredDocumentsFragment :
     }
 
     private fun subscribeToLiveData() {
-        mViewModel.deliveryRegisterResponse.observe(this, Observer {
+
+        mViewModel.saveApiRequestEvent.observe(viewLifecycleOwner, Observer {
+            buildApiRequest()
+            (activity as EditDeliveryProfileActivity).mViewModel.updateProfile()
+        })
+
+        mViewModel.deliveryRegisterResponse.observe(viewLifecycleOwner, Observer {
             showPopUp(
                 it, android.R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface, i ->
@@ -90,22 +109,42 @@ class RequiredDocumentsFragment :
         openPickerWithPermission(currentImage)
     }
 
+    private fun buildApiRequest() {
+        if (mViewModel.isEditMode.get()) {
+            (activity as EditDeliveryProfileActivity).mViewModel.request.driverLicensePicture =
+                mViewModel.carLicenseBase64
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.idCardPicture =
+                mViewModel.nationalIDBase64
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.carFromFrontPicture =
+                mViewModel.carFrontBase64
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.carFromBehindPicture =
+                mViewModel.carBackBase64
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.carRegistrationPicture =
+                mViewModel.carRegistrationBase64
+        } else {
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.driverLicensePicture =
+                mViewModel.carLicenseBase64
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.idCardPicture =
+                mViewModel.nationalIDBase64
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.carFromFrontPicture =
+                mViewModel.carFrontBase64
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.carFromBehindPicture =
+                mViewModel.carBackBase64
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.carRegistrationPicture =
+                mViewModel.carRegistrationBase64
+        }
+    }
+
     override fun submitRequest() {
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.driverLicensePicture =
-            mViewModel.carLicenseBase64
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.idCardPicture =
-            mViewModel.nationalIDBase64
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.carFromFrontPicture =
-            mViewModel.carFrontBase64
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.carFromBehindPicture =
-            mViewModel.carBackBase64
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.carRegistrationPicture =
-            mViewModel.carRegistrationBase64
-
+        buildApiRequest()
         mViewModel.register((activity as DeliveryAuthenticationActivity).mViewModel.request)
     }
 
@@ -199,5 +238,14 @@ class RequiredDocumentsFragment :
 //                mViewModel.setIsLoading(false)
             }
         }).start()
+    }
+
+    companion object {
+        fun newInstance(isEditMode: Boolean) =
+            RequiredDocumentsFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(Constants.IS_EDIT_MODE, isEditMode)
+                }
+            }
     }
 }

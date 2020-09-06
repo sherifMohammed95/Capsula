@@ -18,6 +18,7 @@ import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.de
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.requiredDocuments.RequiredDocumentsViewModel
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeViewModel
 import com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsViewModel
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileViewModel
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryViewModel
 import com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileViewModel
 import com.freelance.capsoula.ui.deliveryMan.wallet.WalletViewModel
@@ -79,4 +80,5 @@ val viewModelModule = module {
     viewModel<WalletViewModel>()
     viewModel<EditProfileViewModel>()
     viewModel<ViewProfileViewModel>()
+    viewModel<EditDeliveryProfileViewModel>()
 }

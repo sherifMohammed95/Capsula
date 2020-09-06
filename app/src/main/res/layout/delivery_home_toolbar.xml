@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_10"
+            android:textAlignment="viewStart"
             android:text="@{vm.userNameText}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_22"

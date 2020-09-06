@@ -216,5 +216,6 @@
     <string name="should_enable_gps">You should enable GPS</string>
     <string name="model">Model</string>
     <string name="user">User</string>
+    <string name="profile_updated">Profile has been updated</string>
 
 </resources>

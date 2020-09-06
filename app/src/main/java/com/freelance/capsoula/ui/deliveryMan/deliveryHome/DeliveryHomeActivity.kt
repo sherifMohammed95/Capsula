@@ -114,7 +114,6 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             R.string.permission_denied,
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->
-                arg.openAppSettings()
             }, false
         )
     }

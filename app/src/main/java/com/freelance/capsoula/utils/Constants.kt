@@ -15,8 +15,7 @@ object Constants {
     const val FCM_TOKEN = "fcm_token"
     const val FROM_HISTORY = "from_history"
     const val FROM_CHANGE_PASSWORD = "from_change_password"
-    const val LATITUDE = "latitude"
-    const val LONGTUIDE = "longtuide"
+    const val IS_EDIT_MODE = "is_edit_mode"
     const val GPS_CODE = 105
 
     var REFRESH_DELIVERY_ORDER = false
@@ -101,4 +100,11 @@ object Constants {
     const val STC_PAY = 3
     const val MADA = 5
     const val GOOGLE_PAY = 6
+
+    /**
+     * Delivery man registration steps
+     * **/
+    const val PERSONAL_DETAILS_STEP = 1
+    const val CAR_DETAILS_STEP = 2
+    const val REQUIRED_DOCS_STEP = 3
 }

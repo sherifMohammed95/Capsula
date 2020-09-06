@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.freelance.base.BaseFragment
 import com.freelance.capsoula.R
 import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
+import com.freelance.capsoula.custom.bottomSheet.BottomSheetModel
 import com.freelance.capsoula.data.ImagePickerOption
 import com.freelance.capsoula.data.SpinnerModel
 import com.freelance.capsoula.data.UserAddress
@@ -20,9 +21,11 @@ import com.freelance.capsoula.ui.addAddress.AddAddressActivity
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.IMAGE_PICKER_OPTIONS_LIST
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ImageUtil
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
@@ -39,14 +42,24 @@ class PersonalDetailsFragment :
     private val REQUEST_GALLERY = 2000
     private val ADD_ADDRESS = 3000
 
-    private val mViewModel: PersonalDetailsViewModel by viewModel()
+    val mViewModel: PersonalDetailsViewModel by viewModel()
     private val imagePickerOptionsList: ArrayList<ImagePickerOption> by inject(
         named(IMAGE_PICKER_OPTIONS_LIST)
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getBundles()
         subscribeToLiveData()
+    }
+
+    private fun getBundles() {
+        if (arguments != null) {
+            mViewModel.isEditMode.set(arguments!!.getBoolean(Constants.IS_EDIT_MODE))
+
+            if (mViewModel.isEditMode.get())
+                mViewModel.fillViewFromUserObject()
+        }
     }
 
     override fun getMyViewModel(): PersonalDetailsViewModel {
@@ -65,10 +78,19 @@ class PersonalDetailsFragment :
     }
 
     private fun subscribeToLiveData() {
+
+        mViewModel.saveApiRequestEvent.observe(viewLifecycleOwner, Observer {
+            buildApiRequest()
+            (activity as EditDeliveryProfileActivity).mViewModel.updateProfile()
+        })
+
         mViewModel.nationalitiesResponse.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 mViewModel.nationalitiesList = it.list
                 SpinnerModel().initialize(mViewModel.nationalitiesList)
+                if (mViewModel.isEditMode.get()) {
+                    mViewModel.setSelectedNationalityPos()
+                }
             }
         })
     }
@@ -91,41 +113,77 @@ class PersonalDetailsFragment :
         openPickerWithPermission()
     }
 
+    private fun buildApiRequest() {
+        if (mViewModel.isEditMode.get()) {
+            (activity as EditDeliveryProfileActivity).mViewModel.request.personalPicture =
+                mViewModel.personalPhotoBase64
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.nationalityId =
+                mViewModel.nationalitiesList[mViewModel.selectedNatiolityPos].id
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.email =
+                mViewModel.emailText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.phoneNumber =
+                mViewModel.phoneText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.bankAccountNumber =
+                mViewModel.bankAccountText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.addressDesc =
+                mViewModel.fullAddressText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.accountHolderAddress =
+                mViewModel.fullAddressText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.latitude =
+                mViewModel.fullAddressObj.latitude
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.longitude =
+                mViewModel.fullAddressObj.longitude
+        } else {
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.personalPicture =
+                mViewModel.personalPhotoBase64
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.fullName =
+                mViewModel.fullNameText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.nationalityId =
+                mViewModel.nationalitiesList[mViewModel.selectedNatiolityPos].id
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.email =
+                mViewModel.emailText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.phoneNumber =
+                mViewModel.phoneText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.bankAccountNumber =
+                mViewModel.bankAccountText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.nationalId =
+                mViewModel.nationalIdText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.addressDesc =
+                mViewModel.fullAddressText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.accountHolderAddress =
+                mViewModel.fullAddressText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.latitude =
+                mViewModel.fullAddressObj.latitude
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.longitude =
+                mViewModel.fullAddressObj.longitude
+
+        }
+    }
+
     override fun openNextStep() {
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.personalPicture =
-            mViewModel.personalPhotoBase64
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.fullName =
-            mViewModel.fullNameText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.nationalityId =
-            mViewModel.nationalitiesList.get(mViewModel.selectedNatiolityPos).id
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.email =
-            mViewModel.emailText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.phoneNumber =
-            mViewModel.phoneText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.bankAccountNumber =
-            mViewModel.bankAccountText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.nationalId =
-            mViewModel.nationalIdText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.addressDesc =
-            mViewModel.fullAddressText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.accountHolderAddress =
-            mViewModel.fullAddressText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.latitude =
-            mViewModel.fullAddressObj.latitude
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.longitude =
-            mViewModel.fullAddressObj.longitude
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openCarDetails()
+        buildApiRequest()
+        if (mViewModel.isEditMode.get())
+            (activity as EditDeliveryProfileActivity).mViewModel.navigator?.openCarDetails()
+        else
+            (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openCarDetails()
     }
 
     override fun addAddress() {
@@ -241,5 +299,15 @@ class PersonalDetailsFragment :
 //                mViewModel.setIsLoading(false)
             }
         }).start()
+    }
+
+    companion object {
+        fun newInstance(isEditMode: Boolean) =
+            PersonalDetailsFragment().apply {
+
+                arguments = Bundle().apply {
+                    putBoolean(Constants.IS_EDIT_MODE, isEditMode)
+                }
+            }
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.data.repository.AuthenticationRepository
 import com.freelance.capsoula.data.requests.DeliveryRegisterRequest
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SingleLiveEvent
 import com.freelance.capsoula.utils.ValidationUtils
@@ -18,6 +19,7 @@ class RequiredDocumentsViewModel(val repo: AuthenticationRepository) :
     BaseViewModel<RequiredDocumentsNavigator>() {
 
     var deliveryRegisterResponse = SingleLiveEvent<String>()
+    var saveApiRequestEvent = SingleLiveEvent<Void>()
 
     var carLicenseImageUri = ObservableField(Uri.EMPTY)
     var nationalIDImageUri = ObservableField(Uri.EMPTY)
@@ -42,10 +44,27 @@ class RequiredDocumentsViewModel(val repo: AuthenticationRepository) :
 
     var termsAndConditions = ObservableBoolean(false)
 
+    var isEditMode = ObservableBoolean(false)
+
+    var carLicenseImageUrl = ObservableField("")
+    var nationalIDImageUrl = ObservableField("")
+    var carFrontImageUrl = ObservableField("")
+    var carBackImageUrl = ObservableField("")
+    var carRegistrationImageUrl = ObservableField("")
+
     init {
         initRepository(repo)
         this.deliveryRegisterResponse = repo.deliveryRegisterResponse
         setImageUri()
+    }
+
+    fun fillViewFromUserObject() {
+        val user = UserDataSource.getDeliveryUser()
+        carLicenseImageUrl.set(user?.driverLicensePicture)
+        nationalIDImageUrl.set(user?.idCardPicture)
+        carFrontImageUrl.set(user?.carFromFrontPicture)
+        carBackImageUrl.set(user?.carFromBehindPicture)
+        carRegistrationImageUrl.set(user?.carRegistrationPicture)
     }
 
     fun submitAction() {
@@ -133,6 +152,11 @@ class RequiredDocumentsViewModel(val repo: AuthenticationRepository) :
             Constants.CAR_BACK -> carBackError.set(false)
             Constants.CAR_REGISTRATION -> carRegistrationError.set(false)
         }
+    }
+
+    fun validateForSaveRequest() {
+        saveApiRequestEvent.call()
+
     }
 
 }

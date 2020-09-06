@@ -207,6 +207,10 @@ interface WebService {
     @POST("DeliveryManRegisteration/Register")
     suspend fun deliveryRegister(@Body request: DeliveryRegisterRequest): Response<BaseResponse<String>>
 
+    @PUT("DeliveryManRegisteration/Update")
+    suspend fun updateDeliveryProfile(@Body request: EditDeliveryProfileRequest):
+            Response<BaseResponse<DeliveryAuthenticationResponse>>
+
     @GET("DeliveryMan/StartDelivery/{orderId}")
     suspend fun startDelivery(@Path("orderId") orderId: Int): Response<BaseResponse<Any>>
 

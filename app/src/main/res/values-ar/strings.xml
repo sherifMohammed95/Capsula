@@ -219,5 +219,6 @@
     <string name="should_enable_gps">يجب عليك تشغبل GPS</string>
     <string name="model">موديل</string>
     <string name="user">مستخدم</string>
+    <string name="profile_updated">تم تعديل الملف الشخصي بنجاح</string>
 
 </resources>

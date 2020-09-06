@@ -20,6 +20,7 @@ class AuthenticationRepository : BaseRepository() {
     val resetPasswordResponse = SingleLiveEvent<Void>()
     val changePasswordResponse = SingleLiveEvent<String>()
     val deliveryRegisterResponse = SingleLiveEvent<String>()
+    val updateDeliveryProfileResponse = SingleLiveEvent<Void>()
 
     suspend fun login(phoneOrEmail: String, password: String) {
         try {
@@ -159,6 +160,38 @@ class AuthenticationRepository : BaseRepository() {
         }
     }
 
+    suspend fun updateDeliveryProfile(request: EditDeliveryProfileRequest) {
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.updateDeliveryProfile(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                }
+                UserDataSource.saveDeliveryUser(response.body()!!.data!!.authUserData)
+
+                withContext(Main) {
+                    updateDeliveryProfileResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        updateDeliveryProfile(request)
+                    }
+                })
+            }
+        }
+    }
 
     suspend fun loginWithGoogle(token: String) {
         try {

@@ -30,6 +30,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:isScrollContainer="true"
             android:scrollbars="none">
 
             <LinearLayout
@@ -114,6 +115,7 @@
                     android:paddingStart="@dimen/dimen_16"
                     android:paddingEnd="@dimen/dimen_16"
                     android:text="@={vm.fullNameText}"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_14"
                     tools:text="sherif" />

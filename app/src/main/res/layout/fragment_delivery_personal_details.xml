@@ -30,93 +30,162 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_25"
                 android:text="@string/personal_details"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_18" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:onClick="@{()->navigator.showImagePickerSheet()}">
+                android:orientation="vertical"
+                android:visibility="@{vm.isEditMode?View.GONE:View.VISIBLE}">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/personal_photo_imageView"
-                    imageUri="@{vm.personalPhotoUri}"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@color/colorFieldBg"
-                    android:scaleType="centerInside"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:riv_border_color="@color/colorCircleBorder"
-                    app:riv_border_width="@dimen/dimen_1"
-                    app:riv_corner_radius="@dimen/dimen_30"
-                    app:riv_mutate_background="true" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:onClick="@{()->navigator.showImagePickerSheet()}">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/personal_photo_imageView"
+                        imageUri="@{vm.personalPhotoUri}"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@color/colorFieldBg"
+                        android:scaleType="centerInside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_border_color="@color/colorCircleBorder"
+                        app:riv_border_width="@dimen/dimen_1"
+                        app:riv_corner_radius="@dimen/dimen_30"
+                        app:riv_mutate_background="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:text="@string/personal_photo"
+                        android:textColor="@color/colorLabelText"
+                        android:textSize="@dimen/font_14"
+                        app:layout_constraintBottom_toBottomOf="@+id/personal_photo_imageView"
+                        app:layout_constraintStart_toEndOf="@+id/personal_photo_imageView"
+                        app:layout_constraintTop_toTopOf="@+id/personal_photo_imageView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_pick_a_personal_photo"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasPersonalPhotoError?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.isEditMode?View.VISIBLE:View.GONE}"
+                tools:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:onClick="@{()->navigator.showImagePickerSheet()}">
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/edit_personal_photo_imageView"
+                        imageURL="@{vm.personalImageUrl}"
+                        userImageUri="@{vm.personalPhotoUri}"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_border_color="@color/colorPersonalImageBorder"
+                        app:riv_border_width="@dimen/dimen_1"
+                        app:riv_corner_radius="@dimen/dimen_40"
+                        app:riv_mutate_background="true" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/dimmed_view"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@color/colorBlurLayer"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_border_color="@color/colorPersonalImageBorder"
+                        app:riv_border_width="@dimen/dimen_1"
+                        app:riv_corner_radius="@dimen/dimen_40"
+                        app:riv_mutate_background="true" />
+
+                    <ImageView
+                        android:id="@+id/avatar_imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_photo"
+                        android:tint="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/edit_personal_photo_imageView"
+                        app:layout_constraintEnd_toEndOf="@+id/edit_personal_photo_imageView"
+                        app:layout_constraintStart_toStartOf="@+id/edit_personal_photo_imageView"
+                        app:layout_constraintTop_toTopOf="@+id/edit_personal_photo_imageView" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{vm.isEditMode?View.GONE:View.VISIBLE}">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:text="@string/personal_photo"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/full_name"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <EditText
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:text="@={vm.fullNameText}"
+                    android:textAlignment="viewStart"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_14"
-                    app:layout_constraintBottom_toBottomOf="@+id/personal_photo_imageView"
-                    app:layout_constraintStart_toEndOf="@+id/personal_photo_imageView"
-                    app:layout_constraintTop_toTopOf="@+id/personal_photo_imageView" />
+                    tools:text="sherif" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:text="@string/please_pick_a_personal_photo"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/font_12"
-                android:visibility="@{vm.hasPersonalPhotoError?View.VISIBLE:View.GONE}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:text="@string/full_name"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorLabelText"
-                android:textSize="@dimen/font_14" />
-
-            <EditText
-                style="@style/medium"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_marginStart="@dimen/dimen_24"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:background="@drawable/field_rounded_bg"
-                android:inputType="text"
-                android:paddingStart="@dimen/dimen_16"
-                android:paddingEnd="@dimen/dimen_16"
-                android:text="@={vm.fullNameText}"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorLabelText"
-                android:textSize="@dimen/font_14"
-                tools:text="sherif" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:text="@string/please_enter_valid_full_name"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/font_12"
-                android:visibility="@{vm.hasFullNameError?View.VISIBLE:View.GONE}" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_enter_valid_full_name"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasFullNameError?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
 
 
             <TextView
@@ -271,43 +340,49 @@
                 android:textSize="@dimen/font_12"
                 android:visibility="@{vm.hasCitizenshipError?View.VISIBLE:View.GONE}" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:text="@string/nationalid"
-                android:textColor="@color/colorLabelText"
-                android:textSize="@dimen/font_14" />
-
-            <EditText
-                style="@style/medium"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:layout_marginStart="@dimen/dimen_24"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:background="@drawable/field_rounded_bg"
-                android:inputType="number"
-                android:paddingStart="@dimen/dimen_16"
-                android:paddingEnd="@dimen/dimen_16"
-                android:text="@={vm.nationalIdText}"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorLabelText"
-                android:textSize="@dimen/font_14"
-                tools:text="sherif" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_25"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginEnd="@dimen/dimen_24"
-                android:text="@string/please_enter_valid_national_id"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/font_12"
-                android:visibility="@{vm.hasNationalIdError?View.VISIBLE:View.GONE}" />
+                android:orientation="vertical"
+                android:visibility="@{vm.isEditMode?View.GONE:View.VISIBLE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:text="@string/nationalid"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <EditText
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="@dimen/dimen_24"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:background="@drawable/field_rounded_bg"
+                    android:inputType="number"
+                    android:paddingStart="@dimen/dimen_16"
+                    android:paddingEnd="@dimen/dimen_16"
+                    android:text="@={vm.nationalIdText}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14"
+                    tools:text="sherif" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_25"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_24"
+                    android:text="@string/please_enter_valid_national_id"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/font_12"
+                    android:visibility="@{vm.hasNationalIdError?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

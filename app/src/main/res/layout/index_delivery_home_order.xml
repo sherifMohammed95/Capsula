@@ -123,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_16"
                         android:layout_marginTop="@dimen/dimen_5"
+                        android:textAlignment="viewStart"
                         android:text="@{order.storeAddress}"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_16" />
@@ -144,6 +145,7 @@
                         android:layout_marginTop="@dimen/dimen_5"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:maxLines="1"
+                        android:textAlignment="viewStart"
                         android:layout_marginBottom="@dimen/dimen_16"
                         android:text="@{order.customerAddress}"
                         android:textColor="@color/colorLabelText"

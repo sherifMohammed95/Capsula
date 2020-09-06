@@ -1,10 +1,12 @@
 package com.freelance.capsoula.ui.deliveryMan.viewProfile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
 import com.freelance.capsoula.databinding.ActivityViewProfileBinding
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
 import com.freelance.capsoula.ui.deliveryMan.viewProfile.adapters.ViewPagerAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,10 +17,10 @@ val viewDeliveryProfileModule = module {
     factory { (fm: FragmentManager) -> ViewPagerAdapter(fm) }
 }
 
-class ViewProfileActivity : BaseActivity<ActivityViewProfileBinding,ViewProfileViewModel>(),
+class ViewProfileActivity : BaseActivity<ActivityViewProfileBinding, ViewProfileViewModel>(),
     ViewProfileNavigator {
 
-    private val mViewModel:ViewProfileViewModel by viewModel()
+    private val mViewModel: ViewProfileViewModel by viewModel()
     private val mAdapter: ViewPagerAdapter by inject { parametersOf(supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,6 @@ class ViewProfileActivity : BaseActivity<ActivityViewProfileBinding,ViewProfileV
     }
 
     override fun openEditMode() {
-
+        startActivity(Intent(this, EditDeliveryProfileActivity::class.java))
     }
 }

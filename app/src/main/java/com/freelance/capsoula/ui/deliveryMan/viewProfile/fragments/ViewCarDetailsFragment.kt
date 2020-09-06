@@ -17,7 +17,10 @@ class ViewCarDetailsFragment:
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
+        super.onResume()
         val user = UserDataSource.getDeliveryUser()
         viewDataBinding?.user = user
     }

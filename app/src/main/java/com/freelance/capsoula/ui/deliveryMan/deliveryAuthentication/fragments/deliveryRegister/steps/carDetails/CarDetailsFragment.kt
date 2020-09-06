@@ -9,6 +9,10 @@ import com.freelance.capsoula.custom.bottomSheet.BottomSelectionFragment
 import com.freelance.capsoula.data.SpinnerModel
 import com.freelance.capsoula.databinding.FragmentDeliveryCarDetailsBinding
 import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
+import com.freelance.capsoula.ui.deliveryMan.deliveryAuthentication.fragments.deliveryRegister.steps.personalDetails.PersonalDetailsFragment
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
+import com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileViewModel
+import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ValidationUtils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import rx.functions.Action2
@@ -16,11 +20,21 @@ import rx.functions.Action2
 class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDetailsViewModel>(),
     CarDetailsNavigator {
 
-    private val mViewModel: CarDetailsViewModel by viewModel()
+    val mViewModel: CarDetailsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getBundles()
         subscribeToLiveData()
+    }
+
+    private fun getBundles() {
+        if (arguments != null) {
+            mViewModel.isEditMode.set(arguments!!.getBoolean(Constants.IS_EDIT_MODE))
+
+            if (mViewModel.isEditMode.get())
+                mViewModel.fillViewFromUserObject()
+        }
     }
 
     override fun getMyViewModel(): CarDetailsViewModel {
@@ -39,6 +53,11 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
     }
 
     private fun subscribeToLiveData() {
+        mViewModel.saveApiRequestEvent.observe(viewLifecycleOwner, Observer {
+            buildApiRequest()
+            (activity as EditDeliveryProfileActivity).mViewModel.updateProfile()
+        })
+
         mViewModel.deliveryRegisterBasicResponse.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 mViewModel.carBrands = it.carTypes!!
@@ -49,6 +68,9 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
 
                 mViewModel.licenseTypes = it.vehicleTypes!!
                 SpinnerModel().initialize(mViewModel.licenseTypes)
+
+                if (mViewModel.isEditMode.get())
+                    mViewModel.setSelectedPos()
             }
         })
 
@@ -56,6 +78,8 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
             if (it != null) {
                 mViewModel.carModels = it.list
                 SpinnerModel().initialize(mViewModel.carModels)
+                if (mViewModel.isEditMode.get())
+                    mViewModel.setCarModelSelectedPos()
             }
         })
     }
@@ -134,26 +158,61 @@ class CarDetailsFragment : BaseFragment<FragmentDeliveryCarDetailsBinding, CarDe
         fragment.show(childFragmentManager, fragment.tag)
     }
 
+    private fun buildApiRequest() {
+        if (mViewModel.isEditMode.get()) {
+            (activity as EditDeliveryProfileActivity).mViewModel.request.carTypeId =
+                mViewModel.carBrands[mViewModel.selectedCarBrandPos].id
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.carModelId =
+                mViewModel.carModels[mViewModel.selectedCarModelPos].id
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.yearId =
+                mViewModel.modelYears[mViewModel.selectedModelYearPos].id
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.vehiclePlateLetters =
+                mViewModel.plateLetterText.get()!!
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.vehiclePlateNumber =
+                mViewModel.plateNumberText.get()!!.toInt()
+
+            (activity as EditDeliveryProfileActivity).mViewModel.request.vehicleTypeId =
+                mViewModel.licenseTypes[mViewModel.selectedLicenseTypePos].id
+        } else {
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.carTypeId =
+                mViewModel.carBrands[mViewModel.selectedCarBrandPos].id
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.carModelId =
+                mViewModel.carModels[mViewModel.selectedCarModelPos].id
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.yearId =
+                mViewModel.modelYears[mViewModel.selectedModelYearPos].id
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateLetters =
+                mViewModel.plateLetterText.get()!!
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateNumber =
+                mViewModel.plateNumberText.get()!!.toInt()
+
+            (activity as DeliveryAuthenticationActivity).mViewModel.request.vehicleTypeId =
+                mViewModel.licenseTypes[mViewModel.selectedLicenseTypePos].id
+        }
+    }
+
     override fun openNextStep() {
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.carTypeId =
-            mViewModel.carBrands[mViewModel.selectedCarBrandPos].id
+        buildApiRequest()
+        if (mViewModel.isEditMode.get())
+            (activity as EditDeliveryProfileActivity).mViewModel.navigator?.openRequiredDocuments()
+        else
+            (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openRequiredDocuments()
+    }
 
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.carModelId =
-            mViewModel.carModels[mViewModel.selectedCarModelPos].id
+    companion object {
+        fun newInstance(isEditMode: Boolean) =
+            CarDetailsFragment().apply {
 
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.yearId =
-            mViewModel.modelYears[mViewModel.selectedModelYearPos].id
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateLetters =
-            mViewModel.plateLetterText.get()!!
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehiclePlateNumber =
-             mViewModel.plateNumberText.get()!!.toInt()
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.request.vehicleTypeId =
-            mViewModel.licenseTypes[mViewModel.selectedLicenseTypePos].id
-
-
-        (activity as DeliveryAuthenticationActivity).mViewModel.navigator?.openRequiredDocuments()
+                arguments = Bundle().apply {
+                    putBoolean(Constants.IS_EDIT_MODE, isEditMode)
+                }
+            }
     }
 }

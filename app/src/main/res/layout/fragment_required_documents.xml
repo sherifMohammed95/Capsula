@@ -23,15 +23,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dimen_25"
-            android:layout_marginEnd="@dimen/dimen_25"
             android:orientation="vertical">
 
             <TextView
                 style="@style/medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_25"
+                android:layout_marginEnd="@dimen/dimen_20"
                 android:text="@string/required_documents"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_18" />
@@ -45,12 +45,14 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/car_licence"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_14" />
@@ -58,6 +60,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_110"
+                        android:layout_marginStart="@dimen/dimen_15"
                         android:layout_marginTop="@dimen/dimen_5"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="@dimen/dimen_10"
@@ -69,6 +72,7 @@
                             android:background="@color/colorFieldBg">
 
                             <ImageView
+                                imageURL="@{vm.carLicenseImageUrl}"
                                 imageUri="@{vm.carLicenseImageUri}"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -81,6 +85,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/please_pick_this_photo"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="@dimen/font_12"
@@ -91,7 +96,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -106,6 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_110"
                         android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginEnd="@dimen/dimen_15"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="@dimen/dimen_10"
                         app:cardUseCompatPadding="true">
@@ -116,6 +122,7 @@
                             android:background="@drawable/field_rounded_bg">
 
                             <ImageView
+                                imageURL="@{vm.nationalIDImageUrl}"
                                 imageUri="@{vm.nationalIDImageUri}"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -147,12 +154,14 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/car_front_image"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_14" />
@@ -160,6 +169,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_110"
+                        android:layout_marginStart="@dimen/dimen_15"
                         android:layout_marginTop="@dimen/dimen_5"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="@dimen/dimen_10"
@@ -171,6 +181,7 @@
                             android:background="@drawable/field_rounded_bg">
 
                             <ImageView
+                                imageURL="@{vm.carFrontImageUrl}"
                                 imageUri="@{vm.carFrontImageUri}"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -183,6 +194,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/please_pick_this_photo"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="@dimen/font_12"
@@ -193,7 +205,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginStart="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -208,6 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_110"
                         android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginEnd="@dimen/dimen_15"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="@dimen/dimen_10"
                         app:cardUseCompatPadding="true">
@@ -218,6 +231,7 @@
                             android:background="@drawable/field_rounded_bg">
 
                             <ImageView
+                                imageURL="@{vm.carBackImageUrl}"
                                 imageUri="@{vm.carBackImageUri}"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -248,12 +262,14 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/car_registration"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_14" />
@@ -261,6 +277,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_110"
+                        android:layout_marginStart="@dimen/dimen_15"
                         android:layout_marginTop="@dimen/dimen_5"
                         app:cardBackgroundColor="@android:color/white"
                         app:cardCornerRadius="@dimen/dimen_10"
@@ -272,6 +289,7 @@
                             android:background="@drawable/field_rounded_bg">
 
                             <ImageView
+                                imageURL="@{vm.carRegistrationImageUrl}"
                                 imageUri="@{vm.carRegistrationImageUri}"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -284,6 +302,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
                         android:text="@string/please_pick_this_photo"
                         android:textColor="@android:color/holo_red_light"
                         android:textSize="@dimen/font_12"
@@ -295,7 +314,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_20"
+                android:visibility="@{vm.isEditMode?View.GONE:View.VISIBLE}">
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/radio_btn"
@@ -348,7 +370,8 @@
                 android:text="@string/submit"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_16"
+                android:visibility="@{vm.isEditMode?View.GONE:View.VISIBLE}" />
 
         </LinearLayout>
 
