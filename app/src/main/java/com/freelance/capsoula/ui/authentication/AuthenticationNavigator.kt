@@ -21,4 +21,6 @@ interface AuthenticationNavigator {
     fun openAddAddress()
 
     fun openForgetPassword()
+
+    fun openTerms()
 }

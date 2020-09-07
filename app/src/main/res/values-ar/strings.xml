@@ -220,5 +220,6 @@
     <string name="model">موديل</string>
     <string name="user">مستخدم</string>
     <string name="profile_updated">تم تعديل الملف الشخصي بنجاح</string>
+    <string name="refresh"><u>تحديث</u></string>
 
 </resources>

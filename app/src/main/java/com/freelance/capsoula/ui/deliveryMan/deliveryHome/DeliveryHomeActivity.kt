@@ -50,7 +50,6 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         subscribeToLiveData()
     }
 
-
     private fun subscribeToLiveData() {
         mViewModel.deliveryHomeDataResponse.observe(this, Observer {
             if (!it.ordersList.isNullOrEmpty()) {
@@ -131,8 +130,6 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     private fun getUserLocationAndScheduleService() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             runWithPermissions(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 options = quickPermissionsOptions
             ) {

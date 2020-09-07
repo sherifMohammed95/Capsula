@@ -42,6 +42,8 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
             Domain.application.getString(R.string.manage_payment_methods) -> navigator?.addPaymentCard()
 
             Domain.application.getString(R.string.change_lang) -> navigator?.changeLanguage()
+
+            Domain.application.getString(R.string.about) -> navigator?.openAbout()
         }
     }
 

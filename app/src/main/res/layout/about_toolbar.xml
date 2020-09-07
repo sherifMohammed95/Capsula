@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsNavigator" />
+            type="com.freelance.capsoula.ui.about.AboutNavigator" />
     </data>
 
 
@@ -34,27 +33,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/order_details"
+            android:text="@string/about"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_18"
             app:layout_constraintBottom_toBottomOf="@+id/back_imageView"
-            app:layout_constraintEnd_toStartOf="@+id/save_textView"
-            app:layout_constraintStart_toEndOf="@+id/back_imageView"
-            app:layout_constraintTop_toTopOf="@+id/back_imageView" />
-
-        <TextView
-            android:id="@+id/save_textView"
-            style="@style/bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimen_20"
-            android:gravity="center_horizontal"
-            android:onClick="@{()->navigator.refreshAction()}"
-            android:text="@string/refresh"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_14"
-            app:layout_constraintBottom_toBottomOf="@+id/back_imageView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/back_imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

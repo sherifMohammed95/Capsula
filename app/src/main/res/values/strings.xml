@@ -114,7 +114,7 @@
     <string name="share_earn">Share and Earn</string>
     <string name="enable_notifications">Enable Notifications</string>
     <string name="faqs">FAQs</string>
-    <string name="about">About US</string>
+    <string name="about">About Capsula</string>
     <string name="logout">Logout</string>
     <string name="order_date">Order Date</string>
     <string name="total_price">Total Price</string>
@@ -217,5 +217,6 @@
     <string name="model">Model</string>
     <string name="user">User</string>
     <string name="profile_updated">Profile has been updated</string>
+    <string name="refresh"><u>Refresh</u></string>
 
 </resources>

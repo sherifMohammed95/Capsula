@@ -4,7 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import com.freelance.base.BaseActivity
 import com.freelance.capsoula.R
+import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityCompleteProfileBinding
+import com.freelance.capsoula.ui.authentication.AuthenticationActivity
+import com.freelance.capsoula.ui.terms.TermsActivity
+import com.freelance.capsoula.ui.userTypes.UserTypesActivity
 import com.freelance.capsoula.ui.verification.VerificationActivity
 import com.freelance.capsoula.utils.Constants
 import com.google.gson.Gson
@@ -29,13 +33,12 @@ class CompleteProfileActivity :
         mViewModel.navigator = this
         viewDataBinding?.vm = mViewModel
         viewDataBinding?.backImageView!!.setOnClickListener {
-            finish()
+            openUserTypes()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun openVerification() {
@@ -45,5 +48,20 @@ class CompleteProfileActivity :
         intent.putExtra(Constants.EXTRA_PHONE, "")
         intent.putExtra(Constants.FROM_WHERE, Constants.COMPLETE_PROFILE_SCREEN)
         startActivity(intent)
+    }
+
+    override fun openTerms() {
+        startActivity(Intent(this, TermsActivity::class.java))
+    }
+
+    override fun openUserTypes() {
+        UserDataSource.saveUser(null)
+        val intent = Intent(this, UserTypesActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        openUserTypes()
     }
 }

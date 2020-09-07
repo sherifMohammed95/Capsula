@@ -341,6 +341,7 @@
                     android:text="@string/terms_conditions"
                     android:textColor="@color/colorLabelText"
                     android:textSize="@dimen/font_14"
+                    android:onClick="@{()->navigator.openTerms()}"
                     app:layout_constraintBottom_toBottomOf="@+id/radio_btn"
                     app:layout_constraintStart_toEndOf="@+id/radio_btn"
                     app:layout_constraintTop_toTopOf="@+id/radio_btn" />
@@ -348,7 +349,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->navigator.openTerms()}"
                     android:text="@string/please_agree_on_terms_and_conditions"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="@dimen/font_12"

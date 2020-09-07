@@ -16,6 +16,7 @@ import com.freelance.capsoula.ui.authentication.fragments.LoginFragment
 import com.freelance.capsoula.ui.authentication.fragments.RegisterFragment
 import com.freelance.capsoula.ui.completeProfile.CompleteProfileActivity
 import com.freelance.capsoula.ui.forgetPassword.ForgetPasswordActivity
+import com.freelance.capsoula.ui.terms.TermsActivity
 import com.freelance.capsoula.ui.verification.VerificationActivity
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.SocialNetworkUtils
@@ -107,6 +108,10 @@ class AuthenticationActivity :
 
     override fun openForgetPassword() {
         startActivity(Intent(this, ForgetPasswordActivity::class.java))
+    }
+
+    override fun openTerms() {
+        startActivity(Intent(this, TermsActivity::class.java))
     }
 
     override fun openVerification() {

@@ -80,4 +80,8 @@ class DeliveryOrderDetailsActivity :
     override fun backAction() {
         finish()
     }
+
+    override fun refreshAction() {
+        mViewModel.loadOrderDetails()
+    }
 }

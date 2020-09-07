@@ -22,4 +22,6 @@ interface MoreNavigator {
 
     fun changeLanguage()
 
+    fun openAbout()
+
 }

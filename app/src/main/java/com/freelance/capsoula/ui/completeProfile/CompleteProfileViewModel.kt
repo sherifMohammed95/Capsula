@@ -22,6 +22,10 @@ class CompleteProfileViewModel(private val mRepository: UserRepository) :
     var nameError = ObservableBoolean(false)
     var emailError = ObservableBoolean(false)
     var phoneError = ObservableBoolean(false)
+
+    var termsAndConditions = ObservableBoolean(false)
+    var termsError = ObservableBoolean(false)
+
     val request = CompleteProfileRequest()
 
     init {
@@ -53,6 +57,15 @@ class CompleteProfileViewModel(private val mRepository: UserRepository) :
             nameText.set(user.name)
     }
 
+    fun termsAction() {
+        termsAndConditions.set(!termsAndConditions.get())
+        termsError.set(false)
+    }
+
+    fun onTermsClick() {
+        navigator!!.openTerms()
+    }
+
     fun onSaveClick() {
         if (!validate())
             return
@@ -81,6 +94,11 @@ class CompleteProfileViewModel(private val mRepository: UserRepository) :
         if (!ValidationUtils.isValidSaudiMobile(phoneText.get()!!)) {
             isValid = false
             phoneError.set(true)
+        }
+
+        if (!termsAndConditions.get()) {
+            isValid = false
+            termsError.set(true)
         }
 
         return isValid

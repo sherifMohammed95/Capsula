@@ -43,6 +43,9 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
     val registerRequest = RegisterRequest()
     var googleSignInAccount: GoogleSignInAccount? = null
 
+    var termsAndConditions = ObservableBoolean(false)
+    var termsError = ObservableBoolean(false)
+
     var fromWhere = -1
 
     init {
@@ -115,6 +118,15 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
         navigator!!.openHome()
     }
 
+    fun termsAction() {
+        termsAndConditions.set(!termsAndConditions.get())
+        termsError.set(false)
+    }
+
+    fun onTermsClick() {
+        navigator!!.openTerms()
+    }
+
     private fun validateRegister(): Boolean {
         var isValid = true
 
@@ -146,6 +158,11 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
         if (!ValidationUtils.isValidSaudiMobile(phoneText.get()!!)) {
             isValid = false
             phoneError.set(true)
+        }
+
+        if (!termsAndConditions.get()) {
+            isValid = false
+            termsError.set(true)
         }
 
         return isValid

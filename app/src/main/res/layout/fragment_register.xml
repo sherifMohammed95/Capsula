@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -181,6 +182,51 @@
             android:textColor="@android:color/holo_red_light"
             android:textSize="@dimen/font_12"
             android:visibility="@{vm.passwordError?View.VISIBLE:View.GONE}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checbox_selector"
+                android:checked="@{vm.termsAndConditions}"
+                android:onClick="@{()->vm.termsAction()}"
+                android:paddingStart="@dimen/dimen_16"
+                android:paddingEnd="@dimen/dimen_5"
+                android:text="@string/i_agree_on"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_conditions"
+                android:textColor="@color/colorLabelText"
+                android:textSize="@dimen/font_14"
+                android:onClick="@{()->vm.onTermsClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/radio_btn"
+                app:layout_constraintStart_toEndOf="@+id/radio_btn"
+                app:layout_constraintTop_toTopOf="@+id/radio_btn" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/please_agree_on_terms_and_conditions"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/font_12"
+                android:visibility="@{vm.termsError?View.VISIBLE:View.GONE}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radio_btn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             style="@style/bold"

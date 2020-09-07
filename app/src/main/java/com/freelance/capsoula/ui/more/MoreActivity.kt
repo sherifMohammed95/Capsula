@@ -19,6 +19,7 @@ import com.freelance.capsoula.data.MoreItem
 import com.freelance.capsoula.data.PaymentMethod
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.ActivityMoreBinding
+import com.freelance.capsoula.ui.about.AboutActivity
 import com.freelance.capsoula.ui.authentication.AuthenticationActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
@@ -192,7 +193,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     }
 
     override fun changeLanguage() {
-        var selectedPos = if (preferencesGateway.load(Constants.LANGUAGE, "en")
+        val selectedPos = if (preferencesGateway.load(Constants.LANGUAGE, "en")
                 .contentEquals("en"))
             0
         else
@@ -226,6 +227,10 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         fragment.show(supportFragmentManager, fragment.tag)
     }
 
+    override fun openAbout() {
+        startActivity(Intent(this, AboutActivity::class.java))
+    }
+
     private fun openSplash() {
         val intent = Intent(this, SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -243,7 +248,6 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
         checkoutSettings.locale = "en_US";
-//        checkoutSettings.storePaymentDetailsMode = CheckoutStorePaymentDetailsMode.ALWAYS
         checkoutSettings.shopperResultUrl = "capsula://result";
 
         val intent =

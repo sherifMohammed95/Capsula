@@ -2,6 +2,7 @@ package com.freelance.capsoula.di
 
 
 import com.freelance.capsoula.custom.bottomSheet.BottomSheetViewModel
+import com.freelance.capsoula.ui.about.AboutViewModel
 import com.freelance.capsoula.ui.addAddress.AddAddressViewModel
 import com.freelance.capsoula.ui.authentication.AuthenticationViewModel
 import com.freelance.capsoula.ui.brands.BrandsViewModel
@@ -81,4 +82,5 @@ val viewModelModule = module {
     viewModel<EditProfileViewModel>()
     viewModel<ViewProfileViewModel>()
     viewModel<EditDeliveryProfileViewModel>()
+    viewModel<AboutViewModel>()
 }

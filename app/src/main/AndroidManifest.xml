@@ -26,6 +26,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.about.AboutActivity"></activity>
         <activity
             android:name=".ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity"
             android:screenOrientation="portrait"
