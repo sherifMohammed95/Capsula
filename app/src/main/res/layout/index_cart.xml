@@ -117,13 +117,11 @@
                         tools:text="RSD 100" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dimen_16"
-                        android:gravity="end"
                         app:layout_constraintBottom_toBottomOf="@+id/price_textView"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/offer_price_textView"
                         app:layout_constraintTop_toTopOf="@+id/price_textView">
 
                         <ImageButton
@@ -142,7 +140,7 @@
                             android:paddingEnd="@dimen/dimen_16"
                             android:text="@{product.quantityText}"
                             android:textColor="@color/colorLabelText"
-                            android:textSize="@dimen/font_18" />
+                            android:textSize="@dimen/font_16" />
 
                         <ImageButton
                             android:id="@+id/plus_imageView"

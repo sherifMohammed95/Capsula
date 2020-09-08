@@ -101,10 +101,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_5"
+                            android:gravity="center"
                             android:text="@{item.estimatedTime}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/font_18"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/estimated_time_label"
                             app:layout_constraintTop_toBottomOf="@+id/estimated_time_label"
                             tools:text="12:00 PM" />

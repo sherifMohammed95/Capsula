@@ -1,6 +1,8 @@
 package com.freelance.capsoula.data.repository
 
+import android.util.Log
 import com.freelance.base.BaseResponse
+import com.freelance.capsoula.data.FAQ
 import com.freelance.capsoula.data.requests.AddAddressRequest
 import com.freelance.capsoula.data.responses.*
 import com.freelance.capsoula.data.source.local.UserDataSource
@@ -22,6 +24,7 @@ class GeneralRepository : BaseRepository() {
     val deliveryRegisterBasicResponse = SingleLiveEvent<DeliveryRegisterBasicResponse>()
     val termsResponse = SingleLiveEvent<String>()
     val aboutResponse = SingleLiveEvent<String>()
+    val faqsResponse = SingleLiveEvent<ArrayList<FAQ>>()
 
     val storesResponse = SingleLiveEvent<BaseResponse<StoresResponse>>()
 
@@ -288,6 +291,33 @@ class GeneralRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         getAbout()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun getFAQs() {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+            val response = webService.getFAQs()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    faqsResponse.postValue(response.body()?.data?.list)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getFAQs()
                     }
                 })
             }

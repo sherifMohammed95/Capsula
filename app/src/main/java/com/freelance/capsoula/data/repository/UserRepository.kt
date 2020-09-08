@@ -18,6 +18,7 @@ class UserRepository : BaseRepository() {
     val addAddressResponse = SingleLiveEvent<Void>()
     val updateDefaultAddressResponse = SingleLiveEvent<Void>()
     val successEvent = SingleLiveEvent<Void>()
+    val logoutEvent = SingleLiveEvent<Void>()
     val paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     val checkoutIdResponse = SingleLiveEvent<String>()
     val saveCardResponse = SingleLiveEvent<String>()
@@ -265,6 +266,37 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         updateUserProfile(request)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun logout() {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.logout()
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    logoutEvent.call()
+                }
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        logout()
                     }
                 })
             }

@@ -24,4 +24,6 @@ interface MoreNavigator {
 
     fun openAbout()
 
+    fun openFAQs()
+
 }

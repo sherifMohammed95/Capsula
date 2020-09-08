@@ -25,6 +25,7 @@ import com.freelance.capsoula.ui.checkout.fragment.details.PAYMENT_METHOD_LIST
 import com.freelance.capsoula.ui.deliveryMan.history.HistoryActivity
 import com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileActivity
 import com.freelance.capsoula.ui.deliveryMan.wallet.WalletActivity
+import com.freelance.capsoula.ui.faqs.FaqsActivity
 import com.freelance.capsoula.ui.home.HomeViewModel
 import com.freelance.capsoula.ui.more.adapters.MoreAdapter
 import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
@@ -79,6 +80,10 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
         mViewModel.saveCardResponse.observe(this, Observer {
             showPopUp("", it, getString(android.R.string.ok), false)
+        })
+
+        mViewModel.logoutResponse.observe(this, Observer {
+            logout()
         })
     }
 
@@ -194,7 +199,8 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun changeLanguage() {
         val selectedPos = if (preferencesGateway.load(Constants.LANGUAGE, "en")
-                .contentEquals("en"))
+                .contentEquals("en")
+        )
             0
         else
             1
@@ -231,6 +237,10 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         startActivity(Intent(this, AboutActivity::class.java))
     }
 
+    override fun openFAQs() {
+        startActivity(Intent(this, FaqsActivity::class.java))
+    }
+
     private fun openSplash() {
         val intent = Intent(this, SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -247,7 +257,13 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
+
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        if(currentLang.contentEquals("en"))
         checkoutSettings.locale = "en_US";
+        else
+            checkoutSettings.locale = "ar_AR";
+
         checkoutSettings.shopperResultUrl = "capsula://result";
 
         val intent =

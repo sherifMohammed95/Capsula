@@ -113,6 +113,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             R.string.permission_denied,
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->
+                arg.openAppSettings()
             }, false
         )
     }
@@ -130,7 +131,9 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     private fun getUserLocationAndScheduleService() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             runWithPermissions(
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 options = quickPermissionsOptions
             ) {
                 getCurrentLocation()

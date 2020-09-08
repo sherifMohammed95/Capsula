@@ -2,6 +2,7 @@ package com.freelance.capsoula.data.source.remote
 
 import com.freelance.base.BaseResponse
 import com.freelance.capsoula.data.DeliveryOrder
+import com.freelance.capsoula.data.FAQ
 import com.freelance.capsoula.data.Order
 import com.freelance.capsoula.data.Wallet
 import com.freelance.capsoula.data.requests.CartRequest
@@ -230,6 +231,9 @@ interface WebService {
     @GET("Home/About")
     suspend fun getAbout(): Response<BaseResponse<String>>
 
+    @GET("Home/FAQs")
+    suspend fun getFAQs(): Response<BaseResponse<FaqsResponse>>
+
     @GET("CheckOut/GetDeliveryCost")
     suspend fun getDeliveryCost(): Response<BaseResponse<PaymentDetailsResponse>>
 
@@ -253,4 +257,7 @@ interface WebService {
     @PUT("DeliveryManRegisteration/UpdateLocation")
     suspend fun updateDeliveryCurrentLocation(@Body request: AddAddressRequest):
             Response<BaseResponse<Any>>
+
+    @GET("Authentication/Logout")
+    suspend fun logout(): Response<BaseResponse<String>>
 }

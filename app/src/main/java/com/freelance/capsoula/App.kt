@@ -12,6 +12,7 @@ import com.freelance.capsoula.ui.checkout.fragment.details.checkoutDetailsModule
 import com.freelance.capsoula.ui.deliveryMan.deliveryHome.deliveryHomeModule
 import com.freelance.capsoula.ui.deliveryMan.viewProfile.viewDeliveryProfileModule
 import com.freelance.capsoula.ui.deliveryMan.wallet.walletModule
+import com.freelance.capsoula.ui.faqs.FAQsModule
 import com.freelance.capsoula.ui.home.homeModule
 import com.freelance.capsoula.ui.more.moreModule
 import com.freelance.capsoula.ui.myOrders.ordersModule
@@ -50,7 +51,7 @@ class App : ApplicationLocale() {
                     brandsModule, categoriesModule, storesModule, subCategoriesModule,
                     productsModule, searchModule, cartModule, checkoutDetailsModule, moreModule,
                     ordersModule, orderDetailsModule, orderTrackingModule, deliveryHomeModule,
-                    walletModule,viewDeliveryProfileModule
+                    walletModule,viewDeliveryProfileModule, FAQsModule
                 )
             )
         }

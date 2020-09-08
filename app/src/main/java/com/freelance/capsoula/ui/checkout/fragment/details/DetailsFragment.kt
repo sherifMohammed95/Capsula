@@ -21,6 +21,7 @@ import com.freelance.capsoula.databinding.FragmentDetailsBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.utils.Constants
 import com.freelance.capsoula.utils.ImageUtil
+import com.freelance.capsoula.utils.preferencesGateway
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
@@ -134,7 +135,13 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
-        checkoutSettings.locale = "en_US";
+
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        if(currentLang.contentEquals("en"))
+            checkoutSettings.locale = "en_US";
+        else
+            checkoutSettings.locale = "ar_AR";
+
         checkoutSettings.storePaymentDetailsMode = CheckoutStorePaymentDetailsMode.ALWAYS
         checkoutSettings.shopperResultUrl = "capsula://result";
 

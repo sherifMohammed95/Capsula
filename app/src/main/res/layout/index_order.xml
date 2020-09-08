@@ -71,9 +71,10 @@
 
             <TextView
                 android:id="@+id/order_date_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
+                app:layout_constraintWidth_percent="0.5"
                 android:text="@string/order_date"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_14"
@@ -82,14 +83,15 @@
 
             <TextView
                 android:id="@+id/total_price_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_45"
                 android:text="@string/total_price"
+                app:layout_constraintWidth_percent="0.5"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_14"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/order_date_textView"
                 app:layout_constraintTop_toBottomOf="@+id/order_id_label" />
 
             <TextView
@@ -122,16 +124,18 @@
             <TextView
                 android:id="@+id/price_value"
                 style="@style/medium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_3"
                 android:layout_marginTop="@dimen/dimen_3"
                 android:text="@{order.finalCost}"
                 android:textColor="@color/colorLabelText"
                 android:textSize="@dimen/font_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dimen_10"
                 app:layout_constraintStart_toEndOf="@+id/rsd"
                 app:layout_constraintTop_toBottomOf="@+id/total_price_textView"
-                tools:text="5000" />
+                tools:text="5000202" />
 
             <TextView
                 android:id="@+id/deliver_address_textView"

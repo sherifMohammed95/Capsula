@@ -74,29 +74,33 @@ object DateUtils {
     }
 
     fun reformatOrderDate(date: String): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH)
-        val output = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale(currentLang))
+        val output = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }
 
     fun getOrderDate(date:String):String{
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        val output = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale(currentLang))
+        val output = SimpleDateFormat("dd MMM yyyy", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }
 
     fun getEstimatedOrderTime(date:String):String{
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        val output = SimpleDateFormat("HH:mm a", Locale.ENGLISH)
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale(currentLang))
+        val output = SimpleDateFormat("HH:mm a", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }
 
     fun getEstimatedOrderDate(date:String):String{
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        val output = SimpleDateFormat("EEE dd MMM", Locale.ENGLISH)
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale(currentLang))
+        val output = SimpleDateFormat("EEE dd MMM", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }
@@ -166,8 +170,9 @@ object DateUtils {
     }
 
     fun getMonthName(monthNumber: Int): String {
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
         val cal = Calendar.getInstance()
-        val monthDate = SimpleDateFormat("MMM", Locale.US)
+        val monthDate = SimpleDateFormat("MMM", Locale(currentLang))
         cal.set(Calendar.MONTH, monthNumber)
         return monthDate.format(cal.time)
     }

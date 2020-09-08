@@ -55,6 +55,7 @@ val moreModule = module {
                 androidContext().getString(R.string.my_wallet)
             ),
             MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
+            MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
             MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
             MoreItem(R.drawable.ic_logout, androidContext().getString(R.string.logout))
         )

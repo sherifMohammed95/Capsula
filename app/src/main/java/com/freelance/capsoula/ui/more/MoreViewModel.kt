@@ -15,6 +15,7 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
 
     var checkoutIdResponse = SingleLiveEvent<String>()
     var saveCardResponse = SingleLiveEvent<String>()
+    var logoutResponse = SingleLiveEvent<Void>()
     var selectedPaymentMethodValue = -1
     var resoursePath:String? = ""
 
@@ -22,6 +23,7 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
         initRepository(repo)
         this.checkoutIdResponse = repo.checkoutIdResponse
         this.saveCardResponse = repo.saveCardResponse
+        this.logoutResponse = repo.logoutEvent
     }
 
     fun navigate(item: MoreItem) {
@@ -33,7 +35,7 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
 
             Domain.application.getString(R.string.login) -> navigator?.openLogin()
 
-            Domain.application.getString(R.string.logout) -> navigator?.logout()
+            Domain.application.getString(R.string.logout) -> logout()
 
             Domain.application.getString(R.string.history) -> navigator?.openHistory()
 
@@ -44,6 +46,8 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
             Domain.application.getString(R.string.change_lang) -> navigator?.changeLanguage()
 
             Domain.application.getString(R.string.about) -> navigator?.openAbout()
+
+            Domain.application.getString(R.string.faqs) -> navigator?.openFAQs()
         }
     }
 
@@ -56,6 +60,12 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
     fun saveCard() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveCard(selectedPaymentMethodValue,resoursePath!!)
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.logout()
         }
     }
 }
