@@ -1,5 +1,6 @@
 package com.freelance.capsoula.ui.checkout.fragment.done
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.freelance.base.BaseFragment
@@ -8,6 +9,7 @@ import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.databinding.FragmentDoneBinding
 import com.freelance.capsoula.ui.checkout.CheckoutActivity
 import com.freelance.capsoula.ui.checkout.fragment.details.DetailsViewModel
+import com.freelance.capsoula.ui.myOrders.MyOrdersActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DoneFragment : BaseFragment<FragmentDoneBinding, DoneViewModel>(), DoneNavigator {
@@ -44,6 +46,7 @@ class DoneFragment : BaseFragment<FragmentDoneBinding, DoneViewModel>(), DoneNav
     }
 
     override fun openMyOrders() {
-
+        startActivity(Intent(activity, MyOrdersActivity::class.java))
+        activity?.finish()
     }
 }

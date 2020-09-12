@@ -20,6 +20,8 @@ object Constants {
 
     var REFRESH_DELIVERY_ORDER = false
 
+    const val ORDER_IS_PROCESSING = 5
+
     const val INTERCOM_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
     const val INTERCOM_APP_ID = "zwlcn8xj"
 

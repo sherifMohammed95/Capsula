@@ -7,6 +7,7 @@ import com.freelance.base.BaseViewModel
 import com.freelance.capsoula.data.DeliveryOrder
 import com.freelance.capsoula.data.repository.OrdersRepository
 import com.freelance.capsoula.utils.Constants
+import com.freelance.capsoula.utils.Constants.ORDER_IS_PROCESSING
 import com.freelance.capsoula.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class DeliveryOrderDetailsViewModel(val repo: OrdersRepository) :
     }
 
     fun takeAction(){
-        if(mOrder.statusId == 2)
+        if(mOrder.statusId == ORDER_IS_PROCESSING)
             finishDelivery()
         else
             startDelivery()
