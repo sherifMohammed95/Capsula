@@ -260,4 +260,7 @@ interface WebService {
 
     @GET("Authentication/Logout")
     suspend fun logout(): Response<BaseResponse<String>>
+
+    @POST("Authentication/RefreshDevice")
+    suspend fun refreshDevice(@Body request: RefreshDeviceRequest): Response<BaseResponse<Any>>
 }

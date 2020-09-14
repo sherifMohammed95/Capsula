@@ -20,6 +20,15 @@ class DeliveryHomeViewModel(private val mRepo: GeneralRepository) :
         initRepository(mRepo)
         this.deliveryHomeDataResponse = mRepo.deliveryHomeDataResponse
         getHomeData()
+
+        if (UserDataSource.getDeliveryUser() != null)
+            refreshDevice()
+    }
+
+    private fun refreshDevice() {
+        viewModelScope.launch(IO) {
+            mRepo.refreshDevice()
+        }
     }
 
     fun getHomeData() {

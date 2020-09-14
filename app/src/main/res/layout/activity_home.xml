@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeActivity">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/tabs_layout"
@@ -217,7 +217,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <include
             android:id="@+id/tabs_layout"

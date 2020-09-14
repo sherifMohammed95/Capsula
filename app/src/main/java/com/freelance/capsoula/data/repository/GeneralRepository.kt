@@ -4,6 +4,7 @@ import android.util.Log
 import com.freelance.base.BaseResponse
 import com.freelance.capsoula.data.FAQ
 import com.freelance.capsoula.data.requests.AddAddressRequest
+import com.freelance.capsoula.data.requests.RefreshDeviceRequest
 import com.freelance.capsoula.data.responses.*
 import com.freelance.capsoula.data.source.local.UserDataSource
 import com.freelance.capsoula.utils.Constants
@@ -321,6 +322,18 @@ class GeneralRepository : BaseRepository() {
                     }
                 })
             }
+        }
+    }
+
+    suspend fun refreshDevice() {
+        try {
+            val request = RefreshDeviceRequest()
+            val response = webService.refreshDevice(request)
+            if (response.isSuccessful) {
+
+            }
+        } catch (e: Exception) {
+
         }
     }
 }

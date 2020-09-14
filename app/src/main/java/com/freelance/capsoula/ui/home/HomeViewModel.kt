@@ -35,6 +35,8 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         this.homeDataResponse = repo.homeDataResponse
         this.storesResponse = repo.storesResponse
 //        loadHomeData()
+        if (UserDataSource.getUser() != null)
+            refreshDevice()
 
         viewModelScope.launch(IO) {
             loginToIntercom()
@@ -105,6 +107,12 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     fun loadUpdatedCart() {
         viewModelScope.launch(IO) {
             repo.getUpdatedCart()
+        }
+    }
+
+   private fun refreshDevice() {
+        viewModelScope.launch(IO) {
+            repo.refreshDevice()
         }
     }
 
