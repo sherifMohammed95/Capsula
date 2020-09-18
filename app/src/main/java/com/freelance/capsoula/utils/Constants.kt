@@ -67,6 +67,7 @@ object Constants {
     const val FROM_ORDER_DETAILS = 11
     const val FROM_MORE = 12
     const val FROM_DELIVERY_PERSONAL_DETAILS = 13
+    const val FROM_NOTIFICATIONS = 14
 
 
     /**
@@ -109,4 +110,15 @@ object Constants {
     const val PERSONAL_DETAILS_STEP = 1
     const val CAR_DETAILS_STEP = 2
     const val REQUIRED_DOCS_STEP = 3
+
+    /**
+     * Notification Types
+     * **/
+    const val CUSTOMER_GENERAL = 1
+    const val DELIVERY_GENERAL = 2
+    const val GENERAL_ALL = 3
+    const val NEW_STORE = 4
+    const val NEW_CUSTOMER_OFFER = 5
+    const val NEW_DELIVERY_ORDER = 6
+    const val ORDER_TRACKING = 7
 }

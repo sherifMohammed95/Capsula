@@ -222,4 +222,29 @@ object DateUtils {
         return "${dateArr[0]} ${getMonthName(dateArr[1].toInt() - 1)}"
     }
 
+    fun getMilliSecondsFromDate(date: String): Long {
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val myFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale(currentLang))
+        var reformattedStr = ""
+        var milliSeconds = 0L
+        try {
+            reformattedStr = myFormat.format(myFormat.parse(date)!!)
+            milliSeconds = myFormat.parse(reformattedStr)!!.time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return milliSeconds
+
+    }
+
+    fun formatNotificationDate(date: Long): Date? {
+        if (date > 0) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = date
+            return toDate(formatter.format(calendar.time))
+        }
+        return Date()
+    }
+
 }

@@ -222,4 +222,12 @@
     <string name="profile_updated">تم تعديل الملف الشخصي بنجاح</string>
     <string name="refresh"><u>تحديث</u></string>
 
+    <string name="just_now">الأن</string>
+    <string name="minute_ago">منذ دقيقة واحدة</string>
+    <string name="minutes_ago">دقائق</string>
+    <string name="hour_ago">منذ ساعة واحدة</string>
+    <string name="hours_ago">ساعات</string>
+    <string name="yesterday">أمس</string>
+    <string name="days_ago">أيام</string>
+    <string name="ago">منذ</string>
 </resources>
