@@ -7,7 +7,7 @@
 
         <variable
             name="category"
-            type="com.freelance.capsoula.data.Category" />
+            type="com.blueMarketing.capsula.data.Category" />
     </data>
 
     <androidx.cardview.widget.CardView

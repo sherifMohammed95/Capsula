@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:757084905257:android:58a9cd339a61700f6ca138",
+        "mobilesdk_app_id": "1:757084905257:android:0b21a36277bf47706ca138",
         "android_client_info": {
-          "package_name": "com.freelance.capsoula"
+          "package_name": "com.blueMarketing.capsula"
         }
       },
       "oauth_client": [
         {
-          "client_id": "757084905257-vej94cd7ovkn8akhr1hm61rv5tevsfj2.apps.googleusercontent.com",
+          "client_id": "757084905257-qqi83pk6cbsnh0epcaecomq78en4f1kh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.freelance.capsoula",
-            "certificate_hash": "fe58723c2248db4c8b1e5dc851e0246562827f3e"
+            "package_name": "com.blueMarketing.capsula",
+            "certificate_hash": "37a4743257e3e274694c6e7bf4da8d6bd3326ec4"
           }
         },
         {
@@ -29,15 +29,22 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6sbe4XWcq3D59NyqDg_SwciERPr3XCRY"
+          "current_key": "AIzaSyCEDuW1Pdl_r3WO3whLsavoBYswbM3E9XU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "757084905257-57tajapc6tcpphlhpipm7nlt1a0t3bec.apps.googleusercontent.com",
+              "client_id": "757084905257-vmemeap5m08ucjt82l6vsusmcqi5q667.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "757084905257-eq6en8q98rdlmk2855n9fdjaodlnveu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.BinoyedSA.Capsula"
+              }
             }
           ]
         }

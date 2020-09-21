@@ -8,7 +8,7 @@
 
         <variable
             name="item"
-            type="com.freelance.capsoula.data.MoreItem" />
+            type="com.blueMarketing.capsula.data.MoreItem" />
     </data>
 
     <LinearLayout

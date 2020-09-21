@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.subCategories.SubCategoriesViewModel" />
+            type="com.blueMarketing.capsula.ui.subCategories.SubCategoriesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

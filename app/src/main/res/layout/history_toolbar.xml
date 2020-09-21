@@ -6,7 +6,7 @@
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.history.HistoryNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.history.HistoryNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

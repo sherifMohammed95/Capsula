@@ -5,7 +5,7 @@
     <data>
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.faqs.FAQsNavigator" />
+            type="com.blueMarketing.capsula.ui.faqs.FAQsNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

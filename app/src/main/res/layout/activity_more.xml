@@ -9,11 +9,11 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.more.MoreViewModel" />
+            type="com.blueMarketing.capsula.ui.more.MoreViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.more.MoreNavigator" />
+            type="com.blueMarketing.capsula.ui.more.MoreNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

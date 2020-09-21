@@ -7,7 +7,7 @@
 
         <variable
             name="brand"
-            type="com.freelance.capsoula.data.Brand" />
+            type="com.blueMarketing.capsula.data.Brand" />
     </data>
 
     <androidx.cardview.widget.CardView

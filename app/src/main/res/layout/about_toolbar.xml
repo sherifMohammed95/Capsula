@@ -5,7 +5,7 @@
     <data>
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.about.AboutNavigator" />
+            type="com.blueMarketing.capsula.ui.about.AboutNavigator" />
     </data>
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.freelance.capsoula">
+    package="com.blueMarketing.capsula">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".App"
+        android:name="com.blueMarketing.capsula.App"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:fullBackupOnly="false"
@@ -27,78 +27,78 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".ui.faqs.FaqsActivity"
+            android:name="com.blueMarketing.capsula.ui.faqs.FaqsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name="com.blueMarketing.capsula.ui.about.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.deliveryMan.viewProfile.ViewProfileActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.viewProfile.ViewProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.editProfile.EditProfileActivity"
+            android:name="com.blueMarketing.capsula.ui.editProfile.EditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.deliveryMan.wallet.WalletActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.wallet.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.userProfile.UserProfileActivity"
+            android:name="com.blueMarketing.capsula.ui.userProfile.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.terms.TermsActivity"
+            android:name="com.blueMarketing.capsula.ui.terms.TermsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.deliveryMan.history.HistoryActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.history.HistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.deliveryMan.deliveryHome.DeliveryHomeActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity"
+            android:name="com.blueMarketing.capsula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.userTypes.UserTypesActivity"
+            android:name="com.blueMarketing.capsula.ui.userTypes.UserTypesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.orderTracking.OrderTrackingActivity"
+            android:name="com.blueMarketing.capsula.ui.orderTracking.OrderTrackingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.orderDetails.OrderDetailsActivity"
+            android:name="com.blueMarketing.capsula.ui.orderDetails.OrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.myOrders.MyOrdersActivity"
+            android:name="com.blueMarketing.capsula.ui.myOrders.MyOrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.more.MoreActivity"
+            android:name="com.blueMarketing.capsula.ui.more.MoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".ui.checkout.CheckoutActivity"
+            android:name="com.blueMarketing.capsula.ui.checkout.CheckoutActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -112,71 +112,71 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.productDetails.ProductDetailsActivity"
+            android:name="com.blueMarketing.capsula.ui.productDetails.ProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.search.SearchActivity"
+            android:name="com.blueMarketing.capsula.ui.search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name=".ui.products.ProductsActivity"
+            android:name="com.blueMarketing.capsula.ui.products.ProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.subCategories.SubCategoriesActivity"
+            android:name="com.blueMarketing.capsula.ui.subCategories.SubCategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.stores.StoresActivity"
+            android:name="com.blueMarketing.capsula.ui.stores.StoresActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.categories.CategoriesActivity"
+            android:name="com.blueMarketing.capsula.ui.categories.CategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.brands.BrandsActivity"
+            android:name="com.blueMarketing.capsula.ui.brands.BrandsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.resetPassword.ResetPasswordActivity"
+            android:name="com.blueMarketing.capsula.ui.resetPassword.ResetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.forgetPassword.ForgetPasswordActivity"
+            android:name="com.blueMarketing.capsula.ui.forgetPassword.ForgetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.blueMarketing.capsula.ui.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.completeProfile.CompleteProfileActivity"
+            android:name="com.blueMarketing.capsula.ui.completeProfile.CompleteProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.addAddress.AddAddressActivity"
+            android:name="com.blueMarketing.capsula.ui.addAddress.AddAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.verification.VerificationActivity"
+            android:name="com.blueMarketing.capsula.ui.verification.VerificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.authentication.AuthenticationActivity"
+            android:name="com.blueMarketing.capsula.ui.authentication.AuthenticationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.blueMarketing.capsula.ui.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
@@ -210,7 +210,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <service android:name=".firebase.MyFirebaseMessagingService">
+        <service android:name="com.blueMarketing.capsula.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -219,7 +219,7 @@
             android:name="com.oppwa.mobile.connect.service.ConnectService"
             android:exported="false" />
         <service
-            android:name=".locationService.LocationService"
+            android:name="com.blueMarketing.capsula.locationService.LocationService"
             android:enabled="true" />
     </application>
 

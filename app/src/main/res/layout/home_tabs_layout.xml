@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.home.HomeViewModel" />
+            type="com.blueMarketing.capsula.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

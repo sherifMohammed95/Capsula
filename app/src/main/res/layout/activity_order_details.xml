@@ -9,15 +9,15 @@
 
         <variable
             name="order"
-            type="com.freelance.capsoula.data.Order" />
+            type="com.blueMarketing.capsula.data.Order" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.orderDetails.OrderDetailsViewModel" />
+            type="com.blueMarketing.capsula.ui.orderDetails.OrderDetailsViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.orderDetails.OrderDetailsNavigator" />
+            type="com.blueMarketing.capsula.ui.orderDetails.OrderDetailsNavigator" />
 
     </data>
 

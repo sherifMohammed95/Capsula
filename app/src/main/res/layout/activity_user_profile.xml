@@ -9,15 +9,15 @@
 
         <variable
             name="user"
-            type="com.freelance.capsoula.data.User" />
+            type="com.blueMarketing.capsula.data.User" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.userProfile.UserProfileViewModel" />
+            type="com.blueMarketing.capsula.ui.userProfile.UserProfileViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.userProfile.UserProfileNavigator" />
+            type="com.blueMarketing.capsula.ui.userProfile.UserProfileNavigator" />
 
     </data>
 

@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.freelance.capsoula.custom.bottomSheet.BottomSheetModel" />
+            type="com.blueMarketing.capsula.custom.bottomSheet.BottomSheetModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

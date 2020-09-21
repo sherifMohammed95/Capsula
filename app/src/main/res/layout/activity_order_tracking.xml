@@ -9,15 +9,15 @@
 
         <variable
             name="item"
-            type="com.freelance.capsoula.data.OrderTracking" />
+            type="com.blueMarketing.capsula.data.OrderTracking" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.orderTracking.OrderTrackingViewModel" />
+            type="com.blueMarketing.capsula.ui.orderTracking.OrderTrackingViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.orderTracking.OrderTrackingNavigator" />
+            type="com.blueMarketing.capsula.ui.orderTracking.OrderTrackingNavigator" />
 
     </data>
 

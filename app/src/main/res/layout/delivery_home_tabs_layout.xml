@@ -5,7 +5,7 @@
     <data>
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

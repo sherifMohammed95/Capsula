@@ -9,11 +9,11 @@
 
         <variable
             name="product"
-            type="com.freelance.capsoula.data.Product" />
+            type="com.blueMarketing.capsula.data.Product" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.productDetails.ProductDetailsViewModel" />
+            type="com.blueMarketing.capsula.ui.productDetails.ProductDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

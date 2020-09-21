@@ -9,11 +9,11 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeViewModel" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,7 +6,7 @@
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

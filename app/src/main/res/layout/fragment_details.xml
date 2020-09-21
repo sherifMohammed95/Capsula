@@ -9,15 +9,15 @@
 
         <variable
             name="payment"
-            type="com.freelance.capsoula.data.responses.PaymentDetailsResponse" />
+            type="com.blueMarketing.capsula.data.responses.PaymentDetailsResponse" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.checkout.fragment.details.DetailsViewModel" />
+            type="com.blueMarketing.capsula.ui.checkout.fragment.details.DetailsViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.checkout.fragment.details.DetailsNavigator" />
+            type="com.blueMarketing.capsula.ui.checkout.fragment.details.DetailsNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

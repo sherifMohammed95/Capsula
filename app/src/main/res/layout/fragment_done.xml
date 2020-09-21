@@ -8,11 +8,11 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.checkout.fragment.done.DoneViewModel" />
+            type="com.blueMarketing.capsula.ui.checkout.fragment.done.DoneViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.checkout.fragment.done.DoneNavigator" />
+            type="com.blueMarketing.capsula.ui.checkout.fragment.done.DoneNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

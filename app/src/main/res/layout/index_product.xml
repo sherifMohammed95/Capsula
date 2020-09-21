@@ -9,7 +9,7 @@
 
         <variable
             name="product"
-            type="com.freelance.capsoula.data.Product" />
+            type="com.blueMarketing.capsula.data.Product" />
     </data>
 
 

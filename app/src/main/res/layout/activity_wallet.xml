@@ -9,15 +9,15 @@
 
         <variable
             name="wallet"
-            type="com.freelance.capsoula.data.Wallet" />
+            type="com.blueMarketing.capsula.data.Wallet" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.deliveryMan.wallet.WalletViewModel" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.wallet.WalletViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.wallet.WalletNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.wallet.WalletNavigator" />
 
     </data>
 

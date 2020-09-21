@@ -9,11 +9,11 @@
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileViewModel" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileViewModel" />
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileNavigator" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileNavigator" />
 
     </data>
 

@@ -8,11 +8,11 @@
 
         <variable
             name="user"
-            type="com.freelance.capsoula.data.DeliveryUser" />
+            type="com.blueMarketing.capsula.data.DeliveryUser" />
 
         <variable
             name="vm"
-            type="com.freelance.capsoula.ui.deliveryMan.viewProfile.ViewProfileViewModel" />
+            type="com.blueMarketing.capsula.ui.deliveryMan.viewProfile.ViewProfileViewModel" />
 
     </data>
 

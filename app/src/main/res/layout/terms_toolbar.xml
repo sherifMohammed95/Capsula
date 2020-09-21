@@ -6,7 +6,7 @@
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.terms.TermsNavigator" />
+            type="com.blueMarketing.capsula.ui.terms.TermsNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

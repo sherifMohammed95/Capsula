@@ -6,7 +6,7 @@
 
         <variable
             name="navigator"
-            type="com.freelance.capsoula.ui.orderTracking.OrderTrackingNavigator" />
+            type="com.blueMarketing.capsula.ui.orderTracking.OrderTrackingNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
