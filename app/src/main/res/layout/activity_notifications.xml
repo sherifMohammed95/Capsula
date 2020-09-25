@@ -8,49 +8,56 @@
         <import type="android.view.View" />
 
         <variable
+            name="navigator"
+            type="com.blueMarketing.capsula.ui.notifications.NotificationsNavigator" />
+
+        <variable
             name="vm"
-            type="com.blueMarketing.capsula.ui.products.ProductsViewModel" />
+            type="com.blueMarketing.capsula.ui.notifications.NotificationsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorScreenBg"
+        tools:context=".ui.notifications.NotificationsActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/notifications_toolbar"
+            app:navigator="@{navigator}" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/toolbar_layout" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/products_recyclerView"
+                    android:id="@+id/notifications_recyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_20"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                    app:spanCount="2"
-                    tools:listitem="@layout/index_product" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/index_notification" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.core.widget.NestedScrollView>
 
         <include
@@ -62,16 +69,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/colorPrimary"
-            android:visibility="@{vm.isLoading?View.VISIBLE:View.GONE}"
+        <include
+            layout="@layout/no_notifications_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.haveNotifications?View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

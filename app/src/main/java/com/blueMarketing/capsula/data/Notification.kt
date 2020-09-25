@@ -18,9 +18,6 @@ class Notification {
     }
 
     fun formatDate(): String? {
-        return TimeAgoUtils().getTimeAgo(
-            DateUtils.getMilliSecondsFromDate(date!!),
-            Domain.application.applicationContext
-        )
+        return DateUtils.reformatNotificationDate(date!!)
     }
 }

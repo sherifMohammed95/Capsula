@@ -230,4 +230,6 @@
     <string name="yesterday">أمس</string>
     <string name="days_ago">أيام</string>
     <string name="ago">منذ</string>
+    <string name="notifications">التنبيهات</string>
+    <string name="you_don_t_have_any_notifications">ليس لديك تنبيهات</string>
 </resources>

@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="navigator"
+            type="com.blueMarketing.capsula.ui.home.HomeNavigator" />
+
+        <variable
             name="vm"
             type="com.blueMarketing.capsula.ui.home.HomeViewModel" />
     </data>
@@ -33,7 +37,8 @@
                 <include
                     android:id="@+id/toolbar"
                     layout="@layout/home_toolbar"
-                    app:vm="@{vm}" />
+                    app:vm="@{vm}"
+                    app:navigator="@{navigator}"/>
 
                 <LinearLayout
                     android:id="@+id/search_layout"
@@ -204,7 +209,7 @@
                     android:id="@+id/stores_recyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_16"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"

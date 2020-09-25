@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="navigator"
+            type="com.blueMarketing.capsula.ui.home.HomeNavigator" />
+
+        <variable
             name="vm"
             type="com.blueMarketing.capsula.ui.home.HomeViewModel" />
     </data>
@@ -24,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_22"
             android:layout_marginBottom="@dimen/dimen_18"
+            android:onClick="@{()->navigator.openNotifications()}"
             android:src="@drawable/ic_notifications"
+            android:visibility="@{vm.notificationsIconVisibility?View.VISIBLE:View.INVISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/hello_textView"
             app:layout_constraintStart_toStartOf="parent" />
 

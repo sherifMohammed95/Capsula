@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/categories_recyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:orientation="vertical"
                     android:nestedScrollingEnabled="false"
@@ -51,7 +51,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <include
             layout="@layout/loading_layout"

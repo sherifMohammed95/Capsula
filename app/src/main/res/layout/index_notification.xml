@@ -14,8 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorScreenBg">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
@@ -65,11 +64,11 @@
                         tools:text="Check new offers" />
 
                     <TextView
-                        style="@style/light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{notification.body}"
                         android:textAlignment="viewStart"
+                        android:layout_marginTop="@dimen/dimen_5"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_12"
                         tools:text="It is a long established fact that a reader
@@ -77,12 +76,13 @@ will be distracted by the readable content
 of a page when looking at its layout." />
 
                     <TextView
-                        style="@style/light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorLabelText50"
-                        android:textSize="@dimen/font_12"
+                        android:textSize="@dimen/font_13"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:text="@{notification.formatDate()}"
                         tools:text="10 minutes ago" />
 
                 </LinearLayout>

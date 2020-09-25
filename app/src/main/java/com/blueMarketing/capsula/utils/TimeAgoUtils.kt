@@ -48,9 +48,9 @@ class TimeAgoUtils {
             time *= 1000
         }
         val now = System.currentTimeMillis()
-        if (time > now || time <= 0) {
-            return null
-        }
+//        if (time > now || time <= 0) {
+//            return null
+//        }
 
         // TODO: localize
         val diff = now - time

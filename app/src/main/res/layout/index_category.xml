@@ -12,12 +12,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_height="@dimen/dimen_180"
+        android:layout_marginEnd="@dimen/dimen_10"
+        app:cardUseCompatPadding="true"
         app:cardBackgroundColor="@android:color/white"
-        android:layout_marginBottom="@dimen/dimen_16"
         app:cardCornerRadius="@dimen/dimen_20"
-        app:cardMaxElevation="3dp">
+        app:cardMaxElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:maxLines="2"
                 android:text="@{category.categoryName}"
                 android:textColor="@color/colorBlack50"
-                android:textSize="@dimen/font_14"
+                android:textSize="@dimen/font_12"
                 tools:text="Babies sherif sherif" />
 
         </LinearLayout>

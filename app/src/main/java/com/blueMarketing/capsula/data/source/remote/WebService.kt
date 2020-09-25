@@ -262,4 +262,10 @@ interface WebService {
 
     @POST("Authentication/RefreshDevice")
     suspend fun refreshDevice(@Body request: RefreshDeviceRequest): Response<BaseResponse<Any>>
+
+    @GET("UserProfile/GetNotifications")
+    suspend fun getNotifications(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int
+    ): Response<BaseResponse<NotificationsResponse>>
 }

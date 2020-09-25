@@ -1,5 +1,6 @@
 package com.blueMarketing.capsula.ui.deliveryMan.deliveryHome
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.blueMarketing.base.BaseViewModel

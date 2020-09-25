@@ -14,6 +14,7 @@ import com.blueMarketing.capsula.ui.home.adapters.HomeBrandsAdapter
 import com.blueMarketing.capsula.ui.home.adapters.HomeCategoriesAdapter
 import com.blueMarketing.capsula.ui.home.adapters.HomeStoresAdapter
 import com.blueMarketing.capsula.ui.more.MoreActivity
+import com.blueMarketing.capsula.ui.notifications.NotificationsActivity
 import com.blueMarketing.capsula.ui.products.ProductsActivity
 import com.blueMarketing.capsula.ui.search.SearchActivity
 import com.blueMarketing.capsula.ui.stores.StoresActivity
@@ -43,13 +44,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        viewDataBinding?.navigator = this
     }
 
     override fun onResume() {
         super.onResume()
         mViewModel.updateToolbarData()
-        if (UserDataSource.getUser() != null)
+        if (UserDataSource.getUser() != null){
+            mViewModel.notificationsIconVisibility.set(true)
             mViewModel.loadUpdatedCart()
+        }
 
         if (mViewModel.storesList.size > 0)
             mViewModel.loadStores(false)
@@ -130,6 +134,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     override fun openNotifications() {
+        startActivity(Intent(this, NotificationsActivity::class.java))
     }
 
     override fun openMore() {

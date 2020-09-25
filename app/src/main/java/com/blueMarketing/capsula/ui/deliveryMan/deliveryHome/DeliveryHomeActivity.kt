@@ -17,6 +17,7 @@ import com.blueMarketing.capsula.locationService.LocationServiceManager
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.adapters.DeliveryOrdersAdapter
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
 import com.blueMarketing.capsula.ui.more.MoreActivity
+import com.blueMarketing.capsula.ui.notifications.NotificationsActivity
 import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.Constants.GPS_CODE
 import com.blueMarketing.capsula.utils.MyLocationManager
@@ -89,6 +90,10 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
 
     override fun openMore() {
         startActivity(Intent(this, MoreActivity::class.java))
+    }
+
+    override fun openNotifications() {
+        startActivity(Intent(this, NotificationsActivity::class.java))
     }
 
     override fun onItemClick(pos: Int, item: DeliveryOrder) {

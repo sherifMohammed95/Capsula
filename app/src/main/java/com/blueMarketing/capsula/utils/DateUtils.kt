@@ -73,6 +73,14 @@ object DateUtils {
         return res
     }
 
+    fun reformatNotificationDate(date: String): String {
+        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale(currentLang))
+        val output = SimpleDateFormat("yyyy/MM/dd HH:mm a", Locale(currentLang))
+        val d = sdf.parse(date)
+        return output.format(d!!)
+    }
+
     fun reformatOrderDate(date: String): String {
         val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale(currentLang))
@@ -224,7 +232,7 @@ object DateUtils {
 
     fun getMilliSecondsFromDate(date: String): Long {
         val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
-        val myFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale(currentLang))
+        val myFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale(currentLang))
         var reformattedStr = ""
         var milliSeconds = 0L
         try {

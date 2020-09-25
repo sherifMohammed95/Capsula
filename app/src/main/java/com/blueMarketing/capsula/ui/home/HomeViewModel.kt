@@ -25,6 +25,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     var cartNumberText = ObservableField("")
     var userNameText = ObservableField(Domain.application.getString(R.string.user))
     var cartNumberVisibility = ObservableBoolean(false)
+    var notificationsIconVisibility = ObservableBoolean(false)
     var emptyCartMessage = SingleLiveEvent<Void>()
     var storesList = ArrayList<Store>()
 

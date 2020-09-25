@@ -8,15 +8,30 @@
         <import type="android.view.View" />
 
         <variable
+            name="navigator"
+            type="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeNavigator" />
+
+        <variable
             name="vm"
             type="com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="130dp"
         android:background="@drawable/toolbar_rounded_bg"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/notifications_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_22"
+            android:layout_marginBottom="@dimen/dimen_18"
+            android:onClick="@{()->navigator.openNotifications()}"
+            android:src="@drawable/ic_notifications"
+            app:layout_constraintBottom_toTopOf="@+id/hello_textView"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/hello_textView"
@@ -38,15 +53,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_10"
-            android:textAlignment="viewStart"
             android:text="@{vm.userNameText}"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_22"
             app:layout_constraintBottom_toBottomOf="@+id/hello_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/hello_textView"
-            app:layout_constraintTop_toTopOf="@+id/hello_textView"
-            tools:text="Sherif" />
+            app:layout_constraintTop_toTopOf="@+id/hello_textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

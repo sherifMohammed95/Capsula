@@ -15,12 +15,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:layout_marginEnd="@dimen/dimen_16"
-        android:layout_marginBottom="@dimen/dimen_16"
+        android:layout_height="220dp"
+        android:layout_marginEnd="@dimen/dimen_10"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/dimen_20"
-        app:cardElevation="3dp">
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:id="@+id/product_name_textView"
                 style="@style/medium"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginEnd="@dimen/dimen_10"

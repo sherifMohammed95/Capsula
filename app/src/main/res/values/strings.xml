@@ -227,5 +227,7 @@
     <string name="yesterday">yesterday</string>
     <string name="days_ago">days ago</string>
     <string name="ago">ago</string>
+    <string name="notifications">Notifications</string>
+    <string name="you_don_t_have_any_notifications">You don’t have any\nnotifications</string>
 
 </resources>

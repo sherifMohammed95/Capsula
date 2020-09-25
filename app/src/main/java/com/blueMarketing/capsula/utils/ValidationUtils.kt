@@ -179,8 +179,8 @@ object ValidationUtils {
 
         val count = IntArray(256)
 
-        for (i in 0 until str.length) {
-            count[str[i].toInt()]++
+        for (element in str) {
+            count[element.toInt()]++
         }
 
         var max = -1

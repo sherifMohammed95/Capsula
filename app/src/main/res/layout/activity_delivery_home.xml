@@ -37,6 +37,7 @@
                 <include
                     android:id="@+id/toolbar"
                     layout="@layout/delivery_home_toolbar"
+                    app:navigator="@{navigator}"
                     app:vm="@{vm}" />
 
                 <TextView
