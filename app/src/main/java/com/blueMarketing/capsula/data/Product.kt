@@ -3,6 +3,7 @@ package com.blueMarketing.capsula.data
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.Domain
+import kotlin.math.round
 
 class Product {
 
@@ -26,7 +27,8 @@ class Product {
     }
 
     fun getPriceText(): String {
-        return Domain.application.getString(R.string.rsd) + " " + price.toString()
+        val mPrice = round(price * 100) / 100
+        return Domain.application.getString(R.string.rsd) + " " + mPrice.toString()
     }
 
     fun getVatText(): String {
@@ -34,19 +36,24 @@ class Product {
     }
 
     fun getOrderDetailsQuantityText(): String {
-        return  quantity.toString() + " " + Domain.application.getString(R.string.pieces)
+        return quantity.toString() + " " + Domain.application.getString(R.string.pieces)
     }
 
     fun getWasPriceText(): String {
+        val mPrice = round(price * 100) / 100
         return Domain.application.getString(R.string.was) + " " +
-                Domain.application.getString(R.string.rsd) + " " + price.toString()
+                Domain.application.getString(R.string.rsd) + " " + mPrice.toString()
     }
 
     fun getPriceDetailsText(): String {
+        val mPrice = round(price * 100) / 100
+        var mOfferPrice = 0.0
+        if (priceInOffer != null)
+            mOfferPrice = round(priceInOffer!! * 100) / 100
         return if (offerType == Constants.DISCOUNT_OFFER)
-            Domain.application.getString(R.string.rsd) + " " + priceInOffer.toString()
+            Domain.application.getString(R.string.rsd) + " " + mOfferPrice.toString()
         else
-            Domain.application.getString(R.string.rsd) + " " + price.toString()
+            Domain.application.getString(R.string.rsd) + " " + mPrice.toString()
     }
 
     fun getOfferTag(): String {

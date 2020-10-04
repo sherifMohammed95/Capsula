@@ -36,7 +36,7 @@ val moreModule = module {
             ),
             MoreItem(
                 R.drawable.ic_enable_notifications,
-                androidContext().getString(R.string.enable_notifications)
+                androidContext().getString(R.string.enable_notifications), true
             ),
             MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),

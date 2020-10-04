@@ -14,6 +14,7 @@ import com.blueMarketing.capsula.utils.Domain
 import com.blueMarketing.capsula.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlin.math.round
 
 class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
 
@@ -163,7 +164,7 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
         }
     }
 
-    fun validateCart() {
+    private fun validateCart() {
         viewModelScope.launch(IO) {
             repo.validateCart()
         }
@@ -195,11 +196,12 @@ class CartViewModel(val repo: CartRepository) : BaseViewModel<CartNavigator>() {
             prodPrice = if (it.offerType == Constants.DISCOUNT_OFFER)
                 it.priceInOffer!!.toDouble()
             else
-                it.price.toDouble()
+                it.price
 
             total += (it.quantity * prodPrice)
         }
 
+        total = round(total * 100) / 100
         totalPriceText.set(
             Domain.application.getString(R.string.total) + " " +
                     Domain.application.getString(R.string.rsd) + " " + total

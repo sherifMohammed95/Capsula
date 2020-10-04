@@ -90,7 +90,6 @@ class ProductDetailsActivity :
             intent.getIntExtra(Constants.FROM_WHERE, -1)
                     == Constants.FROM_CART
         )
-
     }
 
     override fun openCheckout() {

@@ -3,6 +3,7 @@ package com.blueMarketing.capsula.data.source.remote
 import com.blueMarketing.base.BaseResponse
 import com.blueMarketing.capsula.data.DeliveryOrder
 import com.blueMarketing.capsula.data.Order
+import com.blueMarketing.capsula.data.User
 import com.blueMarketing.capsula.data.Wallet
 import com.blueMarketing.capsula.data.requests.CartRequest
 import com.blueMarketing.capsula.data.requests.*
@@ -173,6 +174,9 @@ interface WebService {
 
     @GET("Cart/GetContent")
     suspend fun getUpdatedCart(): Response<BaseResponse<UserCartResponse>>
+
+    @GET("UserProfile/GetUserData")
+    suspend fun getUserData(): Response<BaseResponse<User>>
 
     @GET("Cart/Validate")
     suspend fun validateCart(): Response<BaseResponse<String>>

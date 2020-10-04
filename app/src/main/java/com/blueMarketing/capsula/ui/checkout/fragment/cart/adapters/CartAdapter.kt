@@ -9,10 +9,15 @@ import com.blueMarketing.base.BaseRecyclerSwipeAdapter
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.Product
 import com.blueMarketing.capsula.databinding.IndexCartBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CartAdapter : BaseRecyclerSwipeAdapter<Product, CartAdapter.CartViewHolder>() {
 
     var onIconsClickListener: OnIconsClickListener? = null
+    var hasShowDemo = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val binding: IndexCartBinding = DataBindingUtil.inflate(
@@ -25,6 +30,18 @@ class CartAdapter : BaseRecyclerSwipeAdapter<Product, CartAdapter.CartViewHolder
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val product = items!![position]
         holder.binding.swipeLayout.close(true)
+
+        if (!hasShowDemo) {
+            if (position == 0) {
+                CoroutineScope(Main).launch {
+                    delay(500)
+                    holder.binding.swipeLayout.open(true)
+                    delay(800)
+                    holder.binding.swipeLayout.close(true)
+                }
+            }
+            hasShowDemo = true
+        }
 
         holder.binding.plusImageView.setOnClickListener {
             onIconsClickListener?.onPlusClick(product)

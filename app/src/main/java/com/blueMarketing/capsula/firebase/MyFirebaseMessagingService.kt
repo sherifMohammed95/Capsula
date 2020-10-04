@@ -45,11 +45,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         if (preferencesGateway.load(NOTIFICATIONS_IS_ENABLED, true)) {
-            val type = remoteMessage.data["type"]?.toInt()
-            if ((isCustomerNotification(type) && UserDataSource.getUser() != null) ||
-                (isDeliveryNotification(type) && UserDataSource.getDeliveryUser() != null)
-            )
+            if(intercomPushClient.isIntercomPush(remoteMessage.data)) {
                 popUpNotification(remoteMessage.data)
+            } else {
+                val type = remoteMessage.data["type"]?.toInt()
+                if ((isCustomerNotification(type) && UserDataSource.getUser() != null) ||
+                    (isDeliveryNotification(type) && UserDataSource.getDeliveryUser() != null)
+                )
+                    popUpNotification(remoteMessage.data)
+            }
         }
     }
 

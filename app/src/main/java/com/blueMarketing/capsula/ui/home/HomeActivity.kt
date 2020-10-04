@@ -52,9 +52,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         mViewModel.updateToolbarData()
         if (UserDataSource.getUser() != null){
             mViewModel.notificationsIconVisibility.set(true)
-            mViewModel.loadUpdatedCart()
+            mViewModel.loadUserData()
         }
-
         if (mViewModel.storesList.size > 0)
             mViewModel.loadStores(false)
         else

@@ -103,9 +103,9 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         }
     }
 
-    fun loadUpdatedCart() {
+    fun loadUserData() {
         viewModelScope.launch(IO) {
-            repo.getUpdatedCart()
+            repo.getUserData()
         }
     }
 

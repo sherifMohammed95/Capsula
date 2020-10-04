@@ -243,6 +243,21 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
+    suspend fun getUserData() {
+        try {
+            val response = webService.getUserData()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.IO) {
+                    if (response.body()?.data != null) {
+                        UserDataSource.saveUser(response.body()?.data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
     suspend fun getTerms() {
         try {
             withContext(Dispatchers.Main) {
