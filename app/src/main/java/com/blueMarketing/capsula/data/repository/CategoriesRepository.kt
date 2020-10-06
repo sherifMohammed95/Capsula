@@ -19,13 +19,19 @@ class CategoriesRepository : BaseRepository() {
     suspend fun getCategories(pageNo: Int) {
         try {
             withContext(Dispatchers.Main) {
-                showLoadingLayout.value = true
+                if (pageNo == 1)
+                    showLoadingLayout.value = true
+                else
+                    isPagingLoadingEvent.value = true
             }
 
             val response = webService.getCategories(pageNo, Constants.PER_PAGE)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    if (pageNo == 1)
+                        showLoadingLayout.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     categoriesResponse.postValue(response.body()!!)
                 }
             } else {
@@ -47,13 +53,19 @@ class CategoriesRepository : BaseRepository() {
     suspend fun getStoreCategories(pageNo: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {
-                showLoadingLayout.value = true
+                if (pageNo == 1)
+                    showLoadingLayout.value = true
+                else
+                    isPagingLoadingEvent.value = true
             }
 
             val response = webService.getStoreCategories(pageNo, Constants.PER_PAGE, storeId)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    if (pageNo == 1)
+                        showLoadingLayout.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     storeCategoriesResponse.postValue(response.body()!!)
                 }
             } else {

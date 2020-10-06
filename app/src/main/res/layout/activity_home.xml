@@ -23,6 +23,7 @@
         tools:context=".ui.home.HomeActivity">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_scroll_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/tabs_layout"
@@ -37,8 +38,8 @@
                 <include
                     android:id="@+id/toolbar"
                     layout="@layout/home_toolbar"
-                    app:vm="@{vm}"
-                    app:navigator="@{navigator}"/>
+                    app:navigator="@{navigator}"
+                    app:vm="@{vm}" />
 
                 <LinearLayout
                     android:id="@+id/search_layout"
@@ -83,8 +84,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_22"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:visibility="gone"
                     android:layout_marginEnd="@dimen/dimen_22"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/search_layout"
@@ -111,9 +112,9 @@
                     android:layout_marginEnd="@dimen/dimen_22"
                     android:onClick="@{()->vm.openAllCategories()}"
                     android:text="@string/see_all"
-                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_15"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/categories_textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/categories_textView" />
@@ -142,9 +143,9 @@
                     android:layout_marginStart="@dimen/dimen_22"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:text="@string/brands"
-                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_18"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/categories_recyclerView" />
 
@@ -154,9 +155,9 @@
                     android:layout_marginEnd="@dimen/dimen_22"
                     android:onClick="@{()->vm.openAllBrands()}"
                     android:text="@string/see_all"
-                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_15"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/brands_textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/brands_textView" />
@@ -168,8 +169,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:visibility="gone"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -185,9 +186,9 @@
                     android:layout_marginStart="@dimen/dimen_22"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:text="@string/stores"
-                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_18"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/brands_recyclerView" />
 
@@ -214,9 +215,9 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:spanCount="2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/search_layout"
+                    app:spanCount="2"
                     tools:listitem="@layout/index_home_store" />
 
 
@@ -242,6 +243,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_60"
+            android:gravity="center"
+            android:padding="@dimen/dimen_15"
+            android:visibility="@{vm.isPagingLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/colorPrimary" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

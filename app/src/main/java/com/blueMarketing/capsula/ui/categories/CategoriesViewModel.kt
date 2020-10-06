@@ -3,6 +3,7 @@ package com.blueMarketing.capsula.ui.categories
 import androidx.lifecycle.viewModelScope
 import com.blueMarketing.base.BaseResponse
 import com.blueMarketing.base.BaseViewModel
+import com.blueMarketing.capsula.data.Category
 import com.blueMarketing.capsula.data.repository.CategoriesRepository
 import com.blueMarketing.capsula.data.responses.CategoriesResponse
 import com.blueMarketing.capsula.utils.SingleLiveEvent
@@ -17,6 +18,8 @@ class CategoriesViewModel(private val mRepository: CategoriesRepository) :
     var storeId = -1
     var pageNo = 1
 
+    var storeCategoriesList = ArrayList<Category>()
+
     init {
         initRepository(mRepository)
         this.categoriesResponse = mRepository.categoriesResponse
@@ -25,7 +28,7 @@ class CategoriesViewModel(private val mRepository: CategoriesRepository) :
 
     fun getCategories() {
         viewModelScope.launch(IO) {
-            mRepository.getCategories(1)
+            mRepository.getCategories(pageNo)
         }
     }
 

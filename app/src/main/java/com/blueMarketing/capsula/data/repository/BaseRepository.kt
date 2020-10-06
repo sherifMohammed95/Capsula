@@ -19,21 +19,24 @@ open class BaseRepository : KoinComponent {
     var apiErrorMessage = SingleLiveEvent<String>()
     var progressLoading: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var showLoadingLayout: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    var isPagingLoadingEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var mAction: Action? = null
 
     fun handleNetworkError(mAction: Action) {
         progressLoading.value = false
         showLoadingLayout.value = false
+        isPagingLoadingEvent.value = false
 //        if (!Utils.isConnectingToInternet(Domain.application)) {
-            this.mAction = mAction
-            networkMessageError.value = Domain.application.getString(R.string.no_internet_message)
-            return
+        this.mAction = mAction
+        networkMessageError.value = Domain.application.getString(R.string.no_internet_message)
+        return
 //        }
     }
 
     fun handleApiError(errorMessage: String, code: Int) {
         progressLoading.value = false
         showLoadingLayout.value = false
+        isPagingLoadingEvent.value = false
         when (code) {
             422, 404, 403, 406, 405, 400, 401 -> try {
                 try {
@@ -47,7 +50,7 @@ open class BaseRepository : KoinComponent {
             } catch (e1: IOException) {
                 e1.printStackTrace()
             }
-            500,503 -> {
+            500, 503 -> {
                 apiErrorMessage.value = (Domain.application.getString(R.string.went_wrong))
             }
         }

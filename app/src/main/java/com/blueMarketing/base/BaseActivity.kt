@@ -21,10 +21,14 @@ import android.widget.EditText
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blueMarketing.capsula.R
+import com.blueMarketing.capsula.custom.PaginationScrollListener
 import com.blueMarketing.capsula.data.MessageEvent
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.ui.addAddress.AddAddressActivity
@@ -49,6 +53,7 @@ import com.blueMarketing.capsula.utils.Domain
 import com.blueMarketing.capsula.utils.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
+import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.loading_layout.*
 import kotlinx.android.synthetic.main.search_toolbar_layout.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
@@ -101,6 +106,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             }
         })
 
+        viewModel!!.isPagingLoadingEvent.observe(this, Observer { showLoading ->
+            if (viewModel != null) {
+                viewModel?.isPagingLoading?.set(showLoading)!!
+            }
+        })
+
         viewModel!!.showLoadingLayout.observe(this, Observer { showLoading ->
             if (showLoading)
                 showProgressLayout()
@@ -123,6 +134,44 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
                 , getString(android.R.string.cancel), false)
         })
     }
+
+    fun paginate(recyclerView: RecyclerView?, layoutManager: LinearLayoutManager, action: Action?) {
+        recyclerView?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return viewModel?.isLastPage!!
+            }
+
+            override fun isLoading(): Boolean {
+                return viewModel?.isPagingLoading?.get()!!
+            }
+
+            override fun loadMoreItems() {
+                viewModel?.isPagingLoading?.set(true)
+                action?.run()
+            }
+        })
+    }
+
+    fun paginateWithScrollView(scrollView: NestedScrollView?, action: Action?) {
+        scrollView?.setOnScrollChangeListener { v, scrollX: Int, scrollY: Int,
+                                                oldScrollX: Int, oldScrollY: Int ->
+
+
+            val lastChild = scrollView.getChildAt(scrollView.childCount - 1)
+
+            if (lastChild != null) {
+                if ((scrollY >=
+                            (lastChild.measuredHeight - v.measuredHeight))
+                    && scrollY > oldScrollY && !viewModel?.isPagingLoading?.get()!!
+                    && !viewModel?.isLastPage!!
+                ) {
+//                    viewModel?.setIsPagingLoading(true)
+                    action?.run()
+                }
+            }
+        }
+    }
+
 
     fun setUpSearchToolbar(searchTextCallback: Action1<String>) {
 

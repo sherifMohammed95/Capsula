@@ -77,14 +77,20 @@ class ProductsRepository : BaseRepository() {
     suspend fun getCategoryProducts(pageNo: Int, catId: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {
-                showLoadingLayout.value = true
+                if (pageNo == 1)
+                    showLoadingLayout.value = true
+                else
+                    isPagingLoadingEvent.value = true
             }
 
             val response =
                 webService.getCategoryProducts(pageNo, Constants.PER_PAGE, catId, storeId)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    if (pageNo == 1)
+                        showLoadingLayout.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     productsResponse.postValue(response.body()!!)
                 }
             } else {

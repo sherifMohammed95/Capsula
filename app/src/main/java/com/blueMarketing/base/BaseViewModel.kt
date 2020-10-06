@@ -16,7 +16,10 @@ abstract class BaseViewModel<N> : ViewModel() {
 
     private var mNavigator: WeakReference<N>? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    var isLastPage = false
+    var isPagingLoadingEvent:SingleLiveEvent<Boolean> = SingleLiveEvent()
     val isLoading = ObservableBoolean(false)
+    val isPagingLoading = ObservableBoolean(false)
     var progressLoading: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var showLoadingLayout: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var errorMessage: SingleLiveEvent<String> = SingleLiveEvent()
@@ -39,7 +42,6 @@ abstract class BaseViewModel<N> : ViewModel() {
     }
 
     fun setIsLoading(isLoading: Boolean) {
-//        this.isLoading.set(isLoading)
         progressLoading.value = isLoading
     }
 
@@ -47,6 +49,7 @@ abstract class BaseViewModel<N> : ViewModel() {
         this.repository = repository
         errorMessage = repository.apiErrorMessage
         progressLoading = repository.progressLoading
+        isPagingLoadingEvent = repository.isPagingLoadingEvent
         networkErrorMessage = repository.networkMessageError
         this.showLoadingLayout = repository.showLoadingLayout
     }

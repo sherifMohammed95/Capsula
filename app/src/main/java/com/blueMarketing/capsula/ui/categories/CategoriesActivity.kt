@@ -13,7 +13,9 @@ import com.blueMarketing.capsula.ui.categories.adapters.CategoriesAdapter
 import com.blueMarketing.capsula.ui.products.ProductsActivity
 import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
+import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_categories.*
+import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
@@ -41,6 +43,10 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        paginateWithScrollView(categories_scroll_layout, Action {
+            mViewModel.pageNo++
+            mViewModel.getStoreCategories()
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +78,10 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
         mViewModel.storeCategoriesResponse.observe(this, Observer {
             if (it.data != null) {
                 if (!it.data!!.categoriesList.isNullOrEmpty())
-                    mAdapter.setData(it.data!!.categoriesList!!)
+                    mViewModel.storeCategoriesList.addAll(it.data!!.categoriesList!!)
+                if (mViewModel.storeCategoriesList.size == it.data!!.count)
+                    mViewModel.isLastPage = true
+                mAdapter.setData(mViewModel.storeCategoriesList)
             }
         })
     }

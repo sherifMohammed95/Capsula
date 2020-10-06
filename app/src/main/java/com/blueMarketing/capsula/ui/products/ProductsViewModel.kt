@@ -23,6 +23,7 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
     var fromWhere = 0
     var mProduct = Product()
     var cartResponse = SingleLiveEvent<ArrayList<Product>>()
+    var productsList = ArrayList<Product>()
 
     init {
         initRepository(mRepository)

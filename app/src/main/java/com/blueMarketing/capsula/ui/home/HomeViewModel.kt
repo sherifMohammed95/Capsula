@@ -28,6 +28,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
     var notificationsIconVisibility = ObservableBoolean(false)
     var emptyCartMessage = SingleLiveEvent<Void>()
     var storesList = ArrayList<Store>()
+    var pageNo = 1
 
     init {
         initRepository(repo)
@@ -99,7 +100,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
 
     fun loadStores(showLoading: Boolean) {
         viewModelScope.launch(IO) {
-            repo.getStores(showLoading, 1)
+            repo.getStores(showLoading, pageNo)
         }
     }
 

@@ -25,6 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import rx.functions.Action1
 import rx.functions.Action2
+import io.reactivex.functions.Action
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator,
     ProductsAdapter.OnPlusClickListener, BaseRecyclerAdapter.OnITemClickListener<Product> {
@@ -50,6 +51,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        paginateWithScrollView(search_scroll_view, Action {
+            mViewModel.pageNo++
+            mViewModel.getSearchResults()
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +64,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         setUpSearchToolbar(Action1 {
             mViewModel.pageNo = 1
             mViewModel.searchText = it
+            mViewModel.searchResultList = ArrayList()
+            mViewModel.isLastPage = false
             mViewModel.getSearchResults()
         })
     }
@@ -66,8 +73,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     private fun subscribeToLiveData() {
         mViewModel.searchResultsResponse.observe(this, Observer {
             if (it.data != null) {
-                if (it.data!!.productsList != null)
-                    mAdapter.setData(it.data!!.productsList!!)
+                if (it.data!!.productsList != null) {
+                    mViewModel.searchResultList.addAll(it.data!!.productsList!!)
+                    if (mViewModel.searchResultList.size == it.data!!.count)
+                        mViewModel.isLastPage = true
+                    mAdapter.setData(mViewModel.searchResultList)
+                }
             }
         })
 
@@ -101,6 +112,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                         mViewModel.selectedFilterTypePos = pos
                         mViewModel.filterType = item!!.selectionID!!
                         mViewModel.pageNo = 1
+                        mViewModel.searchResultList = ArrayList()
+                        mViewModel.isLastPage = false
                         mViewModel.getSearchResults()
                     }
                 }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false,

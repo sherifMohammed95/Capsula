@@ -18,6 +18,8 @@ import com.blueMarketing.capsula.ui.productDetails.ProductDetailsActivity
 import com.blueMarketing.capsula.ui.products.adapters.ProductsAdapter
 import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
+import io.reactivex.functions.Action
+import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_products.*
 import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
@@ -97,6 +99,10 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        paginateWithScrollView(products_scroll_layout, Action {
+            mViewModel.pageNo++
+            mViewModel.getCategoryProducts()
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +117,10 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
         mViewModel.productsResponse.observe(this, Observer {
             if (it.data != null) {
                 if (!it.data!!.productsList.isNullOrEmpty())
-                    mAdapter.setData(it.data!!.productsList!!)
+                    mViewModel.productsList.addAll(it.data!!.productsList!!)
+                if (mViewModel.productsList.size == it.data!!.count)
+                    mViewModel.isLastPage = true
+                mAdapter.setData(mViewModel.productsList)
             }
         })
 

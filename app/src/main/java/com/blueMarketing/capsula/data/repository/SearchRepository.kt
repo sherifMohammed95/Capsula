@@ -20,14 +20,20 @@ class SearchRepository : BaseRepository() {
     suspend fun getSearchResults(searchText: String, filterType: Int, pageNo: Int) {
         try {
             withContext(Dispatchers.Main) {
-                progressLoading.value = true
+                if (pageNo == 1)
+                    progressLoading.value = true
+                else
+                    isPagingLoadingEvent.value = true
             }
 
             val response =
                 webService.getSearchResults(searchText, filterType, pageNo, Constants.PER_PAGE)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    progressLoading.value = false
+                    if (pageNo == 1)
+                        progressLoading.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     searchResultsResponse.postValue(response.body()!!)
                 }
             } else {
@@ -39,7 +45,7 @@ class SearchRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getSearchResults(searchText,filterType,pageNo)
+                        getSearchResults(searchText, filterType, pageNo)
                     }
                 })
             }

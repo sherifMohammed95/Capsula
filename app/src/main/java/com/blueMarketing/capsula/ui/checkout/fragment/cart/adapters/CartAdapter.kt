@@ -31,17 +31,17 @@ class CartAdapter : BaseRecyclerSwipeAdapter<Product, CartAdapter.CartViewHolder
         val product = items!![position]
         holder.binding.swipeLayout.close(true)
 
-        if (!hasShowDemo) {
-            if (position == 0) {
-                CoroutineScope(Main).launch {
-                    delay(500)
-                    holder.binding.swipeLayout.open(true)
-                    delay(800)
-                    holder.binding.swipeLayout.close(true)
-                }
-            }
-            hasShowDemo = true
-        }
+//        if (!hasShowDemo) {
+//            if (position == 0) {
+//                CoroutineScope(Main).launch {
+//                    delay(800)
+//                    holder.binding.swipeLayout.open(true)
+//                    delay(800)
+//                    holder.binding.swipeLayout.close(true)
+//                }
+//            }
+//            hasShowDemo = true
+//        }
 
         holder.binding.plusImageView.setOnClickListener {
             onIconsClickListener?.onPlusClick(product)

@@ -23,6 +23,8 @@ class SearchViewModel(private val mRepository: SearchRepository) :
     var emptyCartMessage = SingleLiveEvent<Void>()
     var mProduct = Product()
 
+    var searchResultList = ArrayList<Product>()
+
     var searchText = ""
     var filterType = -1
     var selectedFilterTypePos = -1

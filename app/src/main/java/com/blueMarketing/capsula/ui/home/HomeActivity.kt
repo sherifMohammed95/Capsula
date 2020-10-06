@@ -19,7 +19,10 @@ import com.blueMarketing.capsula.ui.products.ProductsActivity
 import com.blueMarketing.capsula.ui.search.SearchActivity
 import com.blueMarketing.capsula.ui.stores.StoresActivity
 import com.blueMarketing.capsula.utils.Constants
+import io.reactivex.functions.Action
+import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.categories_recyclerView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -45,15 +48,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
         viewDataBinding?.navigator = this
+        paginateWithScrollView(home_scroll_view, Action {
+            mViewModel.pageNo++
+            mViewModel.loadStores(false)
+        })
     }
 
     override fun onResume() {
         super.onResume()
         mViewModel.updateToolbarData()
-        if (UserDataSource.getUser() != null){
+        if (UserDataSource.getUser() != null) {
             mViewModel.notificationsIconVisibility.set(true)
             mViewModel.loadUserData()
         }
+
+        mViewModel.pageNo = 1
         if (mViewModel.storesList.size > 0)
             mViewModel.loadStores(false)
         else
@@ -68,10 +77,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initRecyclerViews()
         subscribeToLiveData()
-
     }
 
     private fun subscribeToLiveData() {
@@ -85,8 +92,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
         mViewModel.storesResponse.observe(this, Observer {
             if (it.data?.storesList != null) {
-                mViewModel.storesList = it.data?.storesList!!
-                homeStoresAdapter.setData(it.data?.storesList!!)
+                mViewModel.storesList.addAll(it.data!!.storesList!!)
+                if (mViewModel.storesList.size == it.data!!.count)
+                    mViewModel.isLastPage = true
+                homeStoresAdapter.setData(mViewModel.storesList)
             }
         })
 

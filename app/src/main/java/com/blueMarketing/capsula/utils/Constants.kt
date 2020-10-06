@@ -6,7 +6,7 @@ object Constants {
     const val BEARER = "Bearer "
     const val TOKEN = "token"
     const val LANGUAGE = "language"
-    const val PER_PAGE = 70
+    const val PER_PAGE = 10
     const val FROM_WHERE = "from_where"
     const val USER_CART = "user_cart"
     const val UPDATE_CART_NUMBER = "update_cart_number"

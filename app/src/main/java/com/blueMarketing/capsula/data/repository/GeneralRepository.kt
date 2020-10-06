@@ -30,16 +30,21 @@ class GeneralRepository : BaseRepository() {
 
     suspend fun getStores(showLoading: Boolean, pageNo: Int) {
         try {
-            if (showLoading) {
-                withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = true
-                }
+            withContext(Dispatchers.Main) {
+                if (pageNo == 1)
+                    showLoadingLayout.value = showLoading
+                else
+                    isPagingLoadingEvent.value = true
             }
+
 
             val response = webService.getStores(pageNo, Constants.PER_PAGE)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    if (pageNo == 1)
+                        showLoadingLayout.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     storesResponse.postValue(response.body()!!)
                 }
             } else {
