@@ -34,7 +34,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
         initRepository(repo)
         this.homeDataResponse = repo.homeDataResponse
         this.storesResponse = repo.storesResponse
-//        loadHomeData()
+        loadStores(true)
         if (UserDataSource.getUser() != null)
             refreshDevice()
 

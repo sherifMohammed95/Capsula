@@ -69,7 +69,8 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         })
 
         mViewModel.saveCardResponse.observe(this, Observer {
-            showPopUp("", it, getString(android.R.string.ok), false)
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+//            showPopUp("", it, getString(android.R.string.ok), false)
         })
 
         mViewModel.logoutResponse.observe(this, Observer {
