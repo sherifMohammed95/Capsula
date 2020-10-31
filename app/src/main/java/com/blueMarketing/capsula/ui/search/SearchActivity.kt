@@ -51,6 +51,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        viewDataBinding?.noDataText = getString(R.string.no_results)
         paginateWithScrollView(search_scroll_view, Action {
             mViewModel.pageNo++
             mViewModel.getSearchResults()
@@ -73,6 +74,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     private fun subscribeToLiveData() {
         mViewModel.searchResultsResponse.observe(this, Observer {
             if (it.data != null) {
+
+                if (it.data!!.count > 0)
+                    mViewModel.hasData.set(true)
+                else
+                    mViewModel.hasData.set(false)
+
                 if (it.data!!.productsList != null) {
                     mViewModel.searchResultList.addAll(it.data!!.productsList!!)
                     if (mViewModel.searchResultList.size == it.data!!.count)

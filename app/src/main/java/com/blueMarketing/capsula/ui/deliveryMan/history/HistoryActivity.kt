@@ -15,7 +15,9 @@ import com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrd
 import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.MonthYearPickerDialog
 import com.google.gson.Gson
+import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_history.*
+import kotlinx.android.synthetic.main.activity_my_orders.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,12 +48,27 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding, HistoryViewModel>()
         viewDataBinding?.vm = mViewModel
         viewDataBinding?.navigator = this
         mViewModel.navigator = this
+        viewDataBinding?.noDataText = getString(R.string.no_history_found)
+        paginateWithScrollView(history_scroll_layout, Action {
+            mViewModel.pageNo++
+            mViewModel.loadHistory()
+        })
     }
 
     private fun subscribeToLiveData() {
         mViewModel.historyResponse.observe(this, Observer {
-            if (it.ordersList != null)
-                mAdapter.setData(it.ordersList!!)
+            if (it != null) {
+                if (it.count > 0)
+                    mViewModel.hasData.set(true)
+                else
+                    mViewModel.hasData.set(false)
+
+                if (!it.ordersList.isNullOrEmpty())
+                    mViewModel.ordersList.addAll(it.ordersList!!)
+                if (mViewModel.ordersList.size == it.count)
+                    mViewModel.isLastPage = true
+                mAdapter.setData(mViewModel.ordersList)
+            }
         })
     }
 
@@ -81,6 +98,9 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding, HistoryViewModel>()
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         mViewModel.currentMonth = month
         mViewModel.currentYear = year
+        mViewModel.ordersList = ArrayList()
+        mViewModel.pageNo = 1
+        mAdapter.setData(ArrayList())
         mViewModel.loadHistory()
     }
 }

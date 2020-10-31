@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="noDataText"
+            type="String" />
+
+        <variable
             name="vm"
             type="com.blueMarketing.capsula.ui.categories.CategoriesViewModel" />
     </data>
@@ -61,6 +65,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/no_data_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.hasData?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:noDataText="@{noDataText}" />
 
         <LinearLayout
             android:layout_width="match_parent"

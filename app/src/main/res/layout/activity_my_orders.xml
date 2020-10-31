@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="noDataText"
+            type="String" />
+
+        <variable
             name="vm"
             type="com.blueMarketing.capsula.ui.myOrders.MyOrdersViewModel" />
     </data>
@@ -19,7 +23,7 @@
         tools:context=".ui.myOrders.MyOrdersActivity">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_layout"
+            android:id="@+id/orders_scroll_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scrollbars="none"
@@ -63,6 +67,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/no_data_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.hasData?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:noDataText="@{noDataText}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dimen_15"
+            android:visibility="@{vm.isPagingLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/colorPrimary" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

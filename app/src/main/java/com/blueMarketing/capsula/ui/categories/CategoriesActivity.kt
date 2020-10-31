@@ -43,6 +43,7 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
+        viewDataBinding?.noDataText = getString(R.string.no_cat_found)
         paginateWithScrollView(categories_scroll_layout, Action {
             mViewModel.pageNo++
             mViewModel.getStoreCategories()
@@ -77,6 +78,12 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
 
         mViewModel.storeCategoriesResponse.observe(this, Observer {
             if (it.data != null) {
+
+                if(it.data!!.count > 0)
+                    mViewModel.hasData.set(true)
+                else
+                    mViewModel.hasData.set(false)
+
                 if (!it.data!!.categoriesList.isNullOrEmpty())
                     mViewModel.storeCategoriesList.addAll(it.data!!.categoriesList!!)
                 if (mViewModel.storeCategoriesList.size == it.data!!.count)

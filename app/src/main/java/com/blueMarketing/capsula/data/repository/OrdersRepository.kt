@@ -5,6 +5,7 @@ import com.blueMarketing.capsula.data.DeliveryOrder
 import com.blueMarketing.capsula.data.Order
 import com.blueMarketing.capsula.data.responses.OrderTrackingResponse
 import com.blueMarketing.capsula.data.responses.OrdersResponse
+import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.SingleLiveEvent
 import io.reactivex.functions.Action
 import kotlinx.coroutines.CoroutineScope
@@ -22,16 +23,25 @@ class OrdersRepository : BaseRepository() {
     val startDeliveryResponse = SingleLiveEvent<Void>()
     val finishDeliveryResponse = SingleLiveEvent<Void>()
 
-    suspend fun getOrders(showLoading: Boolean) {
+    suspend fun getOrders(pageNo: Int, showLoading: Boolean) {
         try {
             withContext(Dispatchers.Main) {
-                showLoadingLayout.value = showLoading
+                if (pageNo == 1)
+                    showLoadingLayout.value = showLoading
+                else
+                    isPagingLoadingEvent.value = true
             }
 
-            val response = webService.getOrders()
+            val response = webService.getOrders(
+                pageNo,
+                Constants.PER_PAGE
+            )
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    if (pageNo == 1)
+                        showLoadingLayout.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     ordersResponse.postValue(response.body()!!)
                 }
             } else {
@@ -43,7 +53,7 @@ class OrdersRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getOrders(showLoading)
+                        getOrders(pageNo, showLoading)
                     }
                 })
             }

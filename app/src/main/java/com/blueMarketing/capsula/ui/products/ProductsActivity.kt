@@ -98,6 +98,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
     override fun init() {
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
+        viewDataBinding?.noDataText = getString(R.string.no_products)
         mViewModel.navigator = this
         paginateWithScrollView(products_scroll_layout, Action {
             mViewModel.pageNo++
@@ -116,6 +117,12 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
     private fun subscribeToLiveData() {
         mViewModel.productsResponse.observe(this, Observer {
             if (it.data != null) {
+
+                if(it.data!!.count > 0)
+                    mViewModel.hasData.set(true)
+                else
+                    mViewModel.hasData.set(false)
+
                 if (!it.data!!.productsList.isNullOrEmpty())
                     mViewModel.productsList.addAll(it.data!!.productsList!!)
                 if (mViewModel.productsList.size == it.data!!.count)

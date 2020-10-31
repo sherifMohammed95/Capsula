@@ -53,10 +53,12 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     private fun subscribeToLiveData() {
         mViewModel.deliveryHomeDataResponse.observe(this, Observer {
             if (!it.ordersList.isNullOrEmpty()) {
+                mViewModel.hasData.set(true)
                 Constants.REFRESH_DELIVERY_ORDER = false
                 mAdapter.setData(it.ordersList!!)
                 getUserLocationAndScheduleService()
-            }
+            } else
+                mViewModel.hasData.set(false)
         })
     }
 
@@ -86,6 +88,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         viewDataBinding?.vm = mViewModel
         viewDataBinding?.navigator = this
         mViewModel.navigator = this
+        viewDataBinding?.noDataText = getString(R.string.no_orders_found)
     }
 
     override fun openMore() {

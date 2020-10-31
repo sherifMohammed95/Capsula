@@ -232,4 +232,12 @@
     <string name="ago">منذ</string>
     <string name="notifications">التنبيهات</string>
     <string name="you_don_t_have_any_notifications">ليس لديك تنبيهات</string>
+    <string name="order_price">سعر الطلب شامل ضريبة قيمة ضافة</string>
+    <string name="delivery_fees_are_not">رسوم التوصيل غير خاضعة لضريبة القيمة المضافة.</string>
+    <string name="and">و</string>
+    <string name="no_orders_found">لا توجد طلبات</string>
+    <string name="no_cat_found">لا توجد تصنيفات</string>
+    <string name="no_products">لا توجد منتجات</string>
+    <string name="no_results">لا توجد نتائج بحث</string>
+    <string name="no_history_found">لا يوجد سجل للطلبات</string>
 </resources>

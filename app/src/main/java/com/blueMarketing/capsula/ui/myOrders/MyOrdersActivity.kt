@@ -13,6 +13,8 @@ import com.blueMarketing.capsula.ui.myOrders.adapters.OrdersAdapter
 import com.blueMarketing.capsula.ui.orderDetails.OrderDetailsActivity
 import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
+import io.reactivex.functions.Action
+import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_my_orders.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,13 +55,26 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
     override fun init() {
         viewModel = mViewModel
         viewDataBinding?.vm = mViewModel
+        viewDataBinding?.noDataText = getString(R.string.no_orders_found)
+        paginateWithScrollView(orders_scroll_layout, Action {
+            mViewModel.pageNo++
+            mViewModel.loadOrders(false)
+        })
     }
 
     private fun subscribeToLiveData() {
         mViewModel.ordersResponse.observe(this, Observer {
-            if (!it.data?.orderList.isNullOrEmpty()) {
-                mViewModel.orderList = it.data?.orderList!!
-                mAdapter.setData(it.data?.orderList!!)
+            if (it.data != null) {
+                if(it.data!!.count > 0)
+                    mViewModel.hasData.set(true)
+                else
+                    mViewModel.hasData.set(false)
+
+                if (!it.data!!.orderList.isNullOrEmpty())
+                    mViewModel.orderList.addAll(it.data!!.orderList!!)
+                if (mViewModel.orderList.size == it.data!!.count)
+                    mViewModel.isLastPage = true
+                mAdapter.setData(mViewModel.orderList)
             }
         })
     }

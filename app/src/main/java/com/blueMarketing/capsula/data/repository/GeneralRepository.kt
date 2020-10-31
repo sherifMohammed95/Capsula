@@ -120,12 +120,18 @@ class GeneralRepository : BaseRepository() {
     suspend fun getHistory(pageNo: Int, date: String) {
         try {
             withContext(Dispatchers.Main) {
-                progressLoading.value = true
+                if (pageNo == 1)
+                    progressLoading.value = true
+                else
+                    isPagingLoadingEvent.value = true
             }
             val response = webService.getHistory(pageNo, Constants.PER_PAGE, date)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    progressLoading.value = false
+                    if (pageNo == 1)
+                        progressLoading.value = false
+                    else
+                        isPagingLoadingEvent.value = false
                     historyResponse.postValue(response.body()?.data)
                 }
             } else {

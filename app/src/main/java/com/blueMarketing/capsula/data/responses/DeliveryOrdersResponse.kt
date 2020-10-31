@@ -8,4 +8,6 @@ class DeliveryOrdersResponse {
     @SerializedName("list")
     var ordersList: ArrayList<DeliveryOrder>? = null
 
+    var count = 0
+
 }

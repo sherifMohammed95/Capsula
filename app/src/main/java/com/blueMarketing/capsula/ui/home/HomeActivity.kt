@@ -62,12 +62,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
             mViewModel.loadUserData()
         }
 
-//        mViewModel.pageNo = 1
-//        mViewModel.storesList = ArrayList()
-//        if (mViewModel.storesList.size > 0)
-//            mViewModel.loadStores(false)
-//        else
-//            mViewModel.loadStores(true)
+        if (Constants.REFRESH_HOME) {
+            Constants.REFRESH_HOME = false
+            mViewModel.pageNo = 1
+            mViewModel.storesList = ArrayList()
+            if (mViewModel.storesList.size > 0)
+                mViewModel.loadStores(false)
+            else
+                mViewModel.loadStores(true)
+        }
     }
 
     private fun initRecyclerViews() {

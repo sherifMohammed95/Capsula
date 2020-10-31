@@ -2,6 +2,8 @@ package com.blueMarketing.capsula.ui.deliveryMan.history
 
 import androidx.lifecycle.viewModelScope
 import com.blueMarketing.base.BaseViewModel
+import com.blueMarketing.capsula.data.Category
+import com.blueMarketing.capsula.data.DeliveryOrder
 import com.blueMarketing.capsula.data.repository.GeneralRepository
 import com.blueMarketing.capsula.data.responses.DeliveryOrdersResponse
 import com.blueMarketing.capsula.utils.SingleLiveEvent
@@ -15,6 +17,10 @@ class HistoryViewModel (private val repo:GeneralRepository): BaseViewModel<Histo
     var currentYear = 0
     var historyResponse = SingleLiveEvent<DeliveryOrdersResponse>()
 
+    var pageNo = 1
+
+    var ordersList = ArrayList<DeliveryOrder>()
+
     init {
         initRepository(repo)
         this.historyResponse = repo.historyResponse
@@ -26,7 +32,7 @@ class HistoryViewModel (private val repo:GeneralRepository): BaseViewModel<Histo
 
     fun loadHistory() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.getHistory(1, "$currentYear/$currentMonth")
+            repo.getHistory(pageNo, "$currentYear/$currentMonth")
         }
     }
 }

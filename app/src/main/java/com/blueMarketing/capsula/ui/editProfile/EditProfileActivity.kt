@@ -61,8 +61,10 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding, EditProfile
     private fun subscribeToLiveData() {
 
         mViewModel.updateDefaultAddressResponse.observe(this, Observer {
+            Constants.REFRESH_HOME = true
             mViewModel.setSelectedUserAddressPos()
             mViewModel.userAddress.set(mViewModel.selectedAddress.text)
+
         })
 
         mViewModel.updateUserProfileResponse.observe(this, Observer {

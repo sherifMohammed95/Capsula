@@ -20,6 +20,7 @@ abstract class BaseViewModel<N> : ViewModel() {
     var isPagingLoadingEvent:SingleLiveEvent<Boolean> = SingleLiveEvent()
     val isLoading = ObservableBoolean(false)
     val isPagingLoading = ObservableBoolean(false)
+    val hasData = ObservableBoolean(true)
     var progressLoading: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var showLoadingLayout: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var errorMessage: SingleLiveEvent<String> = SingleLiveEvent()

@@ -19,6 +19,7 @@ object Constants {
     const val GPS_CODE = 105
 
     var REFRESH_DELIVERY_ORDER = false
+    var REFRESH_HOME = false
 
     const val ORDER_IS_PROCESSING = 5
 
@@ -46,7 +47,9 @@ object Constants {
     /**
      * APIs Constants
      * **/
-    const val BASE_URL = "http://capsulasa-001-site2.itempurl.com/api/"
+
+//    const val BASE_URL = "http://capsulasa-001-site2.itempurl.com/api/"
+    const val BASE_URL = "https://capsula.cc/api/"
     const val CONTENT_TYPE = "application/json"
 
 

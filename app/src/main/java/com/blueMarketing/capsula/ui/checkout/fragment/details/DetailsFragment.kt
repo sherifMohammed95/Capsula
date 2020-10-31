@@ -133,7 +133,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
             paymentBrands.add("MADA")
 
         val checkoutSettings =
-            CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
+            CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.LIVE);
 
         val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
         if(currentLang.contentEquals("en"))

@@ -22,8 +22,8 @@
             android:layout_marginEnd="@dimen/dimen_10"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/dimen_20"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -58,6 +58,7 @@
 
 
                     <TextView
+                        style="@style/medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_10"
@@ -65,7 +66,7 @@
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:layout_marginBottom="@dimen/dimen_10"
                         android:text="@{store.distanceText}"
-                        android:textColor="@color/colorPrice"
+                        android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_12"
                         android:visibility="@{store.distance>0 ? View.VISIBLE:View.GONE}"
                         app:layout_constraintStart_toStartOf="parent"

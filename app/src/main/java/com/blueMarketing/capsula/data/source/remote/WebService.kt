@@ -185,7 +185,8 @@ interface WebService {
     suspend fun submitCheckoutDetails(@Body request: CheckoutDetailsRequest): Response<BaseResponse<String>>
 
     @GET("Order/GetOrders")
-    suspend fun getOrders(): Response<BaseResponse<OrdersResponse>>
+    suspend fun getOrders(  @Query("PageNumber") pageNo: Int,
+                            @Query("PageSize") pageSize: Int): Response<BaseResponse<OrdersResponse>>
 
     @GET("Order/GetOrderDetails")
     suspend fun getOrderDetails(@Query("orderId") orderId: Int): Response<BaseResponse<Order>>

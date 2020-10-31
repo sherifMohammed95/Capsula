@@ -57,7 +57,7 @@
     <string name="see_all"><u>See All</u></string>
     <string name="brands">Brands</string>
     <string name="stores">Stores</string>
-    <string name="rsd">RSD</string>
+    <string name="rsd">SAR</string>
     <string name="search">Search</string>
     <string name="clear">Clear</string>
     <string name="apply">Apply</string>
@@ -229,5 +229,13 @@
     <string name="ago">ago</string>
     <string name="notifications">Notifications</string>
     <string name="you_don_t_have_any_notifications">You don’t have any\nnotifications</string>
+    <string name="order_price">The order price includes VAT</string>
+    <string name="delivery_fees_are_not">Delivery fees are not subject to VAT.</string>
+    <string name="and">and</string>
+    <string name="no_orders_found">No Orders Found</string>
+    <string name="no_cat_found">No Categories Found</string>
+    <string name="no_products">No Products Found</string>
+    <string name="no_results">No Search Results</string>
+    <string name="no_history_found">No History Found</string>
 
 </resources>

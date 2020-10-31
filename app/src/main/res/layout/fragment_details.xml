@@ -363,14 +363,14 @@
                             android:id="@+id/vat_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_5"
                             android:text="@{payment.vatCostText}"
                             android:textColor="@color/colorLabelText50"
-                            android:layout_marginStart="@dimen/dimen_5"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="@+id/vat_label"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/vat_label"
                             app:layout_constraintStart_toEndOf="@+id/vat_rsd"
+                            app:layout_constraintTop_toTopOf="@+id/vat_label"
                             tools:text="12.0" />
 
                         <TextView
@@ -456,6 +456,28 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:textAlignment="viewStart"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginHorizontal="@dimen/dimen_22"
+                    android:text="@{payment.vatPercentageText}"
+                    android:textColor="@color/colorLabelText" />
+
+                <TextView
+                    style="@style/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:textAlignment="viewStart"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginHorizontal="@dimen/dimen_22"
+                    android:text="@string/delivery_fees_are_not"
+                    android:textColor="@color/colorLabelText" />
 
                 <Button
                     android:id="@+id/next_btn"

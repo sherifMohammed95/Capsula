@@ -14,6 +14,7 @@ class MyOrdersViewModel(val repo: OrdersRepository) : BaseViewModel<MyOrdersNavi
 
     var ordersResponse = SingleLiveEvent<BaseResponse<OrdersResponse>>()
     var orderList = ArrayList<Order>()
+    var pageNo = 1
 
     init {
         initRepository(repo)
@@ -21,9 +22,9 @@ class MyOrdersViewModel(val repo: OrdersRepository) : BaseViewModel<MyOrdersNavi
         loadOrders(true)
     }
 
-    fun loadOrders(showLoading:Boolean) {
+    fun loadOrders(showLoading: Boolean) {
         viewModelScope.launch(IO) {
-            repo.getOrders(showLoading)
+            repo.getOrders(pageNo, showLoading)
         }
     }
 }
