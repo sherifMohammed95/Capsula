@@ -33,6 +33,7 @@ class PaymentDetailsResponse {
     fun getVatPercentageText(): String {
         return Domain.application.getString(R.string.order_price) + " " +
                 round(vatPercentage * 100) / 100 + "% " +
+                Domain.application.getString(R.string.vat) + " "+
                 Domain.application.getString(R.string.and) + " " +
                 round(vatCost * 100) / 100 + " " + Domain.application.getString(R.string.rsd)
     }

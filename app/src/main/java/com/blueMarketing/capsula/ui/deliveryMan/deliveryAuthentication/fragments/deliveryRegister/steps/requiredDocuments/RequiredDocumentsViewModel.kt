@@ -96,20 +96,20 @@ class RequiredDocumentsViewModel(val repo: AuthenticationRepository) :
             nationalIDError.set(true)
         }
 
-        if (carFrontBase64.isEmpty()) {
-            isValid = false
-            carFrontError.set(true)
-        }
-
-        if (carBackBase64.isEmpty()) {
-            isValid = false
-            carBackError.set(true)
-        }
-
-        if (carRegistrationBase64.isEmpty()) {
-            isValid = false
-            carRegistrationError.set(true)
-        }
+//        if (carFrontBase64.isEmpty()) {
+//            isValid = false
+//            carFrontError.set(true)
+//        }
+//
+//        if (carBackBase64.isEmpty()) {
+//            isValid = false
+//            carBackError.set(true)
+//        }
+//
+//        if (carRegistrationBase64.isEmpty()) {
+//            isValid = false
+//            carRegistrationError.set(true)
+//        }
 
         if (!termsAndConditions.get()) {
             isValid = false

@@ -89,9 +89,9 @@
     <string name="add_your_payment_method">اضف طريقة الدفع</string>
     <string name="do_you_have_a_promo_code"><u>هل لديك رمز ترويجى؟</u></string>
     <string name="cost_details">تفاصيل الدفع</string>
-    <string name="items_cost">تكلفة المنتج</string>
+    <string name="items_cost">سعر الطلب</string>
     <string name="estimated_total">المجموع الكلي</string>
-    <string name="delivery_cost">تكلفة التوصيل</string>
+    <string name="delivery_cost">رسوم التوصيل</string>
     <string name="permission_denied_permanently">تم رفض السماح للتطبيق باستخدام تطبيقات اخرى، للسماح الرجاء الذهاب للاعدادات</string>
     <string name="permission_denied">تم رفض السماح للتطبيق باستخدام تطبيقات اخرى</string>
     <string name="gallery">المعرض</string>
@@ -153,7 +153,7 @@
     <string name="full_address">عنوانك</string>
     <string name="please_pick_a_personal_photo">فضلا ادخل صورتك الشخصية</string>
     <string name="car_details">معلومات السيارة</string>
-    <string name="car_brand">الشركة المصنعة للسيارة</string>
+    <string name="car_brand">الشركة المصنعة</string>
     <string name="please_choose_car_brand">فضلا ادخل الشركة المصنعة للسيارة</string>
     <string name="car_model">موديل السيارة</string>
     <string name="please_choose_car_model">فضلا ادخل موديل السيارة</string>
@@ -232,9 +232,9 @@
     <string name="ago">منذ</string>
     <string name="notifications">التنبيهات</string>
     <string name="you_don_t_have_any_notifications">ليس لديك تنبيهات</string>
-    <string name="order_price">سعر الطلب شامل ضريبة قيمة ضافة</string>
+    <string name="order_price">سعر الطلب شامل</string>
     <string name="delivery_fees_are_not">رسوم التوصيل غير خاضعة لضريبة القيمة المضافة.</string>
-    <string name="and">و</string>
+    <string name="and">بقيمة</string>
     <string name="no_orders_found">لا توجد طلبات</string>
     <string name="no_cat_found">لا توجد تصنيفات</string>
     <string name="no_products">لا توجد منتجات</string>

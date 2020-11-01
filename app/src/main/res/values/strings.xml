@@ -88,9 +88,9 @@
     <string name="add_your_payment_method">Add your payment method</string>
     <string name="do_you_have_a_promo_code"><u>Do you have a promo code ?</u></string>
     <string name="cost_details">Payment Details</string>
-    <string name="items_cost">Items Cost</string>
+    <string name="items_cost">Order Price</string>
     <string name="estimated_total">Estimated Total</string>
-    <string name="delivery_cost">Delivery Cost</string>
+    <string name="delivery_cost">Delivery Fees</string>
     <string name="permission_denied_permanently">You refused to allow the application to use some applications, to reset go to settings</string>
     <string name="permission_denied">You refused to allow the app to use some apps</string>
     <string name="gallery">Gallery</string>
@@ -129,7 +129,7 @@
     <string name="track_order"><u>Track Order</u></string>
     <string name="documents">Documents</string>
     <string name="prescription">Prescription</string>
-    <string name="products_details">Products Details</string>
+    <string name="products_details">Item Details</string>
     <string name="cancel_order">Cancel Order</string>
     <string name="reorder">Reorder</string>
     <string name="vat">VAT</string>
@@ -229,9 +229,9 @@
     <string name="ago">ago</string>
     <string name="notifications">Notifications</string>
     <string name="you_don_t_have_any_notifications">You don’t have any\nnotifications</string>
-    <string name="order_price">The order price includes VAT</string>
+    <string name="order_price">The order price includes</string>
     <string name="delivery_fees_are_not">Delivery fees are not subject to VAT.</string>
-    <string name="and">and</string>
+    <string name="and">of</string>
     <string name="no_orders_found">No Orders Found</string>
     <string name="no_cat_found">No Categories Found</string>
     <string name="no_products">No Products Found</string>
