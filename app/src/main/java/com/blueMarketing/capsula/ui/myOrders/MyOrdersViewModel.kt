@@ -15,6 +15,7 @@ class MyOrdersViewModel(val repo: OrdersRepository) : BaseViewModel<MyOrdersNavi
     var ordersResponse = SingleLiveEvent<BaseResponse<OrdersResponse>>()
     var orderList = ArrayList<Order>()
     var pageNo = 1
+    var currentOrderPos= -1
 
     init {
         initRepository(repo)

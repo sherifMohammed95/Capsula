@@ -7,6 +7,7 @@ import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.base.BaseRecyclerAdapter
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.Order
+import com.blueMarketing.capsula.data.OrderStatus
 import com.blueMarketing.capsula.data.repository.OrdersRepository
 import com.blueMarketing.capsula.databinding.ActivityMyOrdersBinding
 import com.blueMarketing.capsula.ui.myOrders.adapters.OrdersAdapter
@@ -44,8 +45,15 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
 
     override fun onResume() {
         super.onResume()
-        if (!mViewModel.orderList.isNullOrEmpty())
-            mViewModel.loadOrders(false)
+        if (Constants.REFRESH_CUSTOMER_ORDERS) {
+            Constants.REFRESH_CUSTOMER_ORDERS = false
+            if (mViewModel.currentOrderPos != -1) {
+                mViewModel.orderList[mViewModel.currentOrderPos].orderStatusId =
+                    OrderStatus.CANCELLED
+                mAdapter.setData(mViewModel.orderList)
+                mViewModel.currentOrderPos = -1
+            }
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -65,7 +73,7 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
     private fun subscribeToLiveData() {
         mViewModel.ordersResponse.observe(this, Observer {
             if (it.data != null) {
-                if(it.data!!.count > 0)
+                if (it.data!!.count > 0)
                     mViewModel.hasData.set(true)
                 else
                     mViewModel.hasData.set(false)
@@ -85,6 +93,7 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
     }
 
     override fun onItemClick(pos: Int, item: Order) {
+        mViewModel.currentOrderPos = pos
         val intent = Intent(this, OrderDetailsActivity::class.java)
         intent.putExtra(Constants.EXTRA_ORDER, Gson().toJson(item))
         startActivity(intent)

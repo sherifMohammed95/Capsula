@@ -67,6 +67,7 @@ class OrderDetailsActivity : BaseActivity<ActivityOrderDetailsBinding, OrderDeta
         })
 
         mViewModel.cancelOrderResponse.observe(this, Observer {
+            Constants.REFRESH_CUSTOMER_ORDERS = true
             showPopUp(
                 it, android.R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface, i ->

@@ -80,6 +80,7 @@
                         android:ellipsize="end"
                         android:textAlignment="viewStart"
                         android:maxLines="2"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:text="@{product.productName}"
                         android:textColor="@color/colorLabelText"
                         android:textSize="@dimen/font_12"

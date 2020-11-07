@@ -20,6 +20,7 @@ object Constants {
 
     var REFRESH_DELIVERY_ORDER = false
     var REFRESH_HOME = false
+    var REFRESH_CUSTOMER_ORDERS = false
 
     const val ORDER_IS_PROCESSING = 5
 

@@ -63,13 +63,13 @@ class Order {
     }
 
     fun getOrderStatus(): String {
-        return when {
-            orderStatusId?.value == PENDING.value -> Domain.application.getString(R.string.pending)
-            orderStatusId?.value == CANCELLED.value -> Domain.application.getString(R.string.cancelled)
-            orderStatusId?.value == REJECTED.value -> Domain.application.getString(R.string.rejected)
-            orderStatusId?.value == APPROVED.value -> Domain.application.getString(R.string.approved)
-            orderStatusId?.value == SHIPPED.value -> Domain.application.getString(R.string.shipped)
-            orderStatusId?.value == DELIVERED.value -> Domain.application.getString(R.string.delivered)
+        return when (orderStatusId?.value) {
+            PENDING.value -> Domain.application.getString(R.string.pending)
+            CANCELLED.value -> Domain.application.getString(R.string.cancelled)
+            REJECTED.value -> Domain.application.getString(R.string.rejected)
+            APPROVED.value -> Domain.application.getString(R.string.approved)
+            SHIPPED.value -> Domain.application.getString(R.string.shipped)
+            DELIVERED.value -> Domain.application.getString(R.string.delivered)
             else -> ""
         }
     }

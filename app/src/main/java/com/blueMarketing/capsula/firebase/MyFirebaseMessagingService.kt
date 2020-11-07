@@ -45,7 +45,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         if (preferencesGateway.load(NOTIFICATIONS_IS_ENABLED, true)) {
-            if(intercomPushClient.isIntercomPush(remoteMessage.data)) {
+            if(intercomPushClient.isIntercomPush(remoteMessage.data) &&
+                UserDataSource.getUser() != null) {
                 popUpNotification(remoteMessage.data)
             } else {
                 val type = remoteMessage.data["type"]?.toInt()
