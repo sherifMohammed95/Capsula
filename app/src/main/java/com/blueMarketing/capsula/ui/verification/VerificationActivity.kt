@@ -75,9 +75,10 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
         finish()
     }
 
-    override fun openResetPassword() {
+    override fun openResetPassword(idToken: String?) {
         val intent = Intent(this, ResetPasswordActivity::class.java)
         intent.putExtra(Constants.EXTRA_PHONE, mViewModel.phoneNumber)
+        intent.putExtra(Constants.EXTRA_AUTH_TOKEN, idToken)
         startActivity(intent)
         finish()
     }
@@ -119,7 +120,7 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
 
     override fun onFCMVerifiedSuccess(idToken: String?) {
         mViewModel.setIsLoading(false)
-        takeAction()
+        takeAction(idToken)
     }
 
     private fun getIntentsData() {
@@ -142,97 +143,12 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
         mViewModel.fromWhere = intent.getIntExtra(Constants.FROM_WHERE, -1)
     }
 
-//    private fun verifyPhoneNumberWithCode() {
-//        val credential = PhoneAuthProvider
-//            .getCredential(mViewModel.verificationId!!, mViewModel.enteredCode)
-//        mViewModel.setIsLoading(true)
-//        signInWithPhoneAuthCredential(credential)
-//    }
-//
-//    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-//        mAuth?.signInWithCredential(credential)?.addOnCompleteListener(this) { task ->
-//            mViewModel.setIsLoading(false)
-//            if (task.isSuccessful) {
-//                mAuth?.signOut()
-//                takeAction()
-//            } else {
-//                mViewModel.isValidVerify.set(false)
-//            }
-//        }
-//    }
 
-//    private fun sendSms() {
-//        mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                signInWithPhoneAuthCredential(phoneAuthCredential)
-//            }
-//
-//            override fun onVerificationFailed(e: FirebaseException) {
-//                mViewModel.setIsLoading(false)
-//                showPopUp("", e.message!!, getString(android.R.string.ok), false)
-//            }
-//
-//            override fun onCodeSent(
-//                id: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken
-//            ) {
-//                super.onCodeSent(id, forceResendingToken)
-//                mViewModel.setIsLoading(false)
-//                mViewModel.verificationId = id
-//                mViewModel.mResendToken = forceResendingToken
-//            }
-//        }
-//
-//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//            "+966" + mViewModel.phoneNumber,
-//            60,
-//            TimeUnit.SECONDS,
-//            this,
-//            mCallbacks as PhoneAuthProvider.OnVerificationStateChangedCallbacks
-//        )
-//
-//        mViewModel.setIsLoading(true)
-//    }
-//
-//    private fun reSendSms() {
-//        mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                mViewModel.setIsLoading(false)
-//            }
-//
-//            override fun onVerificationFailed(e: FirebaseException) {
-//                mViewModel.setIsLoading(false)
-//                showPopUp("", e.message!!, getString(android.R.string.ok), false)
-//            }
-//
-//            override fun onCodeSent(
-//                id: String,
-//                forceResendingToken: PhoneAuthProvider.ForceResendingToken
-//            ) {
-//                super.onCodeSent(id, forceResendingToken)
-//                mViewModel.setIsLoading(false)
-//                mViewModel.verificationId = id
-//                mViewModel.mResendToken = forceResendingToken
-//                //                showTimer();
-//            }
-//        }
-//
-//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//            "+966" + mViewModel.phoneNumber,
-//            60,
-//            TimeUnit.SECONDS,
-//            this,
-//            mCallbacks as PhoneAuthProvider.OnVerificationStateChangedCallbacks,
-//            mViewModel.mResendToken
-//        )
-//
-//        mViewModel.setIsLoading(true)
-//    }
-
-    private fun takeAction() {
-        when {
-            mViewModel.fromWhere == Constants.REGISTER_SCREEN -> mViewModel.register()
-            mViewModel.fromWhere == Constants.COMPLETE_PROFILE_SCREEN -> mViewModel.completeProfile()
-            mViewModel.fromWhere == Constants.FORGET_PASSWORD_SCREEN -> openResetPassword()
+    private fun takeAction(idToken: String?) {
+        when (mViewModel.fromWhere) {
+            Constants.REGISTER_SCREEN -> mViewModel.register()
+            Constants.COMPLETE_PROFILE_SCREEN -> mViewModel.completeProfile()
+            Constants.FORGET_PASSWORD_SCREEN -> openResetPassword(idToken)
         }
     }
 }

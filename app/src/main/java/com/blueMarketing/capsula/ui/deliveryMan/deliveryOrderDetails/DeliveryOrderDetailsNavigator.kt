@@ -5,4 +5,8 @@ interface DeliveryOrderDetailsNavigator {
     fun backAction()
 
     fun refreshAction()
+
+    fun openStoreLocation()
+
+    fun openCustomerLocation()
 }

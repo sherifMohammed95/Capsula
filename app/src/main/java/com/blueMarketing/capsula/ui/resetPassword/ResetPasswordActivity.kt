@@ -46,8 +46,10 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
                 false
             )
         )
-        if (!mViewModel.fromChangePassword.get())
+        if (!mViewModel.fromChangePassword.get()){
             mViewModel.phoneNumber = intent.getStringExtra(Constants.EXTRA_PHONE)!!
+            mViewModel.authToken = intent.getStringExtra(Constants.EXTRA_AUTH_TOKEN)!!
+        }
 
     }
 

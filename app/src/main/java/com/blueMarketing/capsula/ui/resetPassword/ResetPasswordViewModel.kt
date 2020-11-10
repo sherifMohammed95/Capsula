@@ -32,6 +32,7 @@ class ResetPasswordViewModel(private val authRepo: AuthenticationRepository) :
     var fromChangePassword = ObservableBoolean(false)
 
     var phoneNumber = ""
+    var authToken = ""
     var resetPasswordResponse = SingleLiveEvent<Void>()
     var changePasswordResponse = SingleLiveEvent<String>()
 
@@ -107,6 +108,7 @@ class ResetPasswordViewModel(private val authRepo: AuthenticationRepository) :
             val request = ResetPasswordRequest()
             request.newPassword = passwordText.get()!!
             request.phoneNumber = phoneNumber
+            request.token = authToken
             authRepo.resetPassword(request)
         }
     }

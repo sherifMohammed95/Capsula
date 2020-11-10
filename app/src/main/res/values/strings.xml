@@ -237,5 +237,6 @@
     <string name="no_products">No Products Found</string>
     <string name="no_results">No Search Results</string>
     <string name="no_history_found">No History Found</string>
+    <string name="reach_out">You can\'t reach out to the customer location before starting the delivery</string>
 
 </resources>

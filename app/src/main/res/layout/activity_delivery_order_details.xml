@@ -69,17 +69,18 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_marginEnd="@dimen/dimen_12"
                     android:minHeight="@dimen/dimen_70"
+                    android:onClick="@{()->navigator.openCustomerLocation()}"
                     app:cardBackgroundColor="@android:color/white"
                     app:cardCornerRadius="@dimen/dimen_15"
                     app:cardElevation="3dp"
                     app:cardUseCompatPadding="true">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dimen_16"
                             android:layout_marginTop="@dimen/dimen_10"
@@ -92,12 +93,80 @@
                             android:textColor="@color/colorLabelText"
                             android:textSize="@dimen/font_14"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/delivery_arrow_imageView"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="Jeddah" />
 
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/delivery_arrow_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_22"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:layout_marginEnd="@dimen/dimen_22"
+                    android:text="@string/store_address"
+                    android:textColor="@color/colorLabelText"
+                    android:textSize="@dimen/font_14" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_12"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_12"
+                    android:minHeight="@dimen/dimen_70"
+                    android:onClick="@{()->navigator.openStoreLocation()}"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="@dimen/dimen_15"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/dimen_16"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:gravity="center_vertical|start"
+                            android:paddingVertical="@dimen/dimen_10"
+                            android:text="@{order.storeAddress}"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorLabelText"
+                            android:textSize="@dimen/font_14"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/address_arrow_imageView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Jeddah" />
+
+                        <ImageView
+                            android:id="@+id/address_arrow_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_16"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 

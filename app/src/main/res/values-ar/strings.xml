@@ -240,4 +240,5 @@
     <string name="no_products">لا توجد منتجات</string>
     <string name="no_results">لا توجد نتائج بحث</string>
     <string name="no_history_found">لا يوجد سجل للطلبات</string>
+    <string name="reach_out">لا يمكنك الوصول إلى موقع العميل قبل بدء التسليم</string>
 </resources>

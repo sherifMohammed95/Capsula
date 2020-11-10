@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{vm.isEditMode?View.VISIBLE:View.GONE}"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
 
                     <ImageView
                         android:id="@+id/avatar_imageView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_photo"
                         android:tint="@android:color/white"

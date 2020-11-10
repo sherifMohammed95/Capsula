@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.capsula.R
+import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityViewProfileBinding
 import com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
 import com.blueMarketing.capsula.ui.deliveryMan.viewProfile.adapters.ViewPagerAdapter
@@ -42,6 +43,7 @@ class ViewProfileActivity : BaseActivity<ActivityViewProfileBinding, ViewProfile
         viewDataBinding?.navigator = this
         mViewModel.navigator = this
         viewDataBinding?.viewPager?.adapter = mAdapter
+        viewDataBinding?.user = UserDataSource.getDeliveryUser()
     }
 
     override fun backAction() {

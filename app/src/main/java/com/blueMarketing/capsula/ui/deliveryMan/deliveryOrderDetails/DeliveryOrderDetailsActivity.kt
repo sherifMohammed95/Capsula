@@ -8,6 +8,7 @@ import com.blueMarketing.capsula.data.DeliveryOrder
 import com.blueMarketing.capsula.databinding.ActivityDeliveryOrderDetailsBinding
 import com.blueMarketing.capsula.ui.orderDetails.adapters.ProductsDetailsAdapter
 import com.blueMarketing.capsula.utils.Constants
+import com.blueMarketing.capsula.utils.Utils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_delivery_order_details.*
 import org.koin.android.ext.android.inject
@@ -45,6 +46,7 @@ class DeliveryOrderDetailsActivity :
 
         mViewModel.startDeliveryResponse.observe(this, Observer {
             Constants.REFRESH_DELIVERY_ORDER = true
+            openStoreLocation()
             backAction()
         })
 
@@ -80,5 +82,27 @@ class DeliveryOrderDetailsActivity :
 
     override fun refreshAction() {
         mViewModel.loadOrderDetails()
+    }
+
+    override fun openStoreLocation() {
+        Utils.navigateToLocation(
+            this, mViewModel.mOrder.storeLat.toString(),
+            mViewModel.mOrder.storeLong.toString()
+        )
+    }
+
+    override fun openCustomerLocation() {
+        if (mViewModel.mOrder.statusId == Constants.ORDER_IS_PROCESSING)
+            Utils.navigateToLocation(
+                this, mViewModel.mOrder.customerLat.toString(),
+                mViewModel.mOrder.customerLong.toString()
+            )
+        else {
+            showPopUp("",
+                getString(R.string.reach_out),
+                getString(android.R.string.ok),
+                false
+            )
+        }
     }
 }

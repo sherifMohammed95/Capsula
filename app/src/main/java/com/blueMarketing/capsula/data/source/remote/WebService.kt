@@ -41,8 +41,8 @@ interface WebService {
     suspend fun completeProfile(@Body request: CompleteProfileRequest):
             Response<BaseResponse<AuthenticationResponse>>
 
-    @GET("UserProfile/CheckUserExist/{phone}")
-    suspend fun checkUserExist(@Path("phone") phone: String): Response<BaseResponse<Any>>
+    @GET("UserProfile/CheckUserExist/")
+    suspend fun checkUserExist(@Query("PhoneNumber") phone: String): Response<BaseResponse<Any>>
 
     @POST("UserProfile/ForgetPassword")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>

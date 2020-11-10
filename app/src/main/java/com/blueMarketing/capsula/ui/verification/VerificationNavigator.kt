@@ -4,5 +4,5 @@ interface VerificationNavigator {
 
     fun openAddAddress()
 
-    fun openResetPassword()
+    fun openResetPassword(idToken: String?)
 }

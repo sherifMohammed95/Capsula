@@ -33,6 +33,7 @@ object Constants {
     const val EXTRA_REGISTER_REQUEST = "register_request"
     const val EXTRA_COMPLETE_PROFILE_REQUEST = "complete_profile_request"
     const val EXTRA_PHONE = "phone"
+    const val EXTRA_AUTH_TOKEN = "auth_token"
     const val EXTRA_STORE_ID = "store_id"
     const val EXTRA_BRAND_ID = "brand_id"
     const val EXTRA_SUB_CATEGORY = "sub_category"

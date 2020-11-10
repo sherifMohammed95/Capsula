@@ -185,30 +185,30 @@
                                 android:textSize="@dimen/font_16" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_10">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="@dimen/dimen_10">-->
 
-                            <TextView
-                                style="@style/medium"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/dimen_10"
-                                android:layout_weight="1"
-                                android:text="@string/cash_orders_fee"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/colorLabelText"
-                                android:textSize="@dimen/font_16" />
+<!--                            <TextView-->
+<!--                                style="@style/medium"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginEnd="@dimen/dimen_10"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="@string/cash_orders_fee"-->
+<!--                                android:textAlignment="viewStart"-->
+<!--                                android:textColor="@color/colorLabelText"-->
+<!--                                android:textSize="@dimen/font_16" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{wallet.cashOrdersCostText}"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/colorLabelText"
-                                android:textSize="@dimen/font_16" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="@{wallet.cashOrdersCostText}"-->
+<!--                                android:textAlignment="viewStart"-->
+<!--                                android:textColor="@color/colorLabelText"-->
+<!--                                android:textSize="@dimen/font_16" />-->
+<!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
