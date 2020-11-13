@@ -38,7 +38,7 @@ open class BaseRepository : KoinComponent {
         showLoadingLayout.value = false
         isPagingLoadingEvent.value = false
         when (code) {
-            422, 404, 403, 406, 400, 401 -> try {
+            422, 403, 406, 400, 401 -> try {
                 try {
                     val jsonObject = JSONObject(errorMessage)
                     apiErrorMessage.value = jsonObject.getString("errors")
@@ -50,7 +50,7 @@ open class BaseRepository : KoinComponent {
             } catch (e1: IOException) {
                 e1.printStackTrace()
             }
-            500, 503, 405 -> {
+            500, 503, 405, 404 -> {
                 apiErrorMessage.value = (Domain.application.getString(R.string.went_wrong))
             }
         }

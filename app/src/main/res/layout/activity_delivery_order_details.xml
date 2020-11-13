@@ -39,7 +39,8 @@
                 <include
                     android:id="@+id/toolbar"
                     layout="@layout/delivery_order_details_toolbar"
-                    app:navigator="@{navigator}" />
+                    app:navigator="@{navigator}"
+                    app:vm="@{vm}" />
 
                 <TextView
                     style="@style/bold"
@@ -104,6 +105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/dimen_16"
                             android:src="@drawable/ic_arrow"
+                            android:visibility="@{vm.fromHistory?View.GONE:View.VISIBLE}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -162,6 +164,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/dimen_16"
                             android:src="@drawable/ic_arrow"
+                            android:visibility="@{vm.fromHistory?View.GONE:View.VISIBLE}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

@@ -85,24 +85,29 @@ class DeliveryOrderDetailsActivity :
     }
 
     override fun openStoreLocation() {
-        Utils.navigateToLocation(
-            this, mViewModel.mOrder.storeLat.toString(),
-            mViewModel.mOrder.storeLong.toString()
-        )
+        if (!mViewModel.fromHistory.get())
+            Utils.navigateToLocation(
+                this, mViewModel.mOrder.storeLat.toString(),
+                mViewModel.mOrder.storeLong.toString()
+            )
     }
 
     override fun openCustomerLocation() {
-        if (mViewModel.mOrder.statusId == Constants.ORDER_IS_PROCESSING)
-            Utils.navigateToLocation(
-                this, mViewModel.mOrder.customerLat.toString(),
-                mViewModel.mOrder.customerLong.toString()
-            )
-        else {
-            showPopUp("",
-                getString(R.string.reach_out),
-                getString(android.R.string.ok),
-                false
-            )
+        if(!mViewModel.fromHistory.get()){
+
+            if (mViewModel.mOrder.statusId == Constants.ORDER_IS_PROCESSING)
+                Utils.navigateToLocation(
+                    this, mViewModel.mOrder.customerLat.toString(),
+                    mViewModel.mOrder.customerLong.toString()
+                )
+            else {
+                showPopUp(
+                    "",
+                    getString(R.string.reach_out),
+                    getString(android.R.string.ok),
+                    false
+                )
+            }
         }
     }
 }
