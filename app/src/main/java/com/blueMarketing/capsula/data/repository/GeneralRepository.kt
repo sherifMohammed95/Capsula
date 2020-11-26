@@ -31,20 +31,14 @@ class GeneralRepository : BaseRepository() {
     suspend fun getStores(showLoading: Boolean, pageNo: Int) {
         try {
             withContext(Dispatchers.Main) {
-                if (pageNo == 1)
-                    showLoadingLayout.value = showLoading
-                else
-                    isPagingLoadingEvent.value = true
+                showLoadingLayout.value = showLoading
             }
 
 
             val response = webService.getStores(pageNo, Constants.PER_PAGE)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if (pageNo == 1)
-                        showLoadingLayout.value = false
-                    else
-                        isPagingLoadingEvent.value = false
+                    showLoadingLayout.value = false
                     storesResponse.postValue(response.body()!!)
                 }
             } else {
@@ -90,10 +84,10 @@ class GeneralRepository : BaseRepository() {
         }
     }
 
-    suspend fun getDeliveryHomeData() {
+    suspend fun getDeliveryHomeData(showLoading:Boolean) {
         try {
             withContext(Dispatchers.Main) {
-                progressLoading.value = true
+                progressLoading.value = showLoading
             }
             val response = webService.getDeliveryHomeData()
             if (response.isSuccessful) {
@@ -110,7 +104,7 @@ class GeneralRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getDeliveryHomeData()
+                        getDeliveryHomeData(showLoading)
                     }
                 })
             }

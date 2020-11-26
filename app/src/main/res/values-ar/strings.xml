@@ -136,8 +136,8 @@
     <string name="vat">ضريبة القيمة المضافة</string>
     <string name="pieces">قطع</string>
     <string name="order_tracking">تتبع الطلب</string>
-    <string name="estimated_date">التاريخ المتوقع</string>
-    <string name="estimated_time">الوقت المتوقع</string>
+    <string name="estimated_date">تاريخ الطلب</string>
+    <string name="estimated_time">وقت الطلب</string>
     <string name="order_is">الطلب هو</string>
     <string name="delivery_representative">مندوب التوصيل</string>
     <string name="customer">العميل</string>

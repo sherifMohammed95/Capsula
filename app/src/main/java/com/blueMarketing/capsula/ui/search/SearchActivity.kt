@@ -26,6 +26,7 @@ import org.koin.core.qualifier.named
 import rx.functions.Action1
 import rx.functions.Action2
 import io.reactivex.functions.Action
+import kotlinx.android.synthetic.main.activity_products.*
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator,
     ProductsAdapter.OnPlusClickListener, BaseRecyclerAdapter.OnITemClickListener<Product> {
@@ -54,7 +55,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         viewDataBinding?.noDataText = getString(R.string.no_results)
         paginateWithScrollView(search_scroll_view, Action {
             mViewModel.pageNo++
-            mViewModel.getSearchResults()
+            mViewModel.getSearchResults(false)
+        })
+
+        swipeToRefresh(search_refresh_layout, Action {
+            mViewModel.isLastPage = false
+            mViewModel.pageNo = 1
+            mViewModel.searchResultList = ArrayList()
+            mViewModel.getSearchResults(false)
         })
     }
 
@@ -67,12 +75,15 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             mViewModel.searchText = it
             mViewModel.searchResultList = ArrayList()
             mViewModel.isLastPage = false
-            mViewModel.getSearchResults()
+            mViewModel.getSearchResults(true)
         })
     }
 
     private fun subscribeToLiveData() {
         mViewModel.searchResultsResponse.observe(this, Observer {
+            viewModel?.isPagingLoadingEvent?.value = false
+            search_refresh_layout.isRefreshing = false
+
             if (it.data != null) {
 
                 if (it.data!!.count > 0)
@@ -81,7 +92,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                     mViewModel.hasData.set(false)
 
                 if (it.data!!.productsList != null) {
-                    mViewModel.searchResultList.addAll(it.data!!.productsList!!)
+                    if (mViewModel.pageNo == 1)
+                        mViewModel.searchResultList = (it.data!!.productsList!!)
+                    else
+                        mViewModel.searchResultList.addAll(it.data!!.productsList!!)
                     if (mViewModel.searchResultList.size == it.data!!.count)
                         mViewModel.isLastPage = true
                     mAdapter.setData(mViewModel.searchResultList)
@@ -121,7 +135,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                         mViewModel.pageNo = 1
                         mViewModel.searchResultList = ArrayList()
                         mViewModel.isLastPage = false
-                        mViewModel.getSearchResults()
+                        mViewModel.getSearchResults(true)
                     }
                 }, mViewModel.selectedFilterTypePos, showClearText = true, showIconImage = false,
                 showAddNewAddressText = false

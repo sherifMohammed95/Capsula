@@ -74,23 +74,17 @@ class ProductsRepository : BaseRepository() {
         }
     }
 
-    suspend fun getCategoryProducts(pageNo: Int, catId: Int, storeId: Int) {
+    suspend fun getCategoryProducts(showLoading: Boolean, pageNo: Int, catId: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {
-                if (pageNo == 1)
-                    showLoadingLayout.value = true
-                else
-                    isPagingLoadingEvent.value = true
+                showLoadingLayout.value = showLoading
             }
 
             val response =
                 webService.getCategoryProducts(pageNo, Constants.PER_PAGE, catId, storeId)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if (pageNo == 1)
-                        showLoadingLayout.value = false
-                    else
-                        isPagingLoadingEvent.value = false
+                    showLoadingLayout.value = false
                     productsResponse.postValue(response.body()!!)
                 }
             } else {
@@ -102,7 +96,7 @@ class ProductsRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getCategoryProducts(pageNo, catId, storeId)
+                        getCategoryProducts(showLoading, pageNo, catId, storeId)
                     }
                 })
             }

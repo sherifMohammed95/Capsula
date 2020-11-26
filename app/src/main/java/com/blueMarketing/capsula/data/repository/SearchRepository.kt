@@ -17,23 +17,22 @@ class SearchRepository : BaseRepository() {
     val searchResultsResponse = SingleLiveEvent<BaseResponse<ProductsResponse>>()
     val cartResponse = SingleLiveEvent<ArrayList<Product>>()
 
-    suspend fun getSearchResults(searchText: String, filterType: Int, pageNo: Int) {
+    suspend fun getSearchResults(
+        showLoading: Boolean,
+        searchText: String,
+        filterType: Int,
+        pageNo: Int
+    ) {
         try {
             withContext(Dispatchers.Main) {
-                if (pageNo == 1)
-                    progressLoading.value = true
-                else
-                    isPagingLoadingEvent.value = true
+                progressLoading.value = showLoading
             }
 
             val response =
                 webService.getSearchResults(searchText, filterType, pageNo, Constants.PER_PAGE)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if (pageNo == 1)
-                        progressLoading.value = false
-                    else
-                        isPagingLoadingEvent.value = false
+                    progressLoading.value = false
                     searchResultsResponse.postValue(response.body()!!)
                 }
             } else {
@@ -45,7 +44,7 @@ class SearchRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getSearchResults(searchText, filterType, pageNo)
+                        getSearchResults(showLoading, searchText, filterType, pageNo)
                     }
                 })
             }

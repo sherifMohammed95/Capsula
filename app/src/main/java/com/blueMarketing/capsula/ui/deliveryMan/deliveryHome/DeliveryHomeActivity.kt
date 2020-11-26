@@ -26,7 +26,9 @@ import com.google.gson.Gson
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
+import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_delivery_home.*
+import kotlinx.android.synthetic.main.activity_products.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
@@ -52,6 +54,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
 
     private fun subscribeToLiveData() {
         mViewModel.deliveryHomeDataResponse.observe(this, Observer {
+            delivery_orders_refresh_layout.isRefreshing = false
             if (!it.ordersList.isNullOrEmpty()) {
                 mViewModel.hasData.set(true)
                 Constants.REFRESH_DELIVERY_ORDER = false
@@ -71,7 +74,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     override fun onResume() {
         super.onResume()
         if (Constants.REFRESH_DELIVERY_ORDER) {
-            mViewModel.getHomeData()
+            mViewModel.getHomeData(false)
         }
     }
 
@@ -89,6 +92,10 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         viewDataBinding?.navigator = this
         mViewModel.navigator = this
         viewDataBinding?.noDataText = getString(R.string.no_orders_found)
+
+        swipeToRefresh(delivery_orders_refresh_layout, Action {
+            mViewModel.getHomeData(false)
+        })
     }
 
     override fun openMore() {

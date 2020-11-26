@@ -27,6 +27,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.custom.PaginationScrollListener
 import com.blueMarketing.capsula.data.MessageEvent
@@ -135,6 +136,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         })
     }
 
+    fun swipeToRefresh(layout: SwipeRefreshLayout?, action: Action?) {
+        layout?.setOnRefreshListener { action?.run() }
+    }
+
     fun paginate(recyclerView: RecyclerView?, layoutManager: LinearLayoutManager, action: Action?) {
         recyclerView?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLastPage(): Boolean {
@@ -165,7 +170,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
                     && scrollY > oldScrollY && !viewModel?.isPagingLoading?.get()!!
                     && !viewModel?.isLastPage!!
                 ) {
-//                    viewModel?.setIsPagingLoading(true)
+                    viewModel?.isPagingLoadingEvent?.value = true
                     action?.run()
                 }
             }

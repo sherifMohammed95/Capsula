@@ -20,6 +20,7 @@ import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_categories.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_products.*
 import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
@@ -57,7 +58,7 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
         mViewModel.storeId = intent.getIntExtra(Constants.EXTRA_STORE_ID, -1)
         toolbarTitle = mViewModel.mCategory.categoryName
 
-        mViewModel.getCategoryProducts()
+        mViewModel.getCategoryProducts(true)
 //        mViewModel.fromWhere = intent.getIntExtra(Constants.FROM_WHERE, 1000)
 
 //        when {
@@ -102,7 +103,13 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
         mViewModel.navigator = this
         paginateWithScrollView(products_scroll_layout, Action {
             mViewModel.pageNo++
-            mViewModel.getCategoryProducts()
+            mViewModel.getCategoryProducts(false)
+        })
+        swipeToRefresh(products_refresh_layout, Action {
+            mViewModel.isLastPage = false
+            mViewModel.pageNo = 1
+            mViewModel.productsList = ArrayList()
+            mViewModel.getCategoryProducts(false)
         })
     }
 
@@ -116,18 +123,26 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
 
     private fun subscribeToLiveData() {
         mViewModel.productsResponse.observe(this, Observer {
+            viewModel?.isPagingLoadingEvent?.value = false
+            products_refresh_layout.isRefreshing = false
+
             if (it.data != null) {
 
-                if(it.data!!.count > 0)
+                if (it.data!!.count > 0)
                     mViewModel.hasData.set(true)
                 else
                     mViewModel.hasData.set(false)
 
-                if (!it.data!!.productsList.isNullOrEmpty())
-                    mViewModel.productsList.addAll(it.data!!.productsList!!)
-                if (mViewModel.productsList.size == it.data!!.count)
-                    mViewModel.isLastPage = true
-                mAdapter.setData(mViewModel.productsList)
+                if (!it.data!!.productsList.isNullOrEmpty()) {
+                    if (mViewModel.pageNo == 1)
+                        mViewModel.productsList = it.data!!.productsList!!
+                    else
+                        mViewModel.productsList.addAll(it.data!!.productsList!!)
+
+                    if (mViewModel.productsList.size == it.data!!.count)
+                        mViewModel.isLastPage = true
+                    mAdapter.setData(mViewModel.productsList)
+                }
             }
         })
 

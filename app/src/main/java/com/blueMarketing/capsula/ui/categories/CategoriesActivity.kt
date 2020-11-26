@@ -15,6 +15,7 @@ import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_categories.*
+import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,7 +47,13 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
         viewDataBinding?.noDataText = getString(R.string.no_cat_found)
         paginateWithScrollView(categories_scroll_layout, Action {
             mViewModel.pageNo++
-            mViewModel.getStoreCategories()
+            mViewModel.getStoreCategories(false)
+        })
+        swipeToRefresh(categories_refresh_layout, Action {
+            mViewModel.isLastPage = false
+            mViewModel.pageNo = 1
+            mViewModel.storeCategoriesList = ArrayList()
+            mViewModel.getStoreCategories(false)
         })
     }
 
@@ -57,10 +64,7 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
         initRecyclerView()
         subscribeToLiveData()
 
-        if (mViewModel.storeId == -1)
-            mViewModel.getCategories()
-        else
-            mViewModel.getStoreCategories()
+        mViewModel.getStoreCategories(true)
     }
 
     private fun getIntentsData() {
@@ -69,26 +73,27 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
 
 
     private fun subscribeToLiveData() {
-        mViewModel.categoriesResponse.observe(this, Observer {
-            if (it.data != null) {
-                if (!it.data!!.categoriesList.isNullOrEmpty())
-                    mAdapter.setData(it.data!!.categoriesList!!)
-            }
-        })
 
         mViewModel.storeCategoriesResponse.observe(this, Observer {
+            viewModel?.isPagingLoadingEvent?.value = false
+            categories_refresh_layout.isRefreshing = false
             if (it.data != null) {
 
-                if(it.data!!.count > 0)
+                if (it.data!!.count > 0)
                     mViewModel.hasData.set(true)
                 else
                     mViewModel.hasData.set(false)
 
-                if (!it.data!!.categoriesList.isNullOrEmpty())
-                    mViewModel.storeCategoriesList.addAll(it.data!!.categoriesList!!)
-                if (mViewModel.storeCategoriesList.size == it.data!!.count)
-                    mViewModel.isLastPage = true
-                mAdapter.setData(mViewModel.storeCategoriesList)
+                if (!it.data!!.categoriesList.isNullOrEmpty()) {
+                    if (mViewModel.pageNo == 1)
+                        mViewModel.storeCategoriesList = it.data!!.categoriesList!!
+                    else
+                        mViewModel.storeCategoriesList.addAll(it.data!!.categoriesList!!)
+
+                    if (mViewModel.storeCategoriesList.size == it.data!!.count)
+                        mViewModel.isLastPage = true
+                    mAdapter.setData(mViewModel.storeCategoriesList)
+                }
             }
         })
     }

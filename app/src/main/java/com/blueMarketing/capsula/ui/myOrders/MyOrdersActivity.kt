@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_my_orders.*
+import kotlinx.android.synthetic.main.activity_products.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
@@ -68,21 +69,34 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
             mViewModel.pageNo++
             mViewModel.loadOrders(false)
         })
+
+        swipeToRefresh(customer_orders_refresh_layout, Action {
+            mViewModel.isLastPage = false
+            mViewModel.pageNo = 1
+            mViewModel.orderList = ArrayList()
+            mViewModel.loadOrders(false)
+        })
     }
 
     private fun subscribeToLiveData() {
         mViewModel.ordersResponse.observe(this, Observer {
+            viewModel?.isPagingLoadingEvent?.value = false
+            customer_orders_refresh_layout.isRefreshing = false
             if (it.data != null) {
                 if (it.data!!.count > 0)
                     mViewModel.hasData.set(true)
                 else
                     mViewModel.hasData.set(false)
 
-                if (!it.data!!.orderList.isNullOrEmpty())
-                    mViewModel.orderList.addAll(it.data!!.orderList!!)
-                if (mViewModel.orderList.size == it.data!!.count)
-                    mViewModel.isLastPage = true
-                mAdapter.setData(mViewModel.orderList)
+                if (!it.data!!.orderList.isNullOrEmpty()) {
+                    if (mViewModel.pageNo == 1)
+                        mViewModel.orderList = (it.data!!.orderList!!)
+                    else
+                        mViewModel.orderList.addAll(it.data!!.orderList!!)
+                    if (mViewModel.orderList.size == it.data!!.count)
+                        mViewModel.isLastPage = true
+                    mAdapter.setData(mViewModel.orderList)
+                }
             }
         })
     }

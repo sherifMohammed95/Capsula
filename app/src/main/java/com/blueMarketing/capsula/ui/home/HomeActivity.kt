@@ -52,6 +52,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
             mViewModel.pageNo++
             mViewModel.loadStores(false)
         })
+        swipeToRefresh(home_refresh_layout, Action {
+            mViewModel.isLastPage = false
+            mViewModel.pageNo = 1
+            mViewModel.storesList = ArrayList()
+            mViewModel.loadStores(false)
+        })
     }
 
     override fun onResume() {
@@ -62,15 +68,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
             mViewModel.loadUserData()
         }
 
-        if (Constants.REFRESH_HOME) {
-            Constants.REFRESH_HOME = false
-            mViewModel.pageNo = 1
-            mViewModel.storesList = ArrayList()
-            if (mViewModel.storesList.size > 0)
-                mViewModel.loadStores(false)
-            else
-                mViewModel.loadStores(true)
-        }
+//        if (Constants.REFRESH_HOME) {
+//            Constants.REFRESH_HOME = false
+//            mViewModel.pageNo = 1
+//            mViewModel.storesList = ArrayList()
+//            if (mViewModel.storesList.size > 0)
+//                mViewModel.loadStores(false)
+//            else
+//                mViewModel.loadStores(true)
+//        }
     }
 
     private fun initRecyclerViews() {
@@ -86,17 +92,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     private fun subscribeToLiveData() {
-//        mViewModel.homeDataResponse.observe(this, Observer {
-//            if (it != null) {
-//                homeCategoriesAdapter.setData(it.categoriesData)
-//                homeBrandsAdapter.setData(it.brandsData)
-//                homeStoresAdapter.setData(it.storesData)
-//            }
-//        })
 
         mViewModel.storesResponse.observe(this, Observer {
-            if (it.data?.storesList != null) {
-                mViewModel.storesList.addAll(it.data!!.storesList!!)
+            viewModel?.isPagingLoadingEvent?.value = false
+            home_refresh_layout.isRefreshing = false
+            if (it.data != null && !it.data?.storesList.isNullOrEmpty()) {
+                if (mViewModel.pageNo == 1)
+                    mViewModel.storesList = it.data!!.storesList!!
+                else
+                    mViewModel.storesList.addAll(it.data!!.storesList!!)
+
                 if (mViewModel.storesList.size == it.data!!.count)
                     mViewModel.isLastPage = true
                 homeStoresAdapter.setData(mViewModel.storesList)

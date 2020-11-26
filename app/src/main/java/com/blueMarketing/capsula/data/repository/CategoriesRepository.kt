@@ -50,22 +50,17 @@ class CategoriesRepository : BaseRepository() {
         }
     }
 
-    suspend fun getStoreCategories(pageNo: Int, storeId: Int) {
+    suspend fun getStoreCategories(showLoading: Boolean, pageNo: Int, storeId: Int) {
         try {
             withContext(Dispatchers.Main) {
-                if (pageNo == 1)
-                    showLoadingLayout.value = true
-                else
-                    isPagingLoadingEvent.value = true
+                showLoadingLayout.value = showLoading
             }
 
-            val response = webService.getStoreCategories(pageNo, Constants.PER_PAGE, storeId)
+            val response =
+                webService.getStoreCategories(pageNo, Constants.PER_PAGE, storeId)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if (pageNo == 1)
-                        showLoadingLayout.value = false
-                    else
-                        isPagingLoadingEvent.value = false
+                    showLoadingLayout.value = false
                     storeCategoriesResponse.postValue(response.body()!!)
                 }
             } else {
@@ -77,7 +72,7 @@ class CategoriesRepository : BaseRepository() {
             withContext(Dispatchers.Main) {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
-                        getStoreCategories(pageNo, storeId)
+                        getStoreCategories(showLoading, pageNo, storeId)
                     }
                 })
             }

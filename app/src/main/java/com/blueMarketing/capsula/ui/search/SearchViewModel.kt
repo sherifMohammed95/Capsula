@@ -34,16 +34,16 @@ class SearchViewModel(private val mRepository: SearchRepository) :
         initRepository(mRepository)
         this.searchResultsResponse = mRepository.searchResultsResponse
         this.cartResponse = mRepository.cartResponse
-        getSearchResults()
+        getSearchResults(true)
     }
 
     fun openFilterList() {
         navigator!!.openFilterList()
     }
 
-    fun getSearchResults() {
+    fun getSearchResults(showLoading: Boolean) {
         viewModelScope.launch(IO) {
-            mRepository.getSearchResults(searchText, filterType, pageNo)
+            mRepository.getSearchResults(showLoading, searchText, filterType, pageNo)
         }
     }
 

@@ -32,9 +32,9 @@ class CategoriesViewModel(private val mRepository: CategoriesRepository) :
         }
     }
 
-    fun getStoreCategories() {
+    fun getStoreCategories(showLoading:Boolean) {
         viewModelScope.launch(IO) {
-            mRepository.getStoreCategories(pageNo, storeId)
+            mRepository.getStoreCategories(showLoading,pageNo, storeId)
         }
     }
 

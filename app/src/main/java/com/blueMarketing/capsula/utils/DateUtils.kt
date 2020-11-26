@@ -76,7 +76,7 @@ object DateUtils {
     fun reformatNotificationDate(date: String): String {
         val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale(currentLang))
-        val output = SimpleDateFormat("yyyy/MM/dd HH:mm a", Locale(currentLang))
+        val output = SimpleDateFormat("yyyy/MM/dd hh:mm a", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }
@@ -100,7 +100,7 @@ object DateUtils {
     fun getEstimatedOrderTime(date:String):String{
         val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale(currentLang))
-        val output = SimpleDateFormat("HH:mm a", Locale(currentLang))
+        val output = SimpleDateFormat("hh:mm a", Locale(currentLang))
         val d = sdf.parse(date)
         return output.format(d!!)
     }

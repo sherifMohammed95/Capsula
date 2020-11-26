@@ -43,9 +43,9 @@ class ProductsViewModel(val mRepository: ProductsRepository) : BaseViewModel<Pro
         }
     }
 
-    fun getCategoryProducts() {
+    fun getCategoryProducts(showLoading: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            mRepository.getCategoryProducts(pageNo, mCategory.categoryId, storeId)
+            mRepository.getCategoryProducts(showLoading, pageNo, mCategory.categoryId, storeId)
         }
     }
 

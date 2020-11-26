@@ -26,10 +26,7 @@ class OrdersRepository : BaseRepository() {
     suspend fun getOrders(pageNo: Int, showLoading: Boolean) {
         try {
             withContext(Dispatchers.Main) {
-                if (pageNo == 1)
-                    showLoadingLayout.value = showLoading
-                else
-                    isPagingLoadingEvent.value = true
+                showLoadingLayout.value = showLoading
             }
 
             val response = webService.getOrders(
@@ -38,10 +35,7 @@ class OrdersRepository : BaseRepository() {
             )
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    if (pageNo == 1)
-                        showLoadingLayout.value = false
-                    else
-                        isPagingLoadingEvent.value = false
+                    showLoadingLayout.value = false
                     ordersResponse.postValue(response.body()!!)
                 }
             } else {
