@@ -481,7 +481,7 @@
                     android:onClick="@{()->vm.takeAction()}"
                     android:paddingStart="@dimen/dimen_20"
                     android:paddingEnd="@dimen/dimen_20"
-                    android:text="@{order.orderStatusDesc}"
+                    android:text="@{order.nextOrderStatus}"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_16"

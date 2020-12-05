@@ -1,10 +1,12 @@
 package com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.DeliveryOrder
+import com.blueMarketing.capsula.data.OrderStatus
 import com.blueMarketing.capsula.databinding.ActivityDeliveryOrderDetailsBinding
 import com.blueMarketing.capsula.ui.orderDetails.adapters.ProductsDetailsAdapter
 import com.blueMarketing.capsula.utils.Constants
@@ -39,21 +41,46 @@ class DeliveryOrderDetailsActivity :
         mViewModel.deliveryOrderDetailsResponse.observe(this, Observer {
             if (it.data != null) {
                 mViewModel.mOrder = it.data!!
-                viewDataBinding?.order = it.data
                 mAdapter.setData(it.data?.products!!)
+
+                when (mViewModel.mOrder.statusId?.value) {
+                    OrderStatus.ON_WAY.value -> {
+                        if (mViewModel.isBtnClicked) {
+                            mViewModel.isBtnClicked = false
+                            openStoreLocation()
+                        }
+                    }
+                    OrderStatus.SHIPPED.value -> {
+                        if (mViewModel.isBtnClicked) {
+                            mViewModel.isBtnClicked = false
+                            openCustomerLocation()
+                        }
+                    }
+                }
+                viewDataBinding?.order = it.data
             }
         })
 
-        mViewModel.startDeliveryResponse.observe(this, Observer {
-            Constants.REFRESH_DELIVERY_ORDER = true
-            openStoreLocation()
-            backAction()
+        mViewModel.changeOrderStatusResponse.observe(this, Observer {
+            if (mViewModel.mOrder.statusId?.value == OrderStatus.DELIVERED.value) {
+                Constants.REFRESH_DELIVERY_ORDER = true
+                finish()
+            } else
+                mViewModel.loadOrderDetails()
         })
 
-        mViewModel.finishDeliveryResponse.observe(this, Observer {
-            Constants.REFRESH_DELIVERY_ORDER = true
-            backAction()
+        mViewModel.askDeliveryEvent.observe(this, Observer {
+            showPopUp(
+                R.string.is_the_order, getString(R.string.no),
+                DialogInterface.OnClickListener { _, _ ->
+                    mViewModel.endDelivery(OrderStatus.UNCOMPLETED.value)
+                }, getString(R.string.yes),
+                DialogInterface.OnClickListener { _, _ ->
+                    mViewModel.endDelivery(OrderStatus.COMPLETED.value)
+                }, true
+            )
         })
+
     }
 
 
@@ -86,16 +113,24 @@ class DeliveryOrderDetailsActivity :
 
     override fun openStoreLocation() {
         if (!mViewModel.fromHistory.get())
-            Utils.navigateToLocation(
-                this, mViewModel.mOrder.storeLat.toString(),
-                mViewModel.mOrder.storeLong.toString()
-            )
+            if (mViewModel.mOrder.storeLocationIsEnabled())
+                Utils.navigateToLocation(
+                    this, mViewModel.mOrder.storeLat.toString(),
+                    mViewModel.mOrder.storeLong.toString()
+                )
+            else
+                showPopUp(
+                    "",
+                    getString(R.string.please_start_delivery),
+                    getString(android.R.string.ok),
+                    false
+                )
     }
 
     override fun openCustomerLocation() {
-        if(!mViewModel.fromHistory.get()){
+        if (!mViewModel.fromHistory.get()) {
 
-            if (mViewModel.mOrder.statusId == Constants.ORDER_IS_PROCESSING)
+            if (mViewModel.mOrder.clientLocationIsEnabled())
                 Utils.navigateToLocation(
                     this, mViewModel.mOrder.customerLat.toString(),
                     mViewModel.mOrder.customerLong.toString()

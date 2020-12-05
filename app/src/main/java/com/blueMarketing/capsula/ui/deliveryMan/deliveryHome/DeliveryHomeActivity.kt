@@ -59,7 +59,6 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             delivery_orders_refresh_layout.isRefreshing = false
             if (!it.ordersList.isNullOrEmpty()) {
                 mViewModel.hasData.set(true)
-                Constants.REFRESH_DELIVERY_ORDER = false
             } else
                 mViewModel.hasData.set(false)
             mAdapter.setData(it.ordersList!!)
@@ -75,6 +74,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
     override fun onResume() {
         super.onResume()
         if (Constants.REFRESH_DELIVERY_ORDER) {
+            Constants.REFRESH_DELIVERY_ORDER = false
             mViewModel.getHomeData(false)
         }
     }

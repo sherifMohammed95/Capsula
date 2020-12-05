@@ -95,6 +95,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 val body = data["body"]
                 val orderId = data["orderId"]?.toInt()
                 val product = data["product"]
+                var acceptActionText = ""
+                var rejectActionText = ""
+
+                if(preferencesGateway.load(Constants.LANGUAGE,"en")
+                        .contentEquals("en")){
+                    acceptActionText = "Accept"
+                    rejectActionText = "Reject"
+                } else {
+                    acceptActionText = "قبول"
+                    rejectActionText = "رفض"
+                }
+
 
                 val random = Random()
                 val notificationId = random.nextInt(9999 - 1000) + 1000
@@ -153,10 +165,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             PendingIntent.FLAG_UPDATE_CURRENT
                         )
 
-                        builder?.addAction(R.mipmap.ic_launcher, getString(R.string.accept_order),
+                        builder?.addAction(R.mipmap.ic_launcher, acceptActionText,
                             acceptPendingIntent)
 
-                        builder?.addAction(R.mipmap.ic_launcher, getString(R.string.reject_order),
+                        builder?.addAction(R.mipmap.ic_launcher, rejectActionText,
                             rejectPendingIntent)
 
                         try {
@@ -181,140 +193,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                     notificationManager.notify(notificationId, builder.build())
 
-//                    when (type) {
-//                        CUSTOMER_GENERAL -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        DELIVERY_GENERAL -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        GENERAL_ALL -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        NEW_STORE -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        NEW_CUSTOMER_OFFER -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        NEW_DELIVERY_ORDER -> {
-//
-//                            customNotification = true
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-////                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                        ORDER_TRACKING -> {
-//
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                val notificationChannel = NotificationChannel(
-//                                    NOTIFICATION_CHANNEL_ID, "My Notifications",
-//                                    NotificationManager.IMPORTANCE_HIGH
-//                                )
-//                                notificationChannel.description = "Channel description"
-//                                notificationManager.createNotificationChannel(notificationChannel)
-//                            }
-//
-//                            builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//
-////                                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-////                                .setSmallIcon(R.mipmap.ic_launcher)
-////                                .setContentTitle(title)
-////                                .setContentText(body)
-////                                .setAutoCancel(true)
-//                        }
-//                    }
                 }
             }
         }
@@ -334,9 +212,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 intent.putExtra(EXTRA_PRODUCT, product)
                 intent.putExtra(FROM_WHERE, FROM_NOTIFICATIONS)
             }
-//            NEW_DELIVERY_ORDER -> {
-//                intent = Intent(this, DeliveryHomeActivity::class.java)
-//            }
             ORDER_TRACKING -> {
                 intent = Intent(this, OrderTrackingActivity::class.java)
                 intent.putExtra(EXTRA_ORDER_ID, orderId)

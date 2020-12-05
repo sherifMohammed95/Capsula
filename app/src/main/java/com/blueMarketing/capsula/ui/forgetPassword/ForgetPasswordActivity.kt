@@ -43,6 +43,7 @@ class ForgetPasswordActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         subscribeToLiveData()
+        mViewModel.isDelivery = intent.getBooleanExtra(Constants.IS_DELIVERY, false)
     }
 
     override fun openVerification() {
@@ -51,6 +52,7 @@ class ForgetPasswordActivity :
         intent.putExtra(Constants.EXTRA_COMPLETE_PROFILE_REQUEST, Gson().toJson(null))
         intent.putExtra(Constants.EXTRA_PHONE, mViewModel.phoneText.get())
         intent.putExtra(Constants.FROM_WHERE, Constants.FORGET_PASSWORD_SCREEN)
+        intent.putExtra(Constants.IS_DELIVERY, mViewModel.isDelivery)
         startActivity(intent)
     }
 }

@@ -141,8 +141,8 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, ProductsViewModel
 
                     if (mViewModel.productsList.size == it.data!!.count)
                         mViewModel.isLastPage = true
-                    mAdapter.setData(mViewModel.productsList)
                 }
+                mAdapter.setData(mViewModel.productsList)
             }
         })
 

@@ -48,6 +48,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         viewDataBinding?.vm = mViewModel
         mViewModel.navigator = this
         viewDataBinding?.navigator = this
+        viewDataBinding?.noDataText = getString(R.string.no_stores_found)
         paginateWithScrollView(home_scroll_view, Action {
             mViewModel.pageNo++
             mViewModel.loadStores(false)
@@ -96,6 +97,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         mViewModel.storesResponse.observe(this, Observer {
             viewModel?.isPagingLoadingEvent?.value = false
             home_refresh_layout.isRefreshing = false
+
+            if (it.data!!.count > 0)
+                mViewModel.hasData.set(true)
+            else
+                mViewModel.hasData.set(false)
+
             if (it.data != null && !it.data?.storesList.isNullOrEmpty()) {
                 if (mViewModel.pageNo == 1)
                     mViewModel.storesList = it.data!!.storesList!!
@@ -104,8 +111,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
                 if (mViewModel.storesList.size == it.data!!.count)
                     mViewModel.isLastPage = true
-                homeStoresAdapter.setData(mViewModel.storesList)
             }
+            homeStoresAdapter.setData(mViewModel.storesList)
         })
 
         mViewModel.emptyCartMessage.observe(this, Observer {

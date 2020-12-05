@@ -237,8 +237,14 @@
     <string name="no_products">No Products Found</string>
     <string name="no_results">No Search Results</string>
     <string name="no_history_found">No History Found</string>
-    <string name="reach_out">You can\'t reach out to the customer location before starting the delivery</string>
-    <string name="accept_order">Accept</string>
-    <string name="reject_order">Reject</string>
+    <string name="reach_out">You can\'t reach out to the customer location before shipping the order</string>
+    <string name="reached_store">Reached Store</string>
+    <string name="please_start_delivery">Please start the delivery to able to go to the store</string>
+    <string name="delivered_delivery">Delivered</string>
+    <string name="is_the_order">Is the order delivered to the customer?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="no_stores_found">No Stores Found</string>
+    <string name="out_of_service">Out Of Service</string>
 
 </resources>

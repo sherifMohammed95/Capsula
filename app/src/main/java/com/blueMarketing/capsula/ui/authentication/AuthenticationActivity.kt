@@ -107,8 +107,9 @@ class AuthenticationActivity :
     }
 
     override fun openForgetPassword() {
-        startActivity(Intent(this, ForgetPasswordActivity::class.java))
-    }
+        val intent = Intent(this, ForgetPasswordActivity::class.java)
+        intent.putExtra(Constants.IS_DELIVERY, false)
+        startActivity(intent)    }
 
     override fun openTerms() {
         startActivity(Intent(this, TermsActivity::class.java))

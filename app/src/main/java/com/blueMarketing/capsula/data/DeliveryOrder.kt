@@ -69,7 +69,7 @@ class DeliveryOrder {
 
     @SerializedName("statusId")
     @Expose
-    var statusId = 0
+    var statusId: OrderStatus? = null
 
     @SerializedName("orderStatusDesc")
     @Expose
@@ -79,7 +79,7 @@ class DeliveryOrder {
 
     var deliveryCost = 0.0
 
-    fun hasProducts():Boolean{
+    fun hasProducts(): Boolean {
         return !products.isNullOrEmpty()
     }
 
@@ -118,5 +118,65 @@ class DeliveryOrder {
         return "" + round(deliveryCost * 100) / 100
     }
 
+    fun getNextOrderStatus(): String {
+        return when (statusId?.value) {
+            OrderStatus.ACCEPTED.value -> {
+                Domain.application.getString(R.string.start_delivery)
+            }
+            OrderStatus.ON_WAY.value -> {
+                Domain.application.getString(R.string.reached_store)
+            }
+            OrderStatus.REACHED_STORE.value -> {
+                Domain.application.getString(R.string.shipped)
+            }
+            OrderStatus.SHIPPED.value -> {
+                Domain.application.getString(R.string.delivered_delivery)
+            }
+            OrderStatus.DELIVERED.value -> {
+                Domain.application.getString(R.string.finish_delivery)
+            }
+            else -> ""
+        }
+    }
+
+    fun getNextDeliveryAction(): Int {
+        return when (statusId?.value) {
+            OrderStatus.ACCEPTED.value -> {
+                OrderStatus.ON_WAY.value
+            }
+            OrderStatus.ON_WAY.value -> {
+                OrderStatus.REACHED_STORE.value
+            }
+            OrderStatus.REACHED_STORE.value -> {
+                OrderStatus.SHIPPED.value
+            }
+            OrderStatus.SHIPPED.value -> {
+                OrderStatus.DELIVERED.value
+            }
+            else -> -1
+        }
+    }
+
+    fun storeLocationIsEnabled(): Boolean {
+        return when (statusId?.value) {
+            OrderStatus.ON_WAY.value, OrderStatus.REACHED_STORE.value, OrderStatus.SHIPPED.value,
+            OrderStatus.DELIVERED.value -> {
+                true
+            }
+            else -> false
+        }
+    }
+
+    fun clientLocationIsEnabled(): Boolean {
+        return when (statusId?.value) {
+            OrderStatus.ON_WAY.value, OrderStatus.REACHED_STORE.value -> {
+                false
+            }
+            OrderStatus.SHIPPED.value, OrderStatus.DELIVERED.value -> {
+                true
+            }
+            else -> false
+        }
+    }
 
 }

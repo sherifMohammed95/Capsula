@@ -328,6 +328,35 @@ class AuthenticationRepository : BaseRepository() {
         }
     }
 
+    suspend fun checkDeliveryExist(phone: String) {
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.checkDeliveryExist(phone)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    checkUserExistResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        checkDeliveryExist(phone)
+                    }
+                })
+            }
+        }
+    }
+
     suspend fun resetPassword(request: ResetPasswordRequest) {
         try {
             withContext(Main) {
@@ -350,6 +379,34 @@ class AuthenticationRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(IO).launch {
                         resetPassword(request)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun resetDeliveryPassword(request: ResetPasswordRequest) {
+        try {
+            withContext(Main) {
+                progressLoading.value = true
+            }
+
+            val response = webService.resetDeliveryPassword(request)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    resetPasswordResponse.call()
+                }
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        resetDeliveryPassword(request)
                     }
                 })
             }

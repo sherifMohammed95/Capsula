@@ -36,6 +36,8 @@ class ResetPasswordViewModel(private val authRepo: AuthenticationRepository) :
     var resetPasswordResponse = SingleLiveEvent<Void>()
     var changePasswordResponse = SingleLiveEvent<String>()
 
+    var isDelivery = false
+
     init {
         initRepository(authRepo)
         passwordText.addCallback {
@@ -109,7 +111,11 @@ class ResetPasswordViewModel(private val authRepo: AuthenticationRepository) :
             request.newPassword = passwordText.get()!!
             request.phoneNumber = phoneNumber
             request.token = authToken
-            authRepo.resetPassword(request)
+
+            if (isDelivery)
+                authRepo.resetDeliveryPassword(request)
+            else
+                authRepo.resetPassword(request)
         }
     }
 

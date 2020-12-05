@@ -96,6 +96,16 @@
                 android:textSize="@dimen/font_12"
                 android:visibility="@{vm.passwordError?View.VISIBLE:View.GONE}" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:onClick="@{()->vm.onForgetPasswordClick()}"
+                android:padding="@dimen/dimen_5"
+                android:text="@string/forgot_password"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_14" />
 
             <Button
                 style="@style/bold"

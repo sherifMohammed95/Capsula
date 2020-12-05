@@ -16,7 +16,7 @@ import kotlin.math.round
 class Order {
 
     var id: Int = 0
-    var statusId: OrderStatus? = null
+    var orderStatusId: OrderStatus? = null
     var orderDate: String? = null
     var totalPrice = 0.0
     var deliveryAddress: String? = null
@@ -61,13 +61,13 @@ class Order {
     }
 
     fun hasAction():Boolean{
-        return statusId?.value == PENDING.value || statusId?.value == CANCELLED.value ||
-                statusId?.value == REJECTED.value || statusId?.value == OrderStatus.COMPLETED.value
-                || statusId?.value == OrderStatus.UNCOMPLETED.value
+        return orderStatusId?.value == PENDING.value || orderStatusId?.value == CANCELLED.value ||
+                orderStatusId?.value == REJECTED.value || orderStatusId?.value == OrderStatus.COMPLETED.value
+                || orderStatusId?.value == OrderStatus.UNCOMPLETED.value
     }
 
     fun hasCancelAction():Boolean{
-        return statusId?.value == PENDING.value
+        return orderStatusId?.value == PENDING.value
     }
 
     fun getPaymentMethod(): String {

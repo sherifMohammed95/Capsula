@@ -18,6 +18,8 @@ class ForgetPasswordViewModel(private val authRepo: AuthenticationRepository) :
     var phoneError = ObservableBoolean(false)
     var checkUserExistResponse = SingleLiveEvent<Void>()
 
+    var isDelivery = false
+
     init {
         initRepository(authRepo)
         phoneText.addCallback {
@@ -31,12 +33,22 @@ class ForgetPasswordViewModel(private val authRepo: AuthenticationRepository) :
             phoneError.set(true)
             return
         }
-        checkUserExist()
+
+        if (isDelivery)
+            checkDeliveryExist()
+        else
+            checkUserExist()
     }
 
     private fun checkUserExist() {
         viewModelScope.launch(IO) {
             authRepo.checkUserExist(phoneText.get()!!)
+        }
+    }
+
+    private fun checkDeliveryExist() {
+        viewModelScope.launch(IO) {
+            authRepo.checkDeliveryExist(phoneText.get()!!)
         }
     }
 

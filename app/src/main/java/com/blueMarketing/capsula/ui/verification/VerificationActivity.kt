@@ -79,6 +79,10 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
         val intent = Intent(this, ResetPasswordActivity::class.java)
         intent.putExtra(Constants.EXTRA_PHONE, mViewModel.phoneNumber)
         intent.putExtra(Constants.EXTRA_AUTH_TOKEN, idToken)
+        intent.putExtra(
+            Constants.IS_DELIVERY,
+            intent.getBooleanExtra(Constants.IS_DELIVERY, false)
+        )
         startActivity(intent)
         finish()
     }

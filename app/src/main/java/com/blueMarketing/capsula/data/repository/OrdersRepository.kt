@@ -21,8 +21,6 @@ class OrdersRepository : BaseRepository() {
     val orderDetailsResponse = SingleLiveEvent<BaseResponse<Order>>()
     val deliveryOrderDetailsResponse = SingleLiveEvent<BaseResponse<DeliveryOrder>>()
     val cancelOrderResponse = SingleLiveEvent<String>()
-    val startDeliveryResponse = SingleLiveEvent<Void>()
-    val finishDeliveryResponse = SingleLiveEvent<Void>()
     val changeOrderStatusResponse = SingleLiveEvent<Void>()
 
     suspend fun getOrders(pageNo: Int, showLoading: Boolean) {
@@ -87,13 +85,13 @@ class OrdersRepository : BaseRepository() {
     suspend fun getDeliveryOrderDetails(orderId: Int) {
         try {
             withContext(Dispatchers.Main) {
-                showLoadingLayout.value = true
+                progressLoading.value = true
             }
 
             val response = webService.getDeliveryOrderDetails(orderId)
             if (response.isSuccessful) {
                 withContext(Dispatchers.Main) {
-                    showLoadingLayout.value = false
+                    progressLoading.value = false
                     deliveryOrderDetailsResponse.postValue(response.body()!!)
                 }
             } else {
@@ -163,62 +161,6 @@ class OrdersRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         cancelOrder(orderId)
-                    }
-                })
-            }
-        }
-    }
-
-    suspend fun startDelivery(orderId: Int) {
-        try {
-            withContext(Dispatchers.Main) {
-                progressLoading.value = true
-            }
-
-            val response = webService.startDelivery(orderId)
-            if (response.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    progressLoading.value = false
-                    startDeliveryResponse.call()
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    handleApiError(response.errorBody()!!.string(), response.code())
-                }
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                handleNetworkError(Action {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        startDelivery(orderId)
-                    }
-                })
-            }
-        }
-    }
-
-    suspend fun finishDelivery(orderId: Int) {
-        try {
-            withContext(Dispatchers.Main) {
-                progressLoading.value = true
-            }
-
-            val response = webService.endDelivery(orderId)
-            if (response.isSuccessful) {
-                withContext(Dispatchers.Main) {
-                    progressLoading.value = false
-                    finishDeliveryResponse.call()
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    handleApiError(response.errorBody()!!.string(), response.code())
-                }
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                handleNetworkError(Action {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        finishDelivery(orderId)
                     }
                 })
             }

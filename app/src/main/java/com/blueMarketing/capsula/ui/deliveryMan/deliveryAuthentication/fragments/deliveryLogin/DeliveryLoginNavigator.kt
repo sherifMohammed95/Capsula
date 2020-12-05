@@ -3,4 +3,6 @@ package com.blueMarketing.capsula.ui.deliveryMan.deliveryAuthentication.fragment
 interface DeliveryLoginNavigator {
 
     fun openHome()
+
+    fun openForgetPassword()
 }

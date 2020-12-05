@@ -41,8 +41,11 @@ interface WebService {
     suspend fun completeProfile(@Body request: CompleteProfileRequest):
             Response<BaseResponse<AuthenticationResponse>>
 
-    @GET("UserProfile/CheckUserExist/")
+    @GET("UserProfile/CheckUserExist")
     suspend fun checkUserExist(@Query("PhoneNumber") phone: String): Response<BaseResponse<Any>>
+
+    @GET("DeliveryManRegisteration/CheckUserExist")
+    suspend fun checkDeliveryExist(@Query("PhoneNumber") phone: String): Response<BaseResponse<Any>>
 
     @POST("UserProfile/ForgetPassword")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>
@@ -287,4 +290,7 @@ interface WebService {
 
     @GET("DeliveryMan/Reject/{orderId}")
     suspend fun rejectOrder(@Path("orderId") orderId: Int): Response<BaseResponse<String>>
+
+    @POST("DeliveryManRegisteration/ForgetPassword")
+    suspend fun resetDeliveryPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>
 }

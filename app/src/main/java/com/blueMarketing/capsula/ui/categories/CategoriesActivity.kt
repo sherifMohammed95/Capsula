@@ -92,8 +92,8 @@ class CategoriesActivity : BaseActivity<ActivityCategoriesBinding, CategoriesVie
 
                     if (mViewModel.storeCategoriesList.size == it.data!!.count)
                         mViewModel.isLastPage = true
-                    mAdapter.setData(mViewModel.storeCategoriesList)
                 }
+                mAdapter.setData(mViewModel.storeCategoriesList)
             }
         })
     }

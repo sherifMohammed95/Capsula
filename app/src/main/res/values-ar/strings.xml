@@ -240,7 +240,13 @@
     <string name="no_products">لا توجد منتجات</string>
     <string name="no_results">لا توجد نتائج بحث</string>
     <string name="no_history_found">لا يوجد سجل للطلبات</string>
-    <string name="reach_out">لا يمكنك الوصول إلى موقع العميل قبل بدء التسليم</string>
-    <string name="accept_order">قبول</string>
-    <string name="reject_order">رفض</string>
+    <string name="reach_out">لا يمكنك الوصول إلى موقع العميل قبل تسليم الطلب من المتجر</string>
+    <string name="reached_store">وصلت للمتجر</string>
+    <string name="please_start_delivery">برجاء قم ببدء التوصيل للوصول لموقع المتجر</string>
+    <string name="delivered_delivery">وصلت للعميل</string>
+    <string name="is_the_order">هل تم تسليم الطلب للعميل؟</string>
+    <string name="no">لا</string>
+    <string name="yes">نعم</string>
+    <string name="no_stores_found">لا توجد متاجر</string>
+    <string name="out_of_service">خارج الخدمة</string>
 </resources>

@@ -8,6 +8,8 @@ import com.blueMarketing.base.BaseFragment
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.databinding.FragmentDeliveryLoginBinding
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity
+import com.blueMarketing.capsula.ui.forgetPassword.ForgetPasswordActivity
+import com.blueMarketing.capsula.utils.Constants
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeliveryLoginFragment : BaseFragment<FragmentDeliveryLoginBinding, DeliveryLoginViewModel>(),
@@ -22,7 +24,7 @@ class DeliveryLoginFragment : BaseFragment<FragmentDeliveryLoginBinding, Deliver
 
     private fun subscribeToLiveData() {
         mViewModel.loginResponse.observe(viewLifecycleOwner, Observer {
-          openHome()
+            openHome()
         })
     }
 
@@ -44,6 +46,12 @@ class DeliveryLoginFragment : BaseFragment<FragmentDeliveryLoginBinding, Deliver
     override fun openHome() {
         val intent = Intent(activity, DeliveryHomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    override fun openForgetPassword() {
+        val intent = Intent(activity, ForgetPasswordActivity::class.java)
+        intent.putExtra(Constants.IS_DELIVERY, true)
         startActivity(intent)
     }
 }

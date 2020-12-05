@@ -42,6 +42,10 @@ class DeliveryLoginViewModel(val mRepository: AuthenticationRepository) :
         login()
     }
 
+    fun onForgetPasswordClick() {
+        navigator!!.openForgetPassword()
+    }
+
     private fun validateLogin(): Boolean {
         var isValid = true
 

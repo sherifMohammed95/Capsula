@@ -8,6 +8,7 @@ import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.databinding.ActivityResetPasswordBinding
 import com.blueMarketing.capsula.ui.authentication.AuthenticationActivity
+import com.blueMarketing.capsula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
 import com.blueMarketing.capsula.utils.Constants
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,7 +47,8 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
                 false
             )
         )
-        if (!mViewModel.fromChangePassword.get()){
+        mViewModel.isDelivery = intent.getBooleanExtra(Constants.IS_DELIVERY, false)
+        if (!mViewModel.fromChangePassword.get()) {
             mViewModel.phoneNumber = intent.getStringExtra(Constants.EXTRA_PHONE)!!
             mViewModel.authToken = intent.getStringExtra(Constants.EXTRA_AUTH_TOKEN)!!
         }
@@ -58,7 +60,10 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
             showPopUp(
                 "", getString(R.string.password_has_changed), getString(android.R.string.ok),
                 DialogInterface.OnClickListener { _, _ ->
-                    openAuthentication()
+                    if (mViewModel.isDelivery)
+                        openDeliveryAuthentication()
+                    else
+                        openAuthentication()
                 }, false
             )
         })
@@ -75,6 +80,12 @@ class ResetPasswordActivity : BaseActivity<ActivityResetPasswordBinding, ResetPa
 
     override fun openAuthentication() {
         val intent = Intent(this, AuthenticationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    override fun openDeliveryAuthentication() {
+        val intent = Intent(this, DeliveryAuthenticationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

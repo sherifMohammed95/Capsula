@@ -49,7 +49,7 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
         if (Constants.REFRESH_CUSTOMER_ORDERS) {
             Constants.REFRESH_CUSTOMER_ORDERS = false
             if (mViewModel.currentOrderPos != -1) {
-                mViewModel.orderList[mViewModel.currentOrderPos].statusId =
+                mViewModel.orderList[mViewModel.currentOrderPos].orderStatusId =
                     OrderStatus.CANCELLED
                 mAdapter.setData(mViewModel.orderList)
                 mViewModel.currentOrderPos = -1
@@ -95,8 +95,8 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
                         mViewModel.orderList.addAll(it.data!!.orderList!!)
                     if (mViewModel.orderList.size == it.data!!.count)
                         mViewModel.isLastPage = true
-                    mAdapter.setData(mViewModel.orderList)
                 }
+                mAdapter.setData(mViewModel.orderList)
             }
         })
     }

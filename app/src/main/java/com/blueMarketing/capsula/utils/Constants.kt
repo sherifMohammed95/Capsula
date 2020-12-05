@@ -17,12 +17,11 @@ object Constants {
     const val FROM_CHANGE_PASSWORD = "from_change_password"
     const val IS_EDIT_MODE = "is_edit_mode"
     const val GPS_CODE = 105
+    const val IS_DELIVERY = "is_delivery"
 
     var REFRESH_DELIVERY_ORDER = false
     var REFRESH_HOME = false
     var REFRESH_CUSTOMER_ORDERS = false
-
-    const val ORDER_IS_PROCESSING = 5
 
     const val INTERCOM_API_KEY = "android_sdk-e04c55cdabfd3596c71a4011672b78a21a1bcf19"
     const val INTERCOM_APP_ID = "zwlcn8xj"
