@@ -1,5 +1,6 @@
 package com.blueMarketing.capsula.data.repository
 
+import android.util.Log
 import com.blueMarketing.base.BaseResponse
 import com.blueMarketing.capsula.data.FAQ
 import com.blueMarketing.capsula.data.requests.RefreshDeviceRequest

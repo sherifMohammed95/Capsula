@@ -238,5 +238,7 @@
     <string name="no_results">No Search Results</string>
     <string name="no_history_found">No History Found</string>
     <string name="reach_out">You can\'t reach out to the customer location before starting the delivery</string>
+    <string name="accept_order">Accept</string>
+    <string name="reject_order">Reject</string>
 
 </resources>

@@ -28,10 +28,10 @@ class DeliveryOrderDetailsViewModel(val repo: OrdersRepository) :
     }
 
     fun takeAction(){
-        if(mOrder.statusId == ORDER_IS_PROCESSING)
-            finishDelivery()
-        else
-            startDelivery()
+//        if(mOrder.statusId == ORDER_IS_PROCESSING)
+//            finishDelivery()
+//        else
+//            startDelivery()
     }
 
    private fun startDelivery(){
@@ -45,7 +45,6 @@ class DeliveryOrderDetailsViewModel(val repo: OrdersRepository) :
             repo.finishDelivery(mOrder.orderId)
         }
     }
-
 
     fun loadOrderDetails() {
         viewModelScope.launch(Dispatchers.IO) {

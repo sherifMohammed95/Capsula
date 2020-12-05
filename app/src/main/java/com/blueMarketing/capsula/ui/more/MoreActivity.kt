@@ -32,6 +32,7 @@ import com.blueMarketing.capsula.utils.preferencesGateway
 import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
 import com.oppwa.mobile.connect.exception.PaymentError
 import com.oppwa.mobile.connect.provider.Connect
+import io.intercom.android.sdk.Intercom
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_more.*
 import org.koin.android.ext.android.inject
@@ -145,6 +146,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
     override fun logout() {
         UserDataSource.saveUser(null)
         UserDataSource.saveDeliveryUser(null)
+        Intercom.client().logout()
         UserDataSource.saveUserToken("")
         val intent = Intent(this, UserTypesActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

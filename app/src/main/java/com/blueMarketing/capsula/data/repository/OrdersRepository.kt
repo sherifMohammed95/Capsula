@@ -1,5 +1,6 @@
 package com.blueMarketing.capsula.data.repository
 
+import android.util.Log
 import com.blueMarketing.base.BaseResponse
 import com.blueMarketing.capsula.data.DeliveryOrder
 import com.blueMarketing.capsula.data.Order
@@ -22,6 +23,7 @@ class OrdersRepository : BaseRepository() {
     val cancelOrderResponse = SingleLiveEvent<String>()
     val startDeliveryResponse = SingleLiveEvent<Void>()
     val finishDeliveryResponse = SingleLiveEvent<Void>()
+    val changeOrderStatusResponse = SingleLiveEvent<Void>()
 
     suspend fun getOrders(pageNo: Int, showLoading: Boolean) {
         try {
@@ -220,6 +222,57 @@ class OrdersRepository : BaseRepository() {
                     }
                 })
             }
+        }
+    }
+
+    suspend fun changeOrderStatus(orderId: Int, statusId: Int) {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+
+            val response = webService.changeOrderStatus(orderId, statusId)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    changeOrderStatusResponse.call()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        changeOrderStatus(orderId, statusId)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun acceptOrder(orderId: Int, callback: Action) {
+        try {
+            val response = webService.acceptOrder(orderId)
+            if (response.isSuccessful) {
+                Log.e("accept success", "sherif success")
+                callback.run()
+            }
+        } catch (e: Exception) {
+            Log.e("accept error", e.toString())
+        }
+    }
+
+    suspend fun rejectOrder(orderId: Int) {
+        try {
+            val response = webService.rejectOrder(orderId)
+            if (response.isSuccessful) {
+                Log.e("rejected success", "sherif success")
+            }
+        } catch (e: Exception) {
+            Log.e("rejected error", e.toString())
         }
     }
 }

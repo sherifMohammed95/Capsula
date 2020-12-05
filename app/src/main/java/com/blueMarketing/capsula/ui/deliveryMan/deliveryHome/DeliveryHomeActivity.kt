@@ -19,6 +19,7 @@ import com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrd
 import com.blueMarketing.capsula.ui.more.MoreActivity
 import com.blueMarketing.capsula.ui.notifications.NotificationsActivity
 import com.blueMarketing.capsula.utils.Constants
+import com.blueMarketing.capsula.utils.Constants.EXTRA_ORDER_ID
 import com.blueMarketing.capsula.utils.Constants.GPS_CODE
 import com.blueMarketing.capsula.utils.MyLocationManager
 import com.blueMarketing.capsula.utils.Utils
@@ -50,6 +51,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         super.onCreate(savedInstanceState)
         initRecyclerView()
         subscribeToLiveData()
+        getUserLocationAndScheduleService()
     }
 
     private fun subscribeToLiveData() {
@@ -58,10 +60,9 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             if (!it.ordersList.isNullOrEmpty()) {
                 mViewModel.hasData.set(true)
                 Constants.REFRESH_DELIVERY_ORDER = false
-                mAdapter.setData(it.ordersList!!)
-                getUserLocationAndScheduleService()
             } else
                 mViewModel.hasData.set(false)
+            mAdapter.setData(it.ordersList!!)
         })
     }
 

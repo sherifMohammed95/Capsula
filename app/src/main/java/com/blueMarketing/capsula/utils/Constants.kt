@@ -43,7 +43,15 @@ object Constants {
     const val EXTRA_PRODUCT = "product"
     const val EXTRA_ORDER = "order"
     const val EXTRA_ORDER_ID = "order_id"
+    const val EXTRA_NOTIFICATION_ID = "notification_id"
     const val EXTRA_ADD_NEW_ADDRESS = "add_new_address"
+
+
+    /**
+     * Delivery Man Actions
+     * **/
+    const val ACCEPT_ACTION = "accept_action"
+    const val REJECT_ACTION = "reject_action"
 
 
     /**

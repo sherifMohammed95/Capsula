@@ -258,15 +258,11 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             updateCartNumber()
 
         if (this is AuthenticationActivity || this is CompleteProfileActivity ||
-            this is AddAddressActivity || this is DeliveryAuthenticationActivity ||
-            this is DeliveryHomeActivity || this is DeliveryOrderDetailsActivity ||
-            this is HistoryActivity
+            this is AddAddressActivity || this is DeliveryAuthenticationActivity
         ) {
             Utils.hideIntercom()
         } else {
-            if (UserDataSource.getDeliveryUser() != null && this is MoreActivity)
-                Utils.hideIntercom()
-            else if (UserDataSource.getUser() != null)
+            if (UserDataSource.getUser() != null || UserDataSource.getDeliveryUser() != null)
                 Utils.showIntercom()
             else
                 Utils.hideIntercom()

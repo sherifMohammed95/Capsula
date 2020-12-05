@@ -10,24 +10,6 @@ class OrderTracking {
     var orderStatusDesc = ""
     var operationDate = ""
 
-    fun getOrderStatus(): String {
-        return when {
-            orderStatusId?.value == OrderStatus.PENDING.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.pending)
-            orderStatusId?.value == OrderStatus.CANCELLED.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.cancelled)
-            orderStatusId?.value == OrderStatus.REJECTED.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.rejected)
-            orderStatusId?.value == OrderStatus.APPROVED.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.approved)
-            orderStatusId?.value == OrderStatus.SHIPPED.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.shipped)
-            orderStatusId?.value == OrderStatus.DELIVERED.value -> Domain.application.getString(R.string.order_is) +
-                    " " + Domain.application.getString(R.string.delivered)
-            else -> ""
-        }
-    }
-
     fun getEstimatedTime():String{
         val text = DateUtils.reformatOrderDate(this.operationDate)
         return DateUtils.getEstimatedOrderTime(text)

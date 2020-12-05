@@ -4,9 +4,6 @@ import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.OrderStatus.PENDING
 import com.blueMarketing.capsula.data.OrderStatus.CANCELLED
 import com.blueMarketing.capsula.data.OrderStatus.REJECTED
-import com.blueMarketing.capsula.data.OrderStatus.APPROVED
-import com.blueMarketing.capsula.data.OrderStatus.SHIPPED
-import com.blueMarketing.capsula.data.OrderStatus.DELIVERED
 import com.blueMarketing.capsula.data.PaymentMethodOption.CASH
 import com.blueMarketing.capsula.data.PaymentMethodOption.STC_PAY
 import com.blueMarketing.capsula.data.PaymentMethodOption.MADA
@@ -19,7 +16,7 @@ import kotlin.math.round
 class Order {
 
     var id: Int = 0
-    var orderStatusId: OrderStatus? = null
+    var statusId: OrderStatus? = null
     var orderDate: String? = null
     var totalPrice = 0.0
     var deliveryAddress: String? = null
@@ -32,6 +29,7 @@ class Order {
     var orderCode = ""
     var vatCost = 0.0
     var deliveryCost = 0.0
+    var orderStatusDesc = ""
 
     fun getFinalCost(): String {
         return "" + round(finalTotalCost * 100) / 100
@@ -62,25 +60,14 @@ class Order {
         return !insuranceNumberImageLink.isNullOrEmpty()
     }
 
-    fun getOrderStatus(): String {
-        return when (orderStatusId?.value) {
-            PENDING.value -> Domain.application.getString(R.string.pending)
-            CANCELLED.value -> Domain.application.getString(R.string.cancelled)
-            REJECTED.value -> Domain.application.getString(R.string.rejected)
-            APPROVED.value -> Domain.application.getString(R.string.approved)
-            SHIPPED.value -> Domain.application.getString(R.string.shipped)
-            DELIVERED.value -> Domain.application.getString(R.string.delivered)
-            else -> ""
-        }
-    }
-
     fun hasAction():Boolean{
-        return orderStatusId?.value == PENDING.value || orderStatusId?.value == CANCELLED.value ||
-                orderStatusId?.value == REJECTED.value || orderStatusId?.value == DELIVERED.value
+        return statusId?.value == PENDING.value || statusId?.value == CANCELLED.value ||
+                statusId?.value == REJECTED.value || statusId?.value == OrderStatus.COMPLETED.value
+                || statusId?.value == OrderStatus.UNCOMPLETED.value
     }
 
     fun hasCancelAction():Boolean{
-        return orderStatusId?.value == PENDING.value
+        return statusId?.value == PENDING.value
     }
 
     fun getPaymentMethod(): String {

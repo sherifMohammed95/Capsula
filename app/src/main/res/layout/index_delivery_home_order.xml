@@ -83,7 +83,7 @@
                             android:text="@string/order_in_progress"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/font_12"
-                            android:visibility="@{order.statusId == 5?View.VISIBLE:View.INVISIBLE}"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/order_id_label"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/order_id_label" />

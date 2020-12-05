@@ -1,5 +1,9 @@
 package com.blueMarketing.capsula
 
+import android.content.ContentResolver
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import com.blueMarketing.capsula.di.viewModelModule
 import com.blueMarketing.capsula.di.networkModule
 import com.blueMarketing.capsula.ui.addAddress.addAddressModule
@@ -40,6 +44,15 @@ class App : ApplicationLocale() {
         startDI()
         instance = this
         initIntercom()
+        initRingTone()
+    }
+
+    private fun initRingTone() {
+        alarmSound = Uri.parse(
+            ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                    this.packageName + "/raw/ringtone"
+        )
+        ringtone = RingtoneManager.getRingtone(this, alarmSound)
     }
 
      fun startDI() {
@@ -69,6 +82,8 @@ class App : ApplicationLocale() {
     }
 
     companion object {
+        lateinit var alarmSound: Uri
+        lateinit var ringtone: Ringtone
         lateinit var instance: App
     }
 }

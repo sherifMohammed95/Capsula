@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_22"
-            android:text="@{item.orderStatus}"
+            android:text="@{item.orderStatusDesc}"
             android:textColor="@color/colorLabelText"
             android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="@+id/order_tracking_imageView"

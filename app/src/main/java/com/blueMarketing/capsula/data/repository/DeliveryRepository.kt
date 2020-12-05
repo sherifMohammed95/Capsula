@@ -50,7 +50,7 @@ class DeliveryRepository : BaseRepository() {
             val response = webService.updateDeliveryCurrentLocation(request)
             if (response.isSuccessful) {
                 withContext(Main) {
-                    Log.e("DELIVERY_LOCATION", "current location updated")
+//                    Log.e("DELIVERY_LOCATION", "current location updated")
                 }
             }
         } catch (e: Exception) {

@@ -241,4 +241,6 @@
     <string name="no_results">لا توجد نتائج بحث</string>
     <string name="no_history_found">لا يوجد سجل للطلبات</string>
     <string name="reach_out">لا يمكنك الوصول إلى موقع العميل قبل بدء التسليم</string>
+    <string name="accept_order">قبول</string>
+    <string name="reject_order">رفض</string>
 </resources>

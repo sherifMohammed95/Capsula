@@ -185,8 +185,10 @@ interface WebService {
     suspend fun submitCheckoutDetails(@Body request: CheckoutDetailsRequest): Response<BaseResponse<String>>
 
     @GET("Order/GetOrders")
-    suspend fun getOrders(  @Query("PageNumber") pageNo: Int,
-                            @Query("PageSize") pageSize: Int): Response<BaseResponse<OrdersResponse>>
+    suspend fun getOrders(
+        @Query("PageNumber") pageNo: Int,
+        @Query("PageSize") pageSize: Int
+    ): Response<BaseResponse<OrdersResponse>>
 
     @GET("Order/GetOrderDetails")
     suspend fun getOrderDetails(@Query("orderId") orderId: Int): Response<BaseResponse<Order>>
@@ -273,4 +275,16 @@ interface WebService {
         @Query("PageNumber") pageNo: Int,
         @Query("PageSize") pageSize: Int
     ): Response<BaseResponse<NotificationsResponse>>
+
+    @GET("DeliveryMan/ChangeStatus/{orderId}/{statusId}")
+    suspend fun changeOrderStatus(
+        @Path("orderId") orderId: Int,
+        @Path("statusId") statusId: Int
+    ): Response<BaseResponse<Any>>
+
+    @GET("DeliveryMan/ChangeStatus/{orderId}/4")
+    suspend fun acceptOrder(@Path("orderId") orderId: Int): Response<BaseResponse<String>>
+
+    @GET("DeliveryMan/Reject/{orderId}")
+    suspend fun rejectOrder(@Path("orderId") orderId: Int): Response<BaseResponse<String>>
 }

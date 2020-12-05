@@ -159,6 +159,7 @@ class HomeViewModel(private val repo: GeneralRepository) : BaseViewModel<HomeNav
                 .withEmail(email)
                 .withPhone(phone)
                 .withUserId(userID.toString())
+                .withCustomAttribute("type","Client")
                 .build()
 
             val registration = Registration.create()

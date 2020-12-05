@@ -71,6 +71,10 @@ class DeliveryOrder {
     @Expose
     var statusId = 0
 
+    @SerializedName("orderStatusDesc")
+    @Expose
+    var orderStatusDesc = ""
+
     var products: ArrayList<Product>? = null
 
     var deliveryCost = 0.0

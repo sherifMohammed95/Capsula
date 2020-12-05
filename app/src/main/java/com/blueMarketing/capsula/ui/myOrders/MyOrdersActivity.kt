@@ -49,7 +49,7 @@ class MyOrdersActivity : BaseActivity<ActivityMyOrdersBinding, MyOrdersViewModel
         if (Constants.REFRESH_CUSTOMER_ORDERS) {
             Constants.REFRESH_CUSTOMER_ORDERS = false
             if (mViewModel.currentOrderPos != -1) {
-                mViewModel.orderList[mViewModel.currentOrderPos].orderStatusId =
+                mViewModel.orderList[mViewModel.currentOrderPos].statusId =
                     OrderStatus.CANCELLED
                 mAdapter.setData(mViewModel.orderList)
                 mViewModel.currentOrderPos = -1

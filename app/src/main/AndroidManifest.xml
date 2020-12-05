@@ -225,6 +225,8 @@
         <service
             android:name=".locationService.LocationService"
             android:enabled="true" />
+
+        <receiver android:name=".notificationReceiver.NotificationReceiver"/>
     </application>
 
 </manifest>
