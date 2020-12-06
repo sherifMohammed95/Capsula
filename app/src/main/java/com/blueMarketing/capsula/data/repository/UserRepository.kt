@@ -23,6 +23,7 @@ class UserRepository : BaseRepository() {
     val checkoutIdResponse = SingleLiveEvent<String>()
     val saveCardResponse = SingleLiveEvent<String>()
     val updateUserProfileResponse = SingleLiveEvent<Void>()
+    val validateDeliveryAddressResponse = SingleLiveEvent<Void>()
 
     suspend fun addAddress(addressText: String, lat: Double, lng: Double) {
 
@@ -297,6 +298,37 @@ class UserRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(Dispatchers.IO).launch {
                         logout()
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun validateDeliveryAddress() {
+
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.validateDeliveryAddress()
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    validateDeliveryAddressResponse.call()
+                }
+
+            } else {
+                withContext(Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        validateDeliveryAddress()
                     }
                 })
             }

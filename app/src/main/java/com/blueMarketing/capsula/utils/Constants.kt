@@ -18,6 +18,7 @@ object Constants {
     const val IS_EDIT_MODE = "is_edit_mode"
     const val GPS_CODE = 105
     const val IS_DELIVERY = "is_delivery"
+    const val OUT_OF_SERVICE = "out_of_service"
 
     var REFRESH_DELIVERY_ORDER = false
     var REFRESH_HOME = false

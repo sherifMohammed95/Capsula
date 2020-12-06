@@ -115,6 +115,8 @@ class DeliveryUser {
     @Expose
     var addressDesc: String? = null
 
+    var outOfService = false
+
     fun getCarModelYearText(): String {
         return Domain.application.getString(R.string.model) + " " + yearDesc
     }

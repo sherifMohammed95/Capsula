@@ -23,6 +23,7 @@ import com.blueMarketing.capsula.ui.deliveryMan.wallet.WalletActivity
 import com.blueMarketing.capsula.ui.faqs.FaqsActivity
 import com.blueMarketing.capsula.ui.more.adapters.MoreAdapter
 import com.blueMarketing.capsula.ui.myOrders.MyOrdersActivity
+import com.blueMarketing.capsula.ui.privacyPolicy.PrivacyPolicyActivity
 import com.blueMarketing.capsula.ui.splash.SplashActivity
 import com.blueMarketing.capsula.ui.userProfile.UserProfileActivity
 import com.blueMarketing.capsula.ui.userTypes.UserTypesActivity
@@ -232,6 +233,10 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun openFAQs() {
         startActivity(Intent(this, FaqsActivity::class.java))
+    }
+
+    override fun openPrivacyPolicy() {
+        startActivity(Intent(this, PrivacyPolicyActivity::class.java))
     }
 
     private fun openSplash() {

@@ -246,5 +246,6 @@
     <string name="yes">Yes</string>
     <string name="no_stores_found">No Stores Found</string>
     <string name="out_of_service">Out Of Service</string>
+    <string name="policy">Privacy Policy</string>
 
 </resources>

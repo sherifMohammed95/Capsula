@@ -32,6 +32,7 @@ import com.blueMarketing.capsula.ui.myOrders.MyOrdersViewModel
 import com.blueMarketing.capsula.ui.notifications.NotificationsViewModel
 import com.blueMarketing.capsula.ui.orderDetails.OrderDetailsViewModel
 import com.blueMarketing.capsula.ui.orderTracking.OrderTrackingViewModel
+import com.blueMarketing.capsula.ui.privacyPolicy.PrivacyPolicyViewModel
 import com.blueMarketing.capsula.ui.productDetails.ProductDetailsViewModel
 import com.blueMarketing.capsula.ui.products.ProductsViewModel
 import com.blueMarketing.capsula.ui.resetPassword.ResetPasswordViewModel
@@ -87,4 +88,5 @@ val viewModelModule = module {
     viewModel<AboutViewModel>()
     viewModel<FAQsViewModel>()
     viewModel<NotificationsViewModel>()
+    viewModel<PrivacyPolicyViewModel>()
 }

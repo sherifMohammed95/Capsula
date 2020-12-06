@@ -47,6 +47,8 @@ class MoreViewModel(val repo: UserRepository) : BaseViewModel<MoreNavigator>() {
             Domain.application.getString(R.string.about) -> navigator?.openAbout()
 
             Domain.application.getString(R.string.faqs) -> navigator?.openFAQs()
+
+            Domain.application.getString(R.string.policy) -> navigator?.openPrivacyPolicy()
         }
     }
 

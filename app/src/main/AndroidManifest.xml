@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.privacyPolicy.PrivacyPolicyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".ui.notifications.NotificationsActivity"
             android:screenOrientation="portrait"
@@ -226,7 +229,7 @@
             android:name=".locationService.LocationService"
             android:enabled="true" />
 
-        <receiver android:name=".notificationReceiver.NotificationReceiver"/>
+        <receiver android:name=".notificationReceiver.NotificationReceiver" />
     </application>
 
 </manifest>

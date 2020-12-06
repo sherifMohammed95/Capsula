@@ -7,11 +7,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.base.BaseRecyclerAdapter
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.DeliveryOrder
+import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityDeliveryHomeBinding
 import com.blueMarketing.capsula.locationService.LocationServiceManager
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.adapters.DeliveryOrdersAdapter
@@ -41,7 +44,7 @@ val deliveryHomeModule = module {
 
 class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryHomeViewModel>(),
     DeliveryHomeNavigator, BaseRecyclerAdapter.OnITemClickListener<DeliveryOrder>,
-    DeliveryOrdersAdapter.OnNavigateClickListener {
+    DeliveryOrdersAdapter.OnNavigateClickListener, CompoundButton.OnCheckedChangeListener {
 
     private val mViewModel: DeliveryHomeViewModel by viewModel()
     private val mAdapter: DeliveryOrdersAdapter by inject()
@@ -52,6 +55,7 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         initRecyclerView()
         subscribeToLiveData()
         getUserLocationAndScheduleService()
+        out_service_switch.setOnCheckedChangeListener(this)
     }
 
     private fun subscribeToLiveData() {
@@ -62,6 +66,10 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
             } else
                 mViewModel.hasData.set(false)
             mAdapter.setData(it.ordersList!!)
+        })
+
+        mViewModel.activeDeliveryStatusResponse.observe(this, Observer {
+            mViewModel.outOfService.set(UserDataSource.getOutOfServiceDelivery())
         })
     }
 
@@ -189,5 +197,9 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         } else {
             //Users did not switch on the GPS
         }
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        mViewModel.changeDeliveryStatus()
     }
 }

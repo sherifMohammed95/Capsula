@@ -249,4 +249,5 @@
     <string name="yes">نعم</string>
     <string name="no_stores_found">لا توجد متاجر</string>
     <string name="out_of_service">خارج الخدمة</string>
+    <string name="policy">سياسة الخصوصية</string>
 </resources>

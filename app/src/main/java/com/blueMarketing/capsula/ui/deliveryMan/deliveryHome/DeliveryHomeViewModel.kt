@@ -18,12 +18,15 @@ class DeliveryHomeViewModel(private val mRepo: GeneralRepository) :
     BaseViewModel<DeliveryHomeNavigator>() {
 
     var userNameText = ObservableField(UserDataSource.getDeliveryUser()?.fullName)
+    var outOfService = ObservableBoolean(UserDataSource.getOutOfServiceDelivery())
     var deliveryHomeDataResponse = SingleLiveEvent<DeliveryOrdersResponse>()
+    var activeDeliveryStatusResponse = SingleLiveEvent<Void>()
     var id = 0
 
     init {
         initRepository(mRepo)
         this.deliveryHomeDataResponse = mRepo.deliveryHomeDataResponse
+        this.activeDeliveryStatusResponse = mRepo.activeDeliveryStatusResponse
         getHomeData(true)
 
         if (UserDataSource.getDeliveryUser() != null)
@@ -46,7 +49,7 @@ class DeliveryHomeViewModel(private val mRepo: GeneralRepository) :
                 .withEmail(email)
                 .withPhone(phone)
                 .withUserId(userID.toString())
-                .withCustomAttribute("type","Delivery man")
+                .withCustomAttribute("type", "Delivery man")
                 .build()
 
             val registration = Registration.create()
@@ -68,6 +71,12 @@ class DeliveryHomeViewModel(private val mRepo: GeneralRepository) :
     fun getHomeData(showLoading: Boolean) {
         viewModelScope.launch(IO) {
             mRepo.getDeliveryHomeData(showLoading)
+        }
+    }
+
+    fun changeDeliveryStatus() {
+        viewModelScope.launch(IO) {
+            mRepo.changeDeliveryStatus()
         }
     }
 

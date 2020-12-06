@@ -79,10 +79,7 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
         val intent = Intent(this, ResetPasswordActivity::class.java)
         intent.putExtra(Constants.EXTRA_PHONE, mViewModel.phoneNumber)
         intent.putExtra(Constants.EXTRA_AUTH_TOKEN, idToken)
-        intent.putExtra(
-            Constants.IS_DELIVERY,
-            intent.getBooleanExtra(Constants.IS_DELIVERY, false)
-        )
+        intent.putExtra(Constants.IS_DELIVERY, mViewModel.isDelivery)
         startActivity(intent)
         finish()
     }
@@ -138,6 +135,7 @@ class VerificationActivity : BaseActivity<ActivityVerificationBinding, Verificat
             CompleteProfileRequest::class.java
         )
         mViewModel.phoneNumber = intent.getStringExtra(Constants.EXTRA_PHONE)!!
+        mViewModel.isDelivery = intent.getBooleanExtra(Constants.IS_DELIVERY,false)
 
         if (mViewModel.registerRequest != null)
             mViewModel.phoneNumber = mViewModel.registerRequest?.phone!!

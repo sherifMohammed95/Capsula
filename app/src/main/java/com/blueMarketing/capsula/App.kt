@@ -22,6 +22,7 @@ import com.blueMarketing.capsula.ui.myOrders.ordersModule
 import com.blueMarketing.capsula.ui.notifications.notificationsModule
 import com.blueMarketing.capsula.ui.orderDetails.orderDetailsModule
 import com.blueMarketing.capsula.ui.orderTracking.orderTrackingModule
+import com.blueMarketing.capsula.ui.privacyPolicy.policyModule
 import com.blueMarketing.capsula.ui.products.productsModule
 import com.blueMarketing.capsula.ui.search.searchModule
 import com.blueMarketing.capsula.ui.stores.storesModule
@@ -64,7 +65,8 @@ class App : ApplicationLocale() {
                     brandsModule, categoriesModule, storesModule, subCategoriesModule,
                     productsModule, searchModule, cartModule, checkoutDetailsModule, moreModule,
                     ordersModule, orderDetailsModule, orderTrackingModule, deliveryHomeModule,
-                    walletModule,viewDeliveryProfileModule, FAQsModule, notificationsModule
+                    walletModule,viewDeliveryProfileModule, FAQsModule, notificationsModule,
+                    policyModule
                 )
             )
         }

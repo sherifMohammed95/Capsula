@@ -32,6 +32,7 @@ class VerificationViewModel(private val authRepo: AuthenticationRepository) :
     var completeProfileRequest: CompleteProfileRequest? = null
 
     var phoneNumber = ""
+    var isDelivery = false
 
     init {
         initRepository(authRepo)

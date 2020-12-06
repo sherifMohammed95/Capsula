@@ -26,4 +26,6 @@ interface MoreNavigator {
 
     fun openFAQs()
 
+    fun openPrivacyPolicy()
+
 }

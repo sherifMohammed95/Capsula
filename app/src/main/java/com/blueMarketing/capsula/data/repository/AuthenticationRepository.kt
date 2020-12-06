@@ -73,6 +73,9 @@ class AuthenticationRepository : BaseRepository() {
                     progressLoading.value = false
                 }
                 UserDataSource.saveDeliveryUser(response.body()!!.data!!.authUserData)
+                UserDataSource.saveOutOfServiceDelivery(
+                    response.body()!!.data!!.authUserData.outOfService
+                )
                 UserDataSource.saveUserToken(response.body()!!.data!!.token)
 
                 withContext(Main) {

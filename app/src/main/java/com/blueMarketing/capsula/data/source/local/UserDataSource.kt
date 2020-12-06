@@ -6,6 +6,7 @@ import com.blueMarketing.capsula.data.Product
 import com.blueMarketing.capsula.data.User
 import com.blueMarketing.capsula.utils.Constants.DELIVERY_USER
 import com.blueMarketing.capsula.utils.Constants.OPEN_CHECKOUT
+import com.blueMarketing.capsula.utils.Constants.OUT_OF_SERVICE
 import com.blueMarketing.capsula.utils.Constants.TOKEN
 import com.blueMarketing.capsula.utils.Constants.UPDATE_CART_NUMBER
 import com.blueMarketing.capsula.utils.Constants.USER
@@ -29,6 +30,13 @@ class UserDataSource {
             preferencesGateway.save(DELIVERY_USER, Gson().toJson(user))
         }
 
+        fun saveOutOfServiceDelivery(outOfService: Boolean) {
+            preferencesGateway.save(OUT_OF_SERVICE, outOfService)
+        }
+
+        fun getOutOfServiceDelivery(): Boolean {
+            return preferencesGateway.load(OUT_OF_SERVICE, false)
+        }
 
         fun getUser(): User? {
             return Gson().fromJson(
@@ -43,6 +51,7 @@ class UserDataSource {
                 DeliveryUser::class.java
             )
         }
+
 
         fun saveUserToken(token: String) {
             preferencesGateway.save(TOKEN, token)

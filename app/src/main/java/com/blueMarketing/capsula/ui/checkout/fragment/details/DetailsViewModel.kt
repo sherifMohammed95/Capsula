@@ -37,13 +37,14 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     var selectedPaymentMethodPos = -1
     var selectedPaymentMethodValue = -1
     var selectedDeliveryAddressPos = -1
-    var resoursePath:String? = ""
+    var resoursePath: String? = ""
 
     var updateDefaultAddressResponse = SingleLiveEvent<Void>()
     var successEvent = SingleLiveEvent<Void>()
     var checkTotalCostEvent = SingleLiveEvent<Void>()
     var paymentDetailsResponse = SingleLiveEvent<PaymentDetailsResponse>()
     var checkoutIdResponse = SingleLiveEvent<String>()
+    var validateDeliveryAddressResponse = SingleLiveEvent<Void>()
 
     init {
         initRepository(repo)
@@ -51,6 +52,7 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
         this.successEvent = repo.successEvent
         this.paymentDetailsResponse = repo.paymentDetailsResponse
         this.checkoutIdResponse = repo.checkoutIdResponse
+        this.validateDeliveryAddressResponse = repo.validateDeliveryAddressResponse
         showPrescription.set(UserDataSource.getUser()?.cartContent?.find { it.isTreatment } != null)
         setImageUri()
         setSelectedAddressPos()
@@ -98,7 +100,7 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     fun nextAction() {
         if (!validate())
             return
-        checkTotalCostEvent.call()
+        validateDeliveryAddress()
     }
 
     private fun validate(): Boolean {
@@ -126,6 +128,12 @@ class DetailsViewModel(val repo: UserRepository) : BaseViewModel<DetailsNavigato
     fun getDeliveryCost() {
         viewModelScope.launch(IO) {
             repo.getDeliveryCost()
+        }
+    }
+
+    private fun validateDeliveryAddress() {
+        viewModelScope.launch(IO) {
+            repo.validateDeliveryAddress()
         }
     }
 

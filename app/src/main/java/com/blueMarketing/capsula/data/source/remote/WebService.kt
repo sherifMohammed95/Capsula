@@ -243,6 +243,9 @@ interface WebService {
     @GET("Home/FAQs")
     suspend fun getFAQs(): Response<BaseResponse<FaqsResponse>>
 
+    @GET("Home/PrivacyPolicies")
+    suspend fun getPrivacyPolicy(): Response<BaseResponse<PolicyResponse>>
+
     @GET("CheckOut/GetDeliveryCost")
     suspend fun getDeliveryCost(): Response<BaseResponse<PaymentDetailsResponse>>
 
@@ -270,6 +273,9 @@ interface WebService {
     @GET("Authentication/Logout")
     suspend fun logout(): Response<BaseResponse<String>>
 
+    @GET("CheckOut/ValidateDeliveryAddress")
+    suspend fun validateDeliveryAddress(): Response<BaseResponse<Any>>
+
     @POST("Authentication/RefreshDevice")
     suspend fun refreshDevice(@Body request: RefreshDeviceRequest): Response<BaseResponse<Any>>
 
@@ -293,4 +299,7 @@ interface WebService {
 
     @POST("DeliveryManRegisteration/ForgetPassword")
     suspend fun resetDeliveryPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Any>>
+
+    @PUT("DeliveryManRegisteration/OutService/{outOfService}")
+    suspend fun changeDeliveryStatus(@Path("outOfService") status: Boolean): Response<BaseResponse<Any>>
 }

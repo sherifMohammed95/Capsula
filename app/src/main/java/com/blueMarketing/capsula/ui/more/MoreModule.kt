@@ -15,6 +15,7 @@ val moreModule = module {
 
     single(named(GUEST_MORE_LIST)) {
         arrayListOf(
+            MoreItem(R.drawable.ic_policy, androidContext().getString(R.string.policy)),
             MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
             MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
@@ -34,6 +35,7 @@ val moreModule = module {
                 R.drawable.ic_enable_notifications,
                 androidContext().getString(R.string.enable_notifications), true
             ),
+            MoreItem(R.drawable.ic_policy, androidContext().getString(R.string.policy)),
             MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
             MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),
@@ -45,10 +47,8 @@ val moreModule = module {
         arrayListOf(
             MoreItem(R.drawable.ic_personal, androidContext().getString(R.string.personal_details)),
             MoreItem(R.drawable.ic_history, androidContext().getString(R.string.history)),
-            MoreItem(
-                R.drawable.ic_wallet,
-                androidContext().getString(R.string.my_wallet)
-            ),
+            MoreItem(R.drawable.ic_wallet, androidContext().getString(R.string.my_wallet)),
+            MoreItem(R.drawable.ic_policy, androidContext().getString(R.string.policy)),
             MoreItem(R.drawable.ic_language, androidContext().getString(R.string.change_lang)),
             MoreItem(R.drawable.ic_faqs, androidContext().getString(R.string.faqs)),
             MoreItem(R.drawable.ic_about, androidContext().getString(R.string.about)),

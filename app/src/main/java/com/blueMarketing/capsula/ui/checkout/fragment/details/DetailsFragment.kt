@@ -85,6 +85,10 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
 
     private fun subscribeToLiveData() {
+
+        mViewModel.validateDeliveryAddressResponse.observe(viewLifecycleOwner, Observer {
+            mViewModel.checkTotalCostEvent.call()
+        })
         mViewModel.paymentDetailsResponse.observe(viewLifecycleOwner, Observer {
             viewDataBinding?.payment = it
         })
@@ -135,8 +139,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.LIVE);
 
-        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
-        if(currentLang.contentEquals("en"))
+        val currentLang: String = preferencesGateway.load(Constants.LANGUAGE, "en")
+        if (currentLang.contentEquals("en"))
             checkoutSettings.locale = "en_US";
         else
             checkoutSettings.locale = "ar_AR";

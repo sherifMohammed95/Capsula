@@ -3,6 +3,7 @@ package com.blueMarketing.capsula.data.repository
 import android.util.Log
 import com.blueMarketing.base.BaseResponse
 import com.blueMarketing.capsula.data.FAQ
+import com.blueMarketing.capsula.data.Policy
 import com.blueMarketing.capsula.data.requests.RefreshDeviceRequest
 import com.blueMarketing.capsula.data.responses.*
 import com.blueMarketing.capsula.data.source.local.UserDataSource
@@ -25,9 +26,41 @@ class GeneralRepository : BaseRepository() {
     val termsResponse = SingleLiveEvent<String>()
     val aboutResponse = SingleLiveEvent<String>()
     val faqsResponse = SingleLiveEvent<ArrayList<FAQ>>()
+    val policyResponse = SingleLiveEvent<ArrayList<Policy>>()
     val notificationResponse = SingleLiveEvent<NotificationsResponse>()
+    val activeDeliveryStatusResponse = SingleLiveEvent<Void>()
 
     val storesResponse = SingleLiveEvent<BaseResponse<StoresResponse>>()
+
+    suspend fun changeDeliveryStatus() {
+        try {
+            withContext(Dispatchers.Main) {
+                progressLoading.value = true
+            }
+            val status = UserDataSource.getOutOfServiceDelivery()
+
+            val response = webService.changeDeliveryStatus(!status)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    progressLoading.value = false
+                    UserDataSource.saveOutOfServiceDelivery(!status)
+                    activeDeliveryStatusResponse.call()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        changeDeliveryStatus()
+                    }
+                })
+            }
+        }
+    }
 
     suspend fun getStores(showLoading: Boolean, pageNo: Int) {
         try {
@@ -387,4 +420,32 @@ class GeneralRepository : BaseRepository() {
             }
         }
     }
+
+    suspend fun getPrivacyPolicy() {
+        try {
+            withContext(Dispatchers.Main) {
+                showLoadingLayout.value = true
+            }
+            val response = webService.getPrivacyPolicy()
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    showLoadingLayout.value = false
+                    policyResponse.postValue(response.body()?.data?.list)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    handleApiError(response.errorBody()!!.string(), response.code())
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        getPrivacyPolicy()
+                    }
+                })
+            }
+        }
+    }
+
 }
