@@ -15,7 +15,7 @@ import com.blueMarketing.capsula.data.repository.CartRepository
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.FragmentCartBinding
 import com.blueMarketing.capsula.ui.authentication.AuthenticationActivity
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.checkout.fragment.cart.adapters.CartAdapter
 import com.blueMarketing.capsula.ui.productDetails.ProductDetailsActivity
 import com.blueMarketing.capsula.utils.Constants
@@ -90,6 +90,10 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
             openDetailsStep()
         })
 
+//        mViewModel.closeScreen.observe(viewLifecycleOwner, Observer {
+//            activity?.finish()
+//        })
+
         mViewModel.differentProductMsg.observe(viewLifecycleOwner, Observer {
             val message = getString(R.string.your_cart_contains) + " " + it + " " +
                     getString(R.string.do_u_wish)
@@ -163,7 +167,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
     }
 
     override fun openDetailsStep() {
-        (activity as CheckoutActivity).openDetailsFragment()
+        (activity as CustomerCheckoutActivity).openDetailsFragment()
     }
 
     private fun updateDataView() {
@@ -179,7 +183,7 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(), CartNav
 
     override fun onResume() {
         super.onResume()
-        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
+        (activity as CustomerCheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
             ?.setImageResource(R.drawable.cart_progress_bar)
     }
 

@@ -7,7 +7,7 @@ import com.blueMarketing.base.BaseFragment
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.FragmentDoneBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.myOrders.MyOrdersActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,7 +40,7 @@ class DoneFragment : BaseFragment<FragmentDoneBinding, DoneViewModel>(), DoneNav
 
     override fun onResume() {
         super.onResume()
-        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
+        (activity as CustomerCheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
             ?.setImageResource(R.drawable.done_progress_bar)
     }
 

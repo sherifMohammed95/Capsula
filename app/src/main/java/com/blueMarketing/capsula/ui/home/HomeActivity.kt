@@ -9,7 +9,7 @@ import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityHomeBinding
 import com.blueMarketing.capsula.ui.brands.BrandsActivity
 import com.blueMarketing.capsula.ui.categories.CategoriesActivity
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.home.adapters.HomeBrandsAdapter
 import com.blueMarketing.capsula.ui.home.adapters.HomeCategoriesAdapter
 import com.blueMarketing.capsula.ui.home.adapters.HomeStoresAdapter
@@ -20,7 +20,6 @@ import com.blueMarketing.capsula.ui.search.SearchActivity
 import com.blueMarketing.capsula.ui.stores.StoresActivity
 import com.blueMarketing.capsula.utils.Constants
 import io.reactivex.functions.Action
-import kotlinx.android.synthetic.main.activity_categories.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.categories_recyclerView
 import org.koin.android.ext.android.inject
@@ -167,7 +166,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     }
 
     override fun openCheckout() {
-        startActivity(Intent(this, CheckoutActivity::class.java))
+        startActivity(Intent(this, CustomerCheckoutActivity::class.java))
     }
 
 }

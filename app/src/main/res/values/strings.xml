@@ -247,5 +247,6 @@
     <string name="no_stores_found">No Stores Found</string>
     <string name="out_of_service">Out Of Service</string>
     <string name="policy">Privacy Policy</string>
+    <string name="deduction_message">To add your card there will be a deduction of 1 SR to verify your card and the deducted amount will be refunded.</string>
 
 </resources>

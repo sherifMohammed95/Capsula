@@ -13,7 +13,7 @@ import com.blueMarketing.capsula.data.MessageEvent
 import com.blueMarketing.capsula.data.Product
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivitySearchBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.productDetails.ProductDetailsActivity
 import com.blueMarketing.capsula.ui.products.adapters.ProductsAdapter
 import com.blueMarketing.capsula.utils.Constants
@@ -26,7 +26,6 @@ import org.koin.core.qualifier.named
 import rx.functions.Action1
 import rx.functions.Action2
 import io.reactivex.functions.Action
-import kotlinx.android.synthetic.main.activity_products.*
 
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator,
     ProductsAdapter.OnPlusClickListener, BaseRecyclerAdapter.OnITemClickListener<Product> {
@@ -149,7 +148,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         val storeName = UserDataSource.checkCartFromTheSameStore(product)
         if (UserDataSource.getUser() == null) {
             if (storeName.contentEquals("")) {
-                UserDataSource.addProductToCart(product)
+                UserDataSource.addProductToCart(product, Action {
+                    openCheckout()
+                })
                 mViewModel.updateCartNumber()
             } else {
                 val message = getString(R.string.your_cart_contains) + " " + storeName + " " +
@@ -157,7 +158,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
                 showPopUp("", message, R.string.new_order,
                     DialogInterface.OnClickListener { _, _ ->
                         UserDataSource.deleteCart()
-                        UserDataSource.addProductToCart(product)
+                        UserDataSource.addProductToCart(product, Action {
+                            openCheckout()
+                        })
                     }
                     , getString(android.R.string.cancel), false)
             }
@@ -191,6 +194,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     }
 
     override fun openCheckout() {
-        startActivity(Intent(this, CheckoutActivity::class.java))
+        startActivity(Intent(this, CustomerCheckoutActivity::class.java))
     }
 }

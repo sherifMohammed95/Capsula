@@ -14,6 +14,7 @@ import com.blueMarketing.capsula.utils.Constants.USER_CART
 import com.blueMarketing.capsula.utils.preferencesGateway
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.functions.Action
 import org.greenrobot.eventbus.EventBus
 
 
@@ -74,7 +75,7 @@ class UserDataSource {
             return userCart.size
         }
 
-        fun addProductToCart(product: Product) {
+        fun addProductToCart(product: Product, openCheckoutCallback: Action) {
             product.quantity = 1
             var userCart = ArrayList<Product>()
             val jsonString = preferencesGateway.load(USER_CART, "")
@@ -82,7 +83,8 @@ class UserDataSource {
                 userCart = Gson().fromJson(jsonString, productListType)
 
                 if (checkProductExistInCart(userCart, product)) {
-                    EventBus.getDefault().postSticky(MessageEvent(OPEN_CHECKOUT))
+//                    EventBus.getDefault().postSticky(MessageEvent(OPEN_CHECKOUT))
+                    openCheckoutCallback.run()
                 } else {
                     userCart.add(product)
                     preferencesGateway.save(USER_CART, Gson().toJson(userCart, productListType))

@@ -10,7 +10,7 @@ object Constants {
     const val FROM_WHERE = "from_where"
     const val USER_CART = "user_cart"
     const val UPDATE_CART_NUMBER = "update_cart_number"
-    const val OPEN_CHECKOUT = "open_checkout"
+    const val OPEN_CHECKOUT = "checkout"
     const val NOTIFICATIONS_IS_ENABLED = "notifications_is_enabled"
     const val FCM_TOKEN = "fcm_token"
     const val FROM_HISTORY = "from_history"

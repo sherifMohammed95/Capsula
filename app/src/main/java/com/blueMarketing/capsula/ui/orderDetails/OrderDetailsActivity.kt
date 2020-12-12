@@ -8,7 +8,7 @@ import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.Order
 import com.blueMarketing.capsula.databinding.ActivityOrderDetailsBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.orderDetails.adapters.ProductsDetailsAdapter
 import com.blueMarketing.capsula.ui.orderTracking.OrderTrackingActivity
 import com.blueMarketing.capsula.utils.Constants
@@ -92,7 +92,7 @@ class OrderDetailsActivity : BaseActivity<ActivityOrderDetailsBinding, OrderDeta
     }
 
     override fun openCheckout() {
-        val intent = Intent(this, CheckoutActivity::class.java)
+        val intent = Intent(this, CustomerCheckoutActivity::class.java)
         intent.putExtra(Constants.EXTRA_ORDER, Gson().toJson(mViewModel.mOrder))
         intent.putExtra(Constants.FROM_WHERE, Constants.FROM_ORDER_DETAILS)
         startActivity(intent)

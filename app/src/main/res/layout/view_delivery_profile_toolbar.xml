@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -76,10 +76,11 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/user_imageView"
-                imageURL="@{user.personalPicture}"
+                imageURL="@{vm.imageUrl}"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:background="@android:color/white"
+                android:scaleType="centerCrop"
                 app:riv_corner_radius="@dimen/dimen_50"
                 app:riv_mutate_background="true" />
 

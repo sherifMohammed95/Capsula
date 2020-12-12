@@ -14,7 +14,7 @@ import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.custom.bottomSheet.BottomSelectionFragment
 import com.blueMarketing.capsula.data.ImagePickerOption
 import com.blueMarketing.capsula.databinding.FragmentRequiredDocumentsBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.checkout.fragment.details.IMAGE_PICKER_OPTIONS_LIST
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
 import com.blueMarketing.capsula.ui.deliveryMan.editDeliveryProfile.EditDeliveryProfileActivity
@@ -171,7 +171,7 @@ class RequiredDocumentsFragment :
 
     private fun handleDenyPermissions(arg: QuickPermissionsRequest) {
 
-        (activity as CheckoutActivity).showPopUp(
+        (activity as CustomerCheckoutActivity).showPopUp(
             R.string.permission_denied,
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->
@@ -180,7 +180,7 @@ class RequiredDocumentsFragment :
     }
 
     private fun handleDenyPermissionsPermanently(arg: QuickPermissionsRequest) {
-        (activity as CheckoutActivity).showPopUp(
+        (activity as CustomerCheckoutActivity).showPopUp(
             getString(R.string.permission_denied_permanently),
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->

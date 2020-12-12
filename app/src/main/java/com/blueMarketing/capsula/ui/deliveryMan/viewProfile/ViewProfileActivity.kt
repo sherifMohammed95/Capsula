@@ -29,6 +29,12 @@ class ViewProfileActivity : BaseActivity<ActivityViewProfileBinding, ViewProfile
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(UserDataSource.getDeliveryUser()!=null)
+            mViewModel.imageUrl.set(UserDataSource.getDeliveryUser()?.personalPicture)
+    }
+
     override fun getMyViewModel(): ViewProfileViewModel {
         return mViewModel
     }

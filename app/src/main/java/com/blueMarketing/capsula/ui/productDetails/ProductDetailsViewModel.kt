@@ -11,6 +11,7 @@ import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.SingleLiveEvent
 import com.blueMarketing.capsula.utils.preferencesGateway
 import com.google.gson.Gson
+import io.reactivex.functions.Action
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,9 @@ class ProductDetailsViewModel(val mRepository: ProductsRepository) :
                     userCart = Gson().fromJson(jsonString, UserDataSource.productListType)
                     if (!UserDataSource.checkProductExistInCart(userCart, product))
                         productaddedMsg.call()
-                    UserDataSource.addProductToCart(product)
+                    UserDataSource.addProductToCart(product, Action {
+                        navigator?.openCheckout()
+                    })
                 }
             } else {
                 differentProductMsg.value = storeName

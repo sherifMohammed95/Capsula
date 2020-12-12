@@ -32,7 +32,8 @@
             android:id="@+id/toolbar"
             layout="@layout/view_delivery_profile_toolbar"
             app:navigator="@{navigator}"
-            app:user="@{user}" />
+            app:user="@{user}"
+            app:vm="@{vm}" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

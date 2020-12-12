@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.Handler
 import androidx.core.app.NotificationCompat
 import com.blueMarketing.capsula.App
 import com.blueMarketing.capsula.R
@@ -98,8 +99,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 var acceptActionText = ""
                 var rejectActionText = ""
 
-                if(preferencesGateway.load(Constants.LANGUAGE,"en")
-                        .contentEquals("en")){
+                if (preferencesGateway.load(Constants.LANGUAGE, "en")
+                        .contentEquals("en")
+                ) {
                     acceptActionText = "Accept"
                     rejectActionText = "Reject"
                 } else {
@@ -129,23 +131,29 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(title)
                         .setContentText(body)
-                        .setStyle(NotificationCompat.BigTextStyle()
-                            .bigText(body))
+                        .setStyle(
+                            NotificationCompat.BigTextStyle()
+                                .bigText(body)
+                        )
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
                         .setAutoCancel(true)
 
                     if (type == NEW_DELIVERY_ORDER) {
 
-                        val acceptIntent = Intent(this,
-                            NotificationReceiver::class.java).apply {
+                        val acceptIntent = Intent(
+                            this,
+                            NotificationReceiver::class.java
+                        ).apply {
                             action = ACCEPT_ACTION
                             putExtra(EXTRA_ORDER_ID, orderId)
                             putExtra(EXTRA_NOTIFICATION_ID, notificationId)
                         }
 
-                        val rejectIntent = Intent(this,
-                            NotificationReceiver::class.java).apply {
+                        val rejectIntent = Intent(
+                            this,
+                            NotificationReceiver::class.java
+                        ).apply {
                             action = REJECT_ACTION
                             putExtra(EXTRA_ORDER_ID, orderId)
                             putExtra(EXTRA_NOTIFICATION_ID, notificationId)
@@ -165,11 +173,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             PendingIntent.FLAG_UPDATE_CURRENT
                         )
 
-                        builder?.addAction(R.mipmap.ic_launcher, acceptActionText,
-                            acceptPendingIntent)
+                        builder?.addAction(
+                            R.mipmap.ic_launcher, acceptActionText,
+                            acceptPendingIntent
+                        )
 
-                        builder?.addAction(R.mipmap.ic_launcher, rejectActionText,
-                            rejectPendingIntent)
+                        builder?.addAction(
+                            R.mipmap.ic_launcher, rejectActionText,
+                            rejectPendingIntent
+                        )
 
                         try {
                             App.ringtone.play()

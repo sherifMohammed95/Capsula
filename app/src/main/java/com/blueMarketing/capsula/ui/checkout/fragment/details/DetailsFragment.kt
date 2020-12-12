@@ -18,7 +18,7 @@ import com.blueMarketing.capsula.data.PaymentMethod
 import com.blueMarketing.capsula.data.UserAddress
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.FragmentDetailsBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.utils.Constants
 import com.blueMarketing.capsula.utils.ImageUtil
 import com.blueMarketing.capsula.utils.preferencesGateway
@@ -63,7 +63,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
     override fun onResume() {
         super.onResume()
-        (activity as CheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
+        (activity as CustomerCheckoutActivity).viewDataBinding?.toolbar?.progressBarImageView
             ?.setImageResource(R.drawable.details_progress_bar)
     }
 
@@ -99,7 +99,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
         })
 
         mViewModel.successEvent.observe(viewLifecycleOwner, Observer {
-            (activity as CheckoutActivity).openDoneFragment()
+            (activity as CustomerCheckoutActivity).openDoneFragment()
         })
 
         mViewModel.checkTotalCostEvent.observe(viewLifecycleOwner, Observer {
@@ -250,7 +250,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
 
     private fun handleDenyPermissions(arg: QuickPermissionsRequest) {
 
-        (activity as CheckoutActivity).showPopUp(
+        (activity as CustomerCheckoutActivity).showPopUp(
             R.string.permission_denied,
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->
@@ -259,7 +259,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding, DetailsViewModel>()
     }
 
     private fun handleDenyPermissionsPermanently(arg: QuickPermissionsRequest) {
-        (activity as CheckoutActivity).showPopUp(
+        (activity as CustomerCheckoutActivity).showPopUp(
             getString(R.string.permission_denied_permanently),
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->

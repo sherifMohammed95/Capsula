@@ -2,10 +2,11 @@ package com.blueMarketing.capsula.ui.checkout
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.Order
-import com.blueMarketing.capsula.databinding.ActivityCheckoutBinding
+import com.blueMarketing.capsula.databinding.ActivityCustomerCheckoutBinding
 import com.blueMarketing.capsula.ui.checkout.fragment.cart.CartFragment
 import com.blueMarketing.capsula.ui.checkout.fragment.details.DetailsFragment
 import com.blueMarketing.capsula.ui.checkout.fragment.done.DoneFragment
@@ -13,7 +14,7 @@ import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel>(),
+class CustomerCheckoutActivity : BaseActivity<ActivityCustomerCheckoutBinding, CheckoutViewModel>(),
     CheckoutNavigator {
 
     private val mViewModel: CheckoutViewModel by viewModel()
@@ -33,7 +34,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_checkout
+        return R.layout.activity_customer_checkout
     }
 
     override fun init() {
@@ -47,7 +48,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutViewModel
 
         if (intent!!.scheme.equals("capsula")) {
             val checkoutId = intent.data!!.getQueryParameter("id")
-//            Toast.makeText(this, "new intent", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "new intent", Toast.LENGTH_LONG).show()
         }
     }
 

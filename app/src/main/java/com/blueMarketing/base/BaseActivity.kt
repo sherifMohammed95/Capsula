@@ -36,19 +36,16 @@ import com.blueMarketing.capsula.ui.addAddress.AddAddressActivity
 import com.blueMarketing.capsula.ui.authentication.AuthenticationActivity
 import com.blueMarketing.capsula.ui.brands.BrandsActivity
 import com.blueMarketing.capsula.ui.categories.CategoriesActivity
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.ui.completeProfile.CompleteProfileActivity
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryAuthentication.DeliveryAuthenticationActivity
-import com.blueMarketing.capsula.ui.deliveryMan.deliveryHome.DeliveryHomeActivity
 import com.blueMarketing.capsula.ui.deliveryMan.deliveryOrderDetails.DeliveryOrderDetailsActivity
-import com.blueMarketing.capsula.ui.deliveryMan.history.HistoryActivity
-import com.blueMarketing.capsula.ui.more.MoreActivity
 import com.blueMarketing.capsula.ui.myOrders.MyOrdersActivity
+import com.blueMarketing.capsula.ui.orderDetails.OrderDetailsActivity
 import com.blueMarketing.capsula.ui.products.ProductsActivity
 import com.blueMarketing.capsula.ui.search.SearchActivity
 import com.blueMarketing.capsula.ui.stores.StoresActivity
 import com.blueMarketing.capsula.ui.subCategories.SubCategoriesActivity
-import com.blueMarketing.capsula.utils.Constants.OPEN_CHECKOUT
 import com.blueMarketing.capsula.utils.Constants.UPDATE_CART_NUMBER
 import com.blueMarketing.capsula.utils.Domain
 import com.blueMarketing.capsula.utils.Utils
@@ -222,7 +219,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
         cart_imageView_layout_toolbar?.setOnClickListener {
             if (UserDataSource.getUser() == null) {
                 if (UserDataSource.getUserCartSize() > 0)
-                    startActivity(Intent(this, CheckoutActivity::class.java))
+                    startActivity(Intent(this, CustomerCheckoutActivity::class.java))
                 else
                     showPopUp(
                         getString(R.string.cart), getString(R.string.empty_cart_msg),
@@ -231,9 +228,9 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             } else {
                 when {
                     UserDataSource.getUserCartSize() > 0 ->
-                        startActivity(Intent(this, CheckoutActivity::class.java))
+                        startActivity(Intent(this, CustomerCheckoutActivity::class.java))
                     UserDataSource.getUser()?.cartContent?.size!! > 0 ->
-                        startActivity(Intent(this, CheckoutActivity::class.java))
+                        startActivity(Intent(this, CustomerCheckoutActivity::class.java))
                     else -> showPopUp(
                         getString(R.string.cart), getString(R.string.empty_cart_msg),
                         getString(android.R.string.ok), false
@@ -258,7 +255,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
             updateCartNumber()
 
         if (this is AuthenticationActivity || this is CompleteProfileActivity ||
-            this is AddAddressActivity || this is DeliveryAuthenticationActivity
+            this is AddAddressActivity || this is DeliveryAuthenticationActivity ||
+            this is OrderDetailsActivity || this is DeliveryOrderDetailsActivity
         ) {
             Utils.hideIntercom()
         } else {
@@ -543,8 +541,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> :
     fun onMessageEvent(event: MessageEvent) {
         if (event.message.contentEquals(UPDATE_CART_NUMBER)) {
             updateCartNumber()
-        } else if (event.message.contentEquals(OPEN_CHECKOUT)) {
-            startActivity(Intent(this, CheckoutActivity::class.java))
         }
     }
 

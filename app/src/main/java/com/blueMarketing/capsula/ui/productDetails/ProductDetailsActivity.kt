@@ -10,9 +10,10 @@ import com.blueMarketing.capsula.data.MessageEvent
 import com.blueMarketing.capsula.data.Product
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityProductDetailsBinding
-import com.blueMarketing.capsula.ui.checkout.CheckoutActivity
+import com.blueMarketing.capsula.ui.checkout.CustomerCheckoutActivity
 import com.blueMarketing.capsula.utils.Constants
 import com.google.gson.Gson
+import io.reactivex.functions.Action
 import org.greenrobot.eventbus.EventBus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -55,7 +56,9 @@ class ProductDetailsActivity :
                     run {
                         if (UserDataSource.getUser() == null) {
                             UserDataSource.deleteCart()
-                            UserDataSource.addProductToCart(mViewModel.product)
+                            UserDataSource.addProductToCart(mViewModel.product, Action {
+                                openCheckout()
+                            })
                         } else {
                             mViewModel.addProductToCart()
                         }
@@ -93,6 +96,6 @@ class ProductDetailsActivity :
     }
 
     override fun openCheckout() {
-        startActivity(Intent(this, CheckoutActivity::class.java))
+        startActivity(Intent(this, CustomerCheckoutActivity::class.java))
     }
 }

@@ -103,20 +103,19 @@
         <activity
             android:name=".ui.more.MoreActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.checkout.CheckoutActivity"
-            android:launchMode="singleTask"
+            android:name=".ui.checkout.CustomerCheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <data android:scheme="capsula" />
+<!--            <intent-filter>-->
+<!--                <data android:scheme="capsula" />-->
 
-                <action android:name="android.intent.action.VIEW" />
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.productDetails.ProductDetailsActivity"

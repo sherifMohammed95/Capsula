@@ -1,5 +1,7 @@
 package com.blueMarketing.capsula.ui.more
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +14,7 @@ import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.custom.bottomSheet.BottomSelectionFragment
 import com.blueMarketing.capsula.data.AppLanguage
 import com.blueMarketing.capsula.data.MoreItem
+import com.blueMarketing.capsula.data.OrderStatus
 import com.blueMarketing.capsula.data.PaymentMethod
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityMoreBinding
@@ -29,6 +32,7 @@ import com.blueMarketing.capsula.ui.userProfile.UserProfileActivity
 import com.blueMarketing.capsula.ui.userTypes.UserTypesActivity
 import com.blueMarketing.capsula.utils.AnimationUtils
 import com.blueMarketing.capsula.utils.Constants
+import com.blueMarketing.capsula.utils.Utils
 import com.blueMarketing.capsula.utils.preferencesGateway
 import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings
 import com.oppwa.mobile.connect.exception.PaymentError
@@ -67,12 +71,21 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     private fun subscribeToLiveData() {
         mViewModel.checkoutIdResponse.observe(this, Observer {
-            openHyperPay(it)
+            showPopUp(
+                R.string.deduction_message, getString(android.R.string.cancel),
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                }, getString(android.R.string.ok),
+                DialogInterface.OnClickListener { _, _ ->
+                    openHyperPay(it)
+                }, false
+            )
+
         })
 
         mViewModel.saveCardResponse.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-//            showPopUp("", it, getString(android.R.string.ok), false)
+//            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            showPopUp("", it, getString(android.R.string.ok), false)
         })
 
         mViewModel.logoutResponse.observe(this, Observer {
@@ -164,7 +177,7 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
 
     override fun addPaymentCard() {
         showPaymentMethodSheet()
-
+//        Utils.openLink(this, "https://capsula.cc/swagger/index.html")
     }
 
     override fun showPaymentMethodSheet() {
@@ -256,9 +269,9 @@ class MoreActivity : BaseActivity<ActivityMoreBinding, MoreViewModel>(), MoreNav
         val checkoutSettings =
             CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.LIVE);
 
-        val currentLang:String = preferencesGateway.load(Constants.LANGUAGE,"en")
-        if(currentLang.contentEquals("en"))
-        checkoutSettings.locale = "en_US";
+        val currentLang: String = preferencesGateway.load(Constants.LANGUAGE, "en")
+        if (currentLang.contentEquals("en"))
+            checkoutSettings.locale = "en_US";
         else
             checkoutSettings.locale = "ar_AR";
 
