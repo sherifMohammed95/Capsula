@@ -17,6 +17,8 @@ class AuthenticationRepository : BaseRepository() {
     val socialMediaResponse = SingleLiveEvent<Void>()
     val completeProfileResponse = SingleLiveEvent<Void>()
     val checkUserExistResponse = SingleLiveEvent<Void>()
+    val userIsExistResponse = SingleLiveEvent<String>()
+    val userIsNotExistResponse = SingleLiveEvent<Void>()
     val resetPasswordResponse = SingleLiveEvent<Void>()
     val changePasswordResponse = SingleLiveEvent<String>()
     val deliveryRegisterResponse = SingleLiveEvent<String>()
@@ -325,6 +327,36 @@ class AuthenticationRepository : BaseRepository() {
                 handleNetworkError(Action {
                     CoroutineScope(IO).launch {
                         checkUserExist(phone)
+                    }
+                })
+            }
+        }
+    }
+
+    suspend fun checkUserExist(phone: String, email: String) {
+        try {
+            withContext(Main) {
+
+                progressLoading.value = true
+            }
+
+            val response = webService.checkUserExist(phone,email)
+            if (response.isSuccessful) {
+                withContext(Main) {
+                    progressLoading.value = false
+                    userIsExistResponse.postValue(response.body()?.data)
+                }
+            } else {
+                withContext(Main) {
+                    progressLoading.value = false
+                    userIsNotExistResponse.call()
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Main) {
+                handleNetworkError(Action {
+                    CoroutineScope(IO).launch {
+                        checkUserExist(phone,email)
                     }
                 })
             }

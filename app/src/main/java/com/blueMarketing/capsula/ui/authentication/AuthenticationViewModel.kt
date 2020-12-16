@@ -20,6 +20,8 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
 
     var loginResponse = SingleLiveEvent<Void>()
     var socialMediaResponse = SingleLiveEvent<Void>()
+    var userIsExistResponse = SingleLiveEvent<String>()
+    var userIsNotExistResponse = SingleLiveEvent<Void>()
 
 
     var loginTab = ObservableBoolean(false)
@@ -71,6 +73,8 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
         }
         this.loginResponse = mRepository.loginResponse
         this.socialMediaResponse = mRepository.socialMediaResponse
+        this.userIsExistResponse = mRepository.userIsExistResponse
+        this.userIsNotExistResponse = mRepository.userIsNotExistResponse
     }
 
     fun onLoginTabClick() {
@@ -89,8 +93,7 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
 
     fun onRegisterButtonClick() {
         if (!validateRegister()) return
-        buildRegisterRequest()
-        navigator!!.openVerification()
+        checkUserExist()
     }
 
     fun onLoginButtonClick() {
@@ -211,6 +214,12 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
         }
     }
 
+    fun checkUserExist() {
+        viewModelScope.launch(IO) {
+            mRepository.checkUserExist(phoneText.get()!!, emailText.get()!!)
+        }
+    }
+
     fun loginWithGoogle() {
         viewModelScope.launch(IO) {
             mRepository.loginWithGoogle(googleSignInAccount?.idToken!!)
@@ -223,7 +232,7 @@ class AuthenticationViewModel(private val mRepository: AuthenticationRepository)
         }
     }
 
-    private fun buildRegisterRequest() {
+    fun buildRegisterRequest() {
         registerRequest.password = passwordText.get()!!
         registerRequest.name = nameText.get()!!
         registerRequest.email = emailText.get()!!

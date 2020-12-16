@@ -109,7 +109,8 @@ class AuthenticationActivity :
     override fun openForgetPassword() {
         val intent = Intent(this, ForgetPasswordActivity::class.java)
         intent.putExtra(Constants.IS_DELIVERY, false)
-        startActivity(intent)    }
+        startActivity(intent)
+    }
 
     override fun openTerms() {
         startActivity(Intent(this, TermsActivity::class.java))
@@ -174,5 +175,14 @@ class AuthenticationActivity :
             else
                 openHome()
         })
+
+        mViewModel.userIsNotExistResponse.observe(this, Observer {
+            mViewModel.buildRegisterRequest()
+            openVerification()
+        })
+        mViewModel.userIsExistResponse.observe(this, Observer {
+            showPopUp("", it, getString(android.R.string.ok), false)
+        })
+
     }
 }

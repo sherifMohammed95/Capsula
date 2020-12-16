@@ -44,6 +44,12 @@ interface WebService {
     @GET("UserProfile/CheckUserExist")
     suspend fun checkUserExist(@Query("PhoneNumber") phone: String): Response<BaseResponse<Any>>
 
+    @GET("UserProfile/CheckUserExist")
+    suspend fun checkUserExist(
+        @Query("PhoneNumber") phone: String,
+        @Query("Email") email: String
+    ): Response<BaseResponse<String>>
+
     @GET("DeliveryManRegisteration/CheckUserExist")
     suspend fun checkDeliveryExist(@Query("PhoneNumber") phone: String): Response<BaseResponse<Any>>
 
