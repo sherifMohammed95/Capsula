@@ -250,5 +250,8 @@
     <string name="no_stores_found">لا توجد متاجر</string>
     <string name="out_of_service">خارج الخدمة</string>
     <string name="policy">سياسة الخصوصية</string>
+    <string name="accept">قبول</string>
+    <string name="reject">رفض</string>
+    <string name="location_permission_msg">يحتاج هذا التطبيق إلى جمع بيانات الموقع لتتبع موقعك حتى عندما يكون التطبيق مغلقًا أو غير مستخدم ، ولإمكانية استخدامه لتعيين أقرب طلب لك</string>
     <string name="deduction_message">سيتم خصم مبلغ 1 ريال لتأكيد البطاقة، و سيتم استرجاع المبلغ.</string>
 </resources>

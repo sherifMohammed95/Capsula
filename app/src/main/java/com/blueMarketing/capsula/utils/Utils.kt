@@ -41,7 +41,7 @@ object Utils {
         val info: PackageInfo
         try {
             info = context.packageManager.getPackageInfo(
-                "com.freelance.capsoula",
+                "com.blueMarketing.capsula",
                 PackageManager.GET_SIGNATURES
             )
             for (signature in info.signatures) {

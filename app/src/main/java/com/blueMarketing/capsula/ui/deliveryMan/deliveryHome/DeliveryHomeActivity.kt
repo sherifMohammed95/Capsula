@@ -14,6 +14,7 @@ import com.blueMarketing.base.BaseActivity
 import com.blueMarketing.base.BaseRecyclerAdapter
 import com.blueMarketing.capsula.R
 import com.blueMarketing.capsula.data.DeliveryOrder
+import com.blueMarketing.capsula.data.OrderStatus
 import com.blueMarketing.capsula.data.source.local.UserDataSource
 import com.blueMarketing.capsula.databinding.ActivityDeliveryHomeBinding
 import com.blueMarketing.capsula.locationService.LocationServiceManager
@@ -30,6 +31,7 @@ import com.google.gson.Gson
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_delivery_home.*
 import kotlinx.android.synthetic.main.activity_products.*
@@ -54,7 +56,31 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
         super.onCreate(savedInstanceState)
         initRecyclerView()
         subscribeToLiveData()
-        getUserLocationAndScheduleService()
+        val rxPermissions = RxPermissions(this)
+
+        var isGranted = false
+        isGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            (rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION) )||
+                    rxPermissions.isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        } else {
+            rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        if (isGranted)
+            getUserLocationAndScheduleService()
+        else
+            showPopUp(
+                R.string.location_permission_msg, getString(R.string.reject),
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                }, getString(R.string.accept),
+                DialogInterface.OnClickListener { _, _ ->
+                    getUserLocationAndScheduleService()
+                }, false
+            )
         out_service_switch.setOnCheckedChangeListener(this)
     }
 
@@ -133,30 +159,37 @@ class DeliveryHomeActivity : BaseActivity<ActivityDeliveryHomeBinding, DeliveryH
 
     private fun handleDenyPermissions(arg: QuickPermissionsRequest) {
         showPopUp(
-            R.string.permission_denied,
+            getString(R.string.should_enable_gps),
             android.R.string.ok,
             DialogInterface.OnClickListener { _, _ ->
-                arg.openAppSettings()
+                startActivityForResult(
+                    Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),
+                    GPS_CODE
+                )
             }, false
         )
     }
 
     private fun handleDenyPermissionsPermanently(arg: QuickPermissionsRequest) {
+
         showPopUp(
-            getString(R.string.permission_denied_permanently),
-            android.R.string.ok,
+            R.string.permission_denied_permanently, getString(android.R.string.no),
+            DialogInterface.OnClickListener { dialog, _ ->
+                dialog.dismiss()
+            }, getString(R.string.yes),
             DialogInterface.OnClickListener { _, _ ->
                 arg.openAppSettings()
-            }, false
+            }, true
         )
     }
 
     private fun getUserLocationAndScheduleService() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
             runWithPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-//                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 options = quickPermissionsOptions
             ) {
                 getCurrentLocation()

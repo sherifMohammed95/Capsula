@@ -247,6 +247,9 @@
     <string name="no_stores_found">No Stores Found</string>
     <string name="out_of_service">Out Of Service</string>
     <string name="policy">Privacy Policy</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="location_permission_msg">This app needs to collect location data to track your location even when the app is closed or not in use and to able to use to assign the nearest order for you</string>
     <string name="deduction_message">To add your card there will be a deduction of 1 SR to verify your card and the deducted amount will be refunded.</string>
 
 </resources>
